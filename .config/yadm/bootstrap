@@ -20,3 +20,7 @@ $yadm_bin reset
 
 # yadm checkout to activate the sparseCheckout config above
 $yadm_bin checkout --quiet
+
+# cd $HOME
+# echo "init submodules..."
+# yadm submodule update --recursive --init
