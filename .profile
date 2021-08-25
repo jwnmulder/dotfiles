@@ -33,6 +33,18 @@ if [ -d "${KREW_ROOT:-$HOME/.krew}"/bin ]; then
     PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 fi
 
+# #user-binaries path
+# if [ ! -f $(systemd-path user-binaries) ]; then
+#   mkdir -p $(systemd-path user-binaries)
+# fi
+# PATH="$(systemd-path user-binaries):$PATH"
+
+# # docker-for-desktop binary unlink
+# if [ -f /usr/bin/kubectl ]; then
+#   # ignore the docker-for-desktop provided /usr/local/bin/kubectl as it is way to old
+#   ln -f -s /usr/bin/kubectl $(systemd-path user-binaries)/.
+# fi
+
 # If running inside WSL
 if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
 
