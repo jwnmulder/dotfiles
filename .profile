@@ -48,7 +48,7 @@ fi
 # If running inside WSL
 if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
 
-    # WSL SSH & GPG relay
+    # WSL SSH & GPG relay test
     if [ -f $HOME/.ssh/ssh-gpg-wsl2-proxy ]; then
         source $HOME/.ssh/ssh-gpg-wsl2-proxy
     fi
