@@ -53,4 +53,3 @@ if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
         source $HOME/.ssh/ssh-gpg-wsl2-proxy
     fi
 fi
-
