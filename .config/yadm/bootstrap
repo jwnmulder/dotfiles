@@ -10,8 +10,8 @@ yadm_bin=~/.local/bin/yadm
 # be run from within $HOME (assuming this is the root of your dotfiles)
 cd "$HOME"
 
-echo "Init submodules"
-yadm submodule update --recursive --init
+echo "Init/update submodules"
+yadm submodule update --recursive --init --rmote
 
 # sparse checkout
 $yadm_bin gitconfig core.sparseCheckout true
