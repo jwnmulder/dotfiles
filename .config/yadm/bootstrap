@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# TODO: only change if SSH is available
 SSH_REPO_URL="git@github.com:jwnmulder/dotfiles.git"
 
 yadm_bin=~/.local/bin/yadm
@@ -31,7 +32,7 @@ $yadm_bin checkout --quiet
 # * Set yadm origin url to ssh
 #-----------------------------------------
 
-echo ">>> Updating the yadm origin to ssh.."
+echo "Updating the yadm repo origin URL"
 yadm remote set-url origin "$SSH_REPO_URL"
 
 echo "Done!"
