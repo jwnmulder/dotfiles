@@ -2,20 +2,20 @@
 	path = .oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
 	branch = master
-	ignore = dirty
+	ignore = all
 [submodule "powerlevel10k"]
 	path = .config/oh-my-zsh/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
 	branch = master
-	ignore = dirty
+	ignore = all
 	shallow = true
 [submodule "zsh-autosuggestions"]
 	path = .config/oh-my-zsh/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 	branch = master
-	ignore = dirty
+	ignore = all
 [submodule "zsh-nvm"]
 	path = .config/oh-my-zsh/custom/plugins/zsh-nvm
 	url = https://github.com/lukechilds/zsh-nvm.git
 	branch = master
-	ignore = dirty
+	ignore = all
