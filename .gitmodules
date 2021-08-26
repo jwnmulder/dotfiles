@@ -1,4 +1,13 @@
-[submodule ".oh-my-zsh"]
-  path = .oh-my-zsh
-  url = https://github.com/ohmyzsh/ohmyzsh.git
-  ignore = dirty
+[submodule "ohmyzsh"]
+	path = .oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git
+	branch = master
+[submodule "powerlevel10k"]
+	path = .config/oh-my-zsh/custom/themes/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
+	branch = master
+	shallow = true
+[submodule "zsh-autosuggestions"]
+	path = .config/oh-my-zsh/custom/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+	branch = master
