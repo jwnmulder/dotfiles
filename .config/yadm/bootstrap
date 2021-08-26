@@ -1,5 +1,7 @@
 #!/bin/sh
 
+SSH_REPO_URL="git@github.com:jwnmulder/dotfiles.git"
+
 yadm_bin=~/.local/bin/yadm
 [ ! -f $yadm_bin ] && yadm_bin=yadm
 
@@ -24,3 +26,12 @@ $yadm_bin reset
 
 # yadm checkout to activate the sparseCheckout config above
 $yadm_bin checkout --quiet
+
+#-----------------------------------------
+# * Set yadm origin url to ssh
+#-----------------------------------------
+
+echo ">>> Updating the yadm origin to ssh.."
+yadm remote set-url origin "$SSH_REPO_URL"
+
+echo "Done!"
