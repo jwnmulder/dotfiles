@@ -11,3 +11,7 @@
 	path = .config/oh-my-zsh/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 	branch = master
+[submodule "zsh-nvm"]
+	path = .config/oh-my-zsh/custom/plugins/zsh-nvm
+	url = https://github.com/lukechilds/zsh-nvm.git
+	branch = master
