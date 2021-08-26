@@ -13,7 +13,10 @@ cd "$HOME"
 echo "Init/update submodules"
 yadm submodule update --recursive --init --remote
 
-# sparse checkout
+#-----------------------------------------
+# * Configure git sparseCheckout to exclude some files from being checked out (e.g. README.md)
+#-----------------------------------------
+
 $yadm_bin gitconfig core.sparseCheckout true
 
 cat << EOF > "$HOME/.local/share/yadm/repo.git/info/sparse-checkout"
@@ -23,7 +26,7 @@ cat << EOF > "$HOME/.local/share/yadm/repo.git/info/sparse-checkout"
 EOF
 
 # yadm reset as otherwise 'yadm status' will show a lot of deleted files
-$yadm_bin reset
+$yadm_bin reset > /dev/null
 
 # yadm checkout to activate the sparseCheckout config above
 $yadm_bin checkout --quiet
@@ -32,7 +35,10 @@ $yadm_bin checkout --quiet
 # * Set yadm origin url to ssh
 #-----------------------------------------
 
-echo "Updating the yadm repo origin URL"
-yadm remote set-url origin "$SSH_REPO_URL"
+current_repo=$(yadm enter git remote get-url origin)
+if [ "$current_repo" != "$SSH_REPO_URL" ]; then
+  echo "Updating the yadm repo origin URL to $SSH_REPO_URL"
+  yadm remote set-url origin "$SSH_REPO_URL"
+fi
 
 echo "Done!"
