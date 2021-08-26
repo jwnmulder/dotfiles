@@ -1,10 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
 yadm_bin=~/.local/bin/yadm
 [ ! -f $yadm_bin ] && yadm_bin=yadm
 
-#cd "$HOME"
-#$yadm_bin submodule update --recursive --init
+# Because Git submodule commands cannot operate without a work tree, they must
+# be run from within $HOME (assuming this is the root of your dotfiles)
+cd "$HOME"
+
+echo "Init submodules"
+yadm submodule update --recursive --init
 
 # sparse checkout
 $yadm_bin gitconfig core.sparseCheckout true
@@ -20,7 +24,3 @@ $yadm_bin reset
 
 # yadm checkout to activate the sparseCheckout config above
 $yadm_bin checkout --quiet
-
-# cd $HOME
-# echo "init submodules..."
-# yadm submodule update --recursive --init
