@@ -32,13 +32,19 @@ $yadm_bin reset > /dev/null
 $yadm_bin checkout --quiet
 
 #-----------------------------------------
-# * Set yadm origin url to ssh
+# * Set yadm origin url to ssh (when our environment is WSL)
 #-----------------------------------------
 
-current_repo=$(yadm enter git remote get-url origin)
-if [ "$current_repo" != "$SSH_REPO_URL" ]; then
-  echo "Updating the yadm repo origin URL to $SSH_REPO_URL"
-  yadm remote set-url origin "$SSH_REPO_URL"
+# If running inside WSL
+if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
+#if [[ -n "$SSH_AUTH_SOCK" ]]; then
+
+  current_repo=$(yadm enter git remote get-url origin)
+  if [ "$current_repo" != "$SSH_REPO_URL" ]; then
+    echo "Updating the yadm repo origin URL to $SSH_REPO_URL"
+    yadm remote set-url origin "$SSH_REPO_URL"
+  fi
+
 fi
 
 echo "Done!"
