@@ -11,7 +11,7 @@ yadm_bin=~/.local/bin/yadm
 cd "$HOME"
 
 echo "Init/update submodules"
-yadm submodule update --recursive --init --remote
+$yadm_bin submodule update --recursive --init --remote
 
 #-----------------------------------------
 # * Configure git sparseCheckout to exclude some files from being checked out (e.g. README.md)
