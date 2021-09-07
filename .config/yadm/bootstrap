@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euxo pipefail
+
 # TODO: only change if SSH is available
 SSH_REPO_URL="git@github.com:jwnmulder/dotfiles.git"
 
@@ -42,7 +44,7 @@ if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
   current_repo=$(yadm enter git remote get-url origin)
   if [ "$current_repo" != "$SSH_REPO_URL" ]; then
     echo "Updating the yadm repo origin URL to $SSH_REPO_URL"
-    yadm remote set-url origin "$SSH_REPO_URL"
+    $yadm_bin remote set-url origin "$SSH_REPO_URL"
   fi
 
 fi
