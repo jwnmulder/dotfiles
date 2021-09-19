@@ -37,6 +37,16 @@ fi
 # fi
 # PATH="$(systemd-path user-binaries):$PATH"
 
+# source files from ~/.profile.d
+if [ -d $HOME/.profile.d ]; then
+  for i in $HOME/.profile.d/*; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+
 # # docker-for-desktop binary unlink
 # if [ -f /usr/bin/kubectl ]; then
 #   # ignore the docker-for-desktop provided /usr/local/bin/kubectl as it is way to old
