@@ -68,7 +68,7 @@ export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
 
 # active plugins
-plugins=(z git zsh-autosuggestions zsh-nvm)
+plugins=(z git zsh-autosuggestions zsh-nvm kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
