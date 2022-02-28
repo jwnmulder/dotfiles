@@ -44,7 +44,7 @@ $yadm_bin checkout --quiet
 if [[ -n "${IS_WSL:-}" || -n "${WSL_DISTRO_NAME:-}" ]]; then
 #if [[ -n "$SSH_AUTH_SOCK" ]]; then
 
-  current_repo=$(yadm enter git remote get-url origin)
+  current_repo=$($yadm_bin enter git remote get-url origin)
   if [ "$current_repo" != "$SSH_REPO_URL" ]; then
     echo "Updating the yadm repo origin URL to $SSH_REPO_URL"
     $yadm_bin remote set-url origin "$SSH_REPO_URL"
