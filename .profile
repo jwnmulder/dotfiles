@@ -58,6 +58,7 @@ if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
 
     # Fix Windows/WSL2 interoperability issue that sometimes occurs
     # See https://www.blogbyben.com/2022/02/gotcha-when-windows-and-wsl2-stop.html
+    # and https://github.com/microsoft/WSL/issues/6420
     export WSL_INTEROP=/var/run/WSL/$(ps auxwwww|grep init | \
       grep -v grep | tail -1 | awk '{print $2}')_interop
 
