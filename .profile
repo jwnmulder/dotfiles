@@ -56,6 +56,11 @@ fi
 # If running inside WSL
 if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
 
+    # Fix Windows/WSL2 interoperability issue that sometimes occurs
+    # See https://www.blogbyben.com/2022/02/gotcha-when-windows-and-wsl2-stop.html
+    export WSL_INTEROP=/var/run/WSL/$(ps auxwwww|grep init | \
+      grep -v grep | tail -1 | awk '{print $2}')_interop
+
     # WSL SSH & GPG relay
     if [ -f $HOME/.ssh/ssh-gpg-wsl2-proxy ]; then
         source $HOME/.ssh/ssh-gpg-wsl2-proxy
