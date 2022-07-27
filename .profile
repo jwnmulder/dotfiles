@@ -59,11 +59,37 @@ if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
     # Fix Windows/WSL2 interoperability issue that sometimes occurs
     # See https://www.blogbyben.com/2022/02/gotcha-when-windows-and-wsl2-stop.html
     # and https://github.com/microsoft/WSL/issues/6420
-    export WSL_INTEROP=/var/run/WSL/$(ps auxwwww|grep init | \
-      grep -v grep | tail -1 | awk '{print $2}')_interop
+    #export WSL_INTEROP=/var/run/WSL/$(ps auxwwww|grep init | \
+    #  grep -v grep | tail -1 | awk '{print $2}')_interop
+
+    # See https://github.com/microsoft/WSL/issues/7174#issuecomment-940163080
+    parentof() {
+        pid=$(ps -p ${1:-$$} -o ppid=;)
+        echo ${pid// /}
+    }
+
+    interop_pid=$$
+
+    while true ; do
+        [[ -e /run/WSL/${interop_pid}_interop ]] && break
+        interop_pid=$(parentof ${interop_pid})
+        [[ ${interop_pid} == 1 ]] && break
+    done
+
+    if [[ ${interop_pid} == 1 ]] ; then
+        echo "Failed to find a parent process with a working interop socket.  Interop is broken."
+    else
+        export WSL_INTEROP=/run/WSL/${interop_pid}_interop
+    fi
 
     # WSL SSH & GPG relay
     if [ -f $HOME/.ssh/ssh-gpg-wsl2-proxy ]; then
+        echo "sourcing .ssh/ssh-gpg-wsl2-proxy"
         source $HOME/.ssh/ssh-gpg-wsl2-proxy
     fi
+else
+    echo "Skip loading ssh-gpg proxy, WSL_INTEROP=$WSL_INTEROP"
+    #export WSL_INTEROP=/var/run/WSL/$(ps auxwwww|grep init | \
+    #  grep -v grep | tail -1 | awk '{print $2}')_interop
+    echo "IS_WSL=$IS_WSL, WSL_DISTRO_NAME=$WSL_DISTRO_NAME, WSL_INTEROP=$WSL_INTEROP"
 fi
