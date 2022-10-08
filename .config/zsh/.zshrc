@@ -1,3 +1,9 @@
+# for filename in $ZDOTDIR/{options,completion,keybindings,commands,prompt}.zsh; do
+for filename in "$HOME/.config/zsh/"*.zsh; do
+    source $filename
+done
+unset filename
+
 #direnv export
 if command -v direnv &> /dev/null; then
     emulate zsh -c "$(direnv export zsh)"
@@ -64,6 +70,7 @@ DISABLE_UPDATE_PROMPT="true"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # zsh-nvm plgin config
+export NVM_LAZY=1
 export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
 
@@ -95,3 +102,4 @@ source $ZSH/oh-my-zsh.sh
 if command -v direnv &> /dev/null; then
     emulate zsh -c "$(direnv hook zsh)"
 fi
+#zprof
