@@ -87,9 +87,4 @@ if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
         echo "sourcing .ssh/ssh-gpg-wsl2-proxy"
         source $HOME/.ssh/ssh-gpg-wsl2-proxy
     fi
-else
-    echo "Skip loading ssh-gpg proxy, WSL_INTEROP=$WSL_INTEROP"
-    #export WSL_INTEROP=/var/run/WSL/$(ps auxwwww|grep init | \
-    #  grep -v grep | tail -1 | awk '{print $2}')_interop
-    echo "IS_WSL=$IS_WSL, WSL_DISTRO_NAME=$WSL_DISTRO_NAME, WSL_INTEROP=$WSL_INTEROP"
 fi
