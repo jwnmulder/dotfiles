@@ -70,9 +70,12 @@ DISABLE_UPDATE_PROMPT="true"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # zsh-nvm plgin config
-export NVM_LAZY=1
 export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
+
+# [nvm plugin] Variable-style settings are deprecated. Instead of NVM_LAZY, use:
+# export NVM_LAZY=1
+zstyle ':omz:plugins:nvm' lazy yes
 
 # active plugins
 plugins=(z git zsh-autosuggestions nvm kubectl)
