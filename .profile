@@ -47,6 +47,11 @@ if [ -d $HOME/.profile.d ]; then
   unset i
 fi
 
+# The .NET tools collect usage data in order to help us improve your experience.
+# It is collected by Microsoft and shared with the community.
+# You can opt-out of telemetry by setting the DOTNET_CLI_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 # # docker-for-desktop binary unlink
 # if [ -f /usr/bin/kubectl ]; then
 #   # ignore the docker-for-desktop provided /usr/local/bin/kubectl as it is way to old
