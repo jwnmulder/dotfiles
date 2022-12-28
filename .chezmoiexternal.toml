@@ -1,35 +1,36 @@
+{{ if eq .chezmoi.os "linux" }}
 [".oh-my-zsh"]
-    type = "git-repo"
-    url = "https://github.com/ohmyzsh/ohmyzsh.git"
-    refreshPeriod = "168h"
-    [".oh-my-zsh".clone]
-      args = ["--single-branch", "--branch", "master"]
-    [".oh-my-zsh".pull]
-      args = ["-q", "origin", "master"]
+  type = "git-repo"
+  url = "https://github.com/ohmyzsh/ohmyzsh.git"
+  refreshPeriod = "168h"
+  [".oh-my-zsh".clone]
+    args = ["--single-branch", "--branch", "master"]
+  [".oh-my-zsh".pull]
+    args = ["-q", "origin", "master"]
 
 [".config/oh-my-zsh/custom/themes/powerlevel10k"]
-    type = "git-repo"
-    url = "https://github.com/romkatv/powerlevel10k.git"
-    refreshPeriod = "168h"
-    [".config/oh-my-zsh/custom/themes/powerlevel10k".clone]
-      args = ["--single-branch", "--branch", "master"]
-    [".config/oh-my-zsh/custom/themes/powerlevel10k".pull]
-      args = ["-q", "origin", "master"]
+  type = "git-repo"
+  url = "https://github.com/romkatv/powerlevel10k.git"
+  refreshPeriod = "168h"
+  [".config/oh-my-zsh/custom/themes/powerlevel10k".clone]
+    args = ["--single-branch", "--branch", "master"]
+  [".config/oh-my-zsh/custom/themes/powerlevel10k".pull]
+    args = ["-q", "origin", "master"]
 
 [".config/oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-    type = "git-repo"
-    url = "https://github.com/zsh-users/zsh-autosuggestions.git"
-    refreshPeriod = "168h"
-    [".config/oh-my-zsh/custom/plugins/zsh-autosuggestions".clone]
-      args = ["--single-branch", "--branch", "master"]
-    [".config/oh-my-zsh/custom/plugins/zsh-autosuggestions".pull]
-      args = ["-q", "origin", "master"]
+  type = "git-repo"
+  url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+  refreshPeriod = "168h"
+  [".config/oh-my-zsh/custom/plugins/zsh-autosuggestions".clone]
+    args = ["--single-branch", "--branch", "master"]
+  [".config/oh-my-zsh/custom/plugins/zsh-autosuggestions".pull]
+    args = ["-q", "origin", "master"]
 
 [".config/oh-my-zsh/custom/plugins/zsh-nvm"]
-    type = "git-repo"
-    url = "https://github.com/lukechilds/zsh-nvm.git"
-    refreshPeriod = "168h"
-    [".config/oh-my-zsh/custom/plugins/zsh-nvm".clone]
-      args = ["--single-branch", "--branch", "master"]
-    [".config/oh-my-zsh/custom/plugins/zsh-nvm".pull]
-      args = ["-q", "origin", "master"]
+  type = "git-repo"
+  url = "https://github.com/lukechilds/zsh-nvm.git"
+  refreshPeriod = "168h"
+  [".config/oh-my-zsh/custom/plugins/zsh-nvm".clone]
+    args = ["--single-branch", "--branch", "master"]
+  pull.args = ["-q", "origin", "master"]
+{{ end }}

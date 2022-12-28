@@ -6,7 +6,7 @@
 mkdir -p ~/.local/bin
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
 
-chezmoi init https://github.com/jwnmulder/dotfiles.git
+chezmoi init jwnmulder
 chezmoi apply
 ```
 
