@@ -4,8 +4,10 @@
 
 ```bash
 mkdir -p ~/.local/bin
-curl -fLo ~/.local/bin/yadm https://github.com/TheLocehiliosan/yadm/raw/master/yadm && chmod a+x ~/.local/bin/yadm
-~/.local/bin/yadm clone https://github.com/jwnmulder/dotfiles.git --bootstrap
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
+
+chezmoi init jwnmulder
+chezmoi apply
 ```
 
 ## Set ZSH as default shell
@@ -17,6 +19,5 @@ chsh -s $(which zsh)
 ## Updating dotfiles
 
 ```bash
-yadm pull -r
-yadm bootstrap
+chezmoi update
 ```

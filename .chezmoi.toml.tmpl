@@ -1,0 +1,27 @@
+{{- $email := promptStringOnce . "email" "What is your email address" -}}
+{{- $name := promptStringOnce . "name" "What is your name" -}}
+
+{{- $personal_device := promptBoolOnce . "personal_device" "true if this machine should have personal setup" -}}
+{{- $work_device := promptBoolOnce . "work_device" "true if this machine should have work setup" -}}
+
+{{- $is_wsl := false -}}
+{{- if .chezmoi.kernel -}}
+{{-     if hasKey .chezmoi.kernel "osrelease" -}}
+{{-         $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{-     end -}}
+{{- end -}}
+
+{{- $sourceDir := .chezmoi.sourceDir -}}
+
+{{- if eq .chezmoi.os "windows" -}}
+{{- $sourceDir = printf "%s%s" .chezmoi.homeDir "/AppData/Local/chezmoi" -}}
+{{- end -}}
+
+{{- /*sourceDir = "{{ $sourceDir }}"*/ -}}
+
+[data]
+  email = "{{ $email }}"
+  name = "{{ $name }}"
+  personal_device = {{ $personal_device }}
+  work_device = {{ $work_device }}
+  is_wsl = {{ $is_wsl }}
