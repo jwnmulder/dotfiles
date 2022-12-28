@@ -32,5 +32,6 @@
   refreshPeriod = "168h"
   [".config/oh-my-zsh/custom/plugins/zsh-nvm".clone]
     args = ["--single-branch", "--branch", "master"]
-  pull.args = ["-q", "origin", "master"]
+  [".config/oh-my-zsh/custom/plugins/zsh-nvm".pull]
+    args = ["-q", "origin", "master"]
 {{ end }}
