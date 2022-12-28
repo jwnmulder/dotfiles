@@ -4,6 +4,14 @@
 {{- $personal_device := promptBoolOnce . "personal_device" "true if this machine should have personal setup" -}}
 {{- $work_device := promptBoolOnce . "work_device" "true if this machine should have work setup" -}}
 
+{{- $sourceDir := .chezmoi.sourceDir -}}
+
+{{- if eq .chezmoi.os "windows" -}}
+{{- $sourceDir = printf "%s%s" .chezmoi.homeDir "/AppData/Local/chezmoi" -}}
+{{- end -}}
+
+sourceDir = "{{ $sourceDir }}"
+
 [data]
   email = "{{ $email }}"
   name = "{{ $name }}"
