@@ -1,4 +1,12 @@
-{{ if eq .chezmoi.os "linux" }}
+{{ if .is_wsl }}
+[".local/bin/bw"]
+    type = "file"
+    url = "https://vault.bitwarden.com/download/?app=cli&platform=linux"
+    executable = true
+    refreshPeriod = "168h"
+    [".local/bin/bw".filter]
+        command = "zcat"
+
 [".oh-my-zsh"]
   type = "git-repo"
   url = "https://github.com/ohmyzsh/ohmyzsh.git"
