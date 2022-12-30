@@ -20,7 +20,7 @@ config_info: |
 
   {{- /*sourceDir = "{{ $sourceDir }}"*/ -}}
   {{ "" }}
-  Generated for user={{ env "USER" }}, hostname{{ .chezmoi.hostname }}
+  Generated for user={{ .chezmoi.username }}, hostname{{ .chezmoi.hostname }}
 
 data:
   email: {{ $email }}
