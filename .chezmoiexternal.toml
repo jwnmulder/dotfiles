@@ -8,38 +8,31 @@
         command = "zcat"
 
 [".oh-my-zsh"]
-  type = "git-repo"
-  url = "https://github.com/ohmyzsh/ohmyzsh.git"
+  type = "archive"
+  url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
   refreshPeriod = "168h"
-  [".oh-my-zsh".clone]
-    args = ["--single-branch", "--branch", "master"]
-  [".oh-my-zsh".pull]
-    args = ["-q", "origin", "master"]
 
 [".config/oh-my-zsh/custom/themes/powerlevel10k"]
-  type = "git-repo"
-  url = "https://github.com/romkatv/powerlevel10k.git"
+  type = "archive"
+  url = "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
   refreshPeriod = "168h"
-  [".config/oh-my-zsh/custom/themes/powerlevel10k".clone]
-    args = ["--single-branch", "--branch", "master"]
-  [".config/oh-my-zsh/custom/themes/powerlevel10k".pull]
-    args = ["-q", "origin", "master"]
 
 [".config/oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-  type = "git-repo"
-  url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+  type = "archive"
+  url = "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
   refreshPeriod = "168h"
-  [".config/oh-my-zsh/custom/plugins/zsh-autosuggestions".clone]
-    args = ["--single-branch", "--branch", "master"]
-  [".config/oh-my-zsh/custom/plugins/zsh-autosuggestions".pull]
-    args = ["-q", "origin", "master"]
 
 [".config/oh-my-zsh/custom/plugins/zsh-nvm"]
-  type = "git-repo"
-  url = "https://github.com/lukechilds/zsh-nvm.git"
+  type = "archive"
+  url = "https://github.com/lukechilds/zsh-nvm/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
   refreshPeriod = "168h"
-  [".config/oh-my-zsh/custom/plugins/zsh-nvm".clone]
-    args = ["--single-branch", "--branch", "master"]
-  [".config/oh-my-zsh/custom/plugins/zsh-nvm".pull]
-    args = ["-q", "origin", "master"]
+
 {{ end }}
