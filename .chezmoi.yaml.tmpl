@@ -1,9 +1,23 @@
 config_info: |
-  {{- $email := promptStringOnce . "email" "What is your email address" -}}
-  {{- $name := promptStringOnce . "name" "What is your name" -}}
+  {{- $email := env "DATA_email" -}}
+  {{- if not $email -}}
+  {{-   $email = promptStringOnce . "email" "What is your email address" -}}
+  {{- end -}}
 
-  {{- $personal_device := promptBoolOnce . "personal_device" "true if this machine should have personal setup" -}}
-  {{- $work_device := promptBoolOnce . "work_device" "true if this machine should have work setup" -}}
+  {{- $name := env "DATA_name" -}}
+  {{- if not $name -}}
+  {{-   $name = promptStringOnce . "name" "What is your name" -}}
+  {{- end -}}
+
+  {{- $personal_device := env "DATA_personal_device" -}}
+  {{- if not $personal_device -}}
+  {{-   $personal_device = promptStringOnce . "personal_device" "true if this machine should have personal setup" -}}
+  {{- end -}}
+
+  {{- $work_device := env "DATA_work_device" -}}
+  {{- if not $work_device -}}
+  {{-   $work_device = promptStringOnce . "work_device" "true if this machine should have work setup" -}}
+  {{- end -}}
 
   {{- $is_wsl := false -}}
   {{- if .chezmoi.kernel -}}
@@ -21,7 +35,7 @@ config_info: |
   {{- end -}}
 
   {{ "" }}
-  Generated for user={{ $username }}, hostname{{ .chezmoi.hostname }}
+  xGenerated for user={{ $username }}, hostname{{ .chezmoi.hostname }}
 
 data:
   email: {{ $email }}
