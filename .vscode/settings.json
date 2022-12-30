@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.toml.tmpl": "toml",
+        "*.yaml.tmpl": "yaml",
+        "dot_bashrc*": "shellscript",
+        "dot_profile*": "shellscript",
+        "dot_zshenv*": "shellscript",
+        "dot_zprofile*": "shellscript",
+        "dot_zshrc*": "shellscript"
+    },
+}
