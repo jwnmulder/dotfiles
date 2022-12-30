@@ -7,20 +7,21 @@ config_info: |
 
   {{- $is_wsl := false -}}
   {{- if .chezmoi.kernel -}}
-  {{-     if hasKey .chezmoi.kernel "osrelease" -}}
-  {{-         $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
-  {{-     end -}}
+  {{-   if hasKey .chezmoi.kernel "osrelease" -}}
+  {{-     $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+  {{-   end -}}
   {{- end -}}
 
   {{- $sourceDir := .chezmoi.sourceDir -}}
+  {{- $username := .chezmoi.username -}}
 
   {{- if eq .chezmoi.os "windows" -}}
-  {{- $sourceDir = printf "%s%s" .chezmoi.homeDir "/AppData/Local/chezmoi" -}}
+  {{-   $sourceDir = printf "%s%s" .chezmoi.homeDir "/AppData/Local/chezmoi" -}}
+  {{-   $username = env "USERNAME" -}}
   {{- end -}}
 
-  {{- /*sourceDir = "{{ $sourceDir }}"*/ -}}
   {{ "" }}
-  Generated for user={{ .chezmoi.username }}, hostname{{ .chezmoi.hostname }}
+  Generated for user={{ $username }}, hostname{{ .chezmoi.hostname }}
 
 data:
   email: {{ $email }}
