@@ -19,6 +19,11 @@
 
 {{- /*sourceDir = "{{ $sourceDir }}"*/ -}}
 
+encryption = "gpg"
+[gpg]
+  recipient = "72856692E69B44EFE4DEE1B53E00B30213F541DD"
+  args = ["--quiet"]
+
 [data]
   email = "{{ $email }}"
   name = "{{ $name }}"
