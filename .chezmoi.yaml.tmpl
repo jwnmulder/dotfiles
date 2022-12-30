@@ -11,12 +11,12 @@ config_info: |
 
   {{- $personal_device := env "DATA_personal_device" -}}
   {{- if not $personal_device -}}
-  {{-   $personal_device = promptStringOnce . "personal_device" "true if this machine should have personal setup" -}}
+  {{-   $personal_device = promptBoolOnce . "personal_device" "true if this machine should have personal setup" -}}
   {{- end -}}
 
   {{- $work_device := env "DATA_work_device" -}}
   {{- if not $work_device -}}
-  {{-   $work_device = promptStringOnce . "work_device" "true if this machine should have work setup" -}}
+  {{-   $work_device = promptBoolOnce . "work_device" "true if this machine should have work setup" -}}
   {{- end -}}
 
   {{- $is_wsl := false -}}
