@@ -1,5 +1,9 @@
 README.md
 
+{{ if eq .chezmoi.os "linux" }}
+.oh-my-zsh/cache
+{{ end }}
+
 {{ if eq .chezmoi.os "windows" }}
 *
 {{ end }}
