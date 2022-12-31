@@ -18,5 +18,8 @@ chsh -s $(which zsh)
 ## Updating dotfiles
 
 ```bash
-chezmoi update
+# pull only
+chezmoi update --apply=false
+
+chezmoi apply
 ```
