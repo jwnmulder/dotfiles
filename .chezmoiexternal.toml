@@ -1,11 +1,20 @@
+{{ $kustomizeVersion := "4.5.7" -}}
 {{ if .is_wsl }}
 [".local/bin/bw"]
-    type = "file"
-    url = "https://vault.bitwarden.com/download/?app=cli&platform=linux"
-    executable = true
-    refreshPeriod = "168h"
-    [".local/bin/bw".filter]
-        command = "zcat"
+  type = "file"
+  url = "https://vault.bitwarden.com/download/?app=cli&platform=linux"
+  executable = true
+  refreshPeriod = "168h"
+  [".local/bin/bw".filter]
+    command = "zcat"
+
+[".local/bin/kustomize"]
+  type = "file"
+  url = "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v{{ $kustomizeVersion }}/kustomize_v{{ $kustomizeVersion }}_linux_amd64.tar.gz"
+  executable = true
+  [".local/bin/kustomize".filter]
+    command = "tar"
+    args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "kustomize"]
 
 [".oh-my-zsh"]
   type = "archive"
