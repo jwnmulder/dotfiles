@@ -2,6 +2,7 @@
     "files.associations": {
         "*.toml.tmpl": "toml",
         "*.yaml.tmpl": "yaml",
+        "*.sh.tmpl": "shellscript",
         "dot_bashrc*": "shellscript",
         "dot_profile*": "shellscript",
         "dot_zshenv*": "shellscript",

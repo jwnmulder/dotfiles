@@ -1,0 +1,11 @@
+{{- if .is_wsl -}}
+#!/usr/bin/env bash
+
+PIP_PACKAGES=(
+   pre-commit
+)
+
+echo "Installing/updating pip packages: ${PIP_PACKAGES[@]}"
+pip install --user --upgrade ${PIP_PACKAGES[@]}
+
+{{ end }}
