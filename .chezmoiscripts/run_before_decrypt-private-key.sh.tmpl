@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-{{ if .secrets -}}
-
 AGE_BIN=age
 AGE_DOWNLOAD_URL="https://github.com/FiloSottile/age/releases/download/v1.1.1/age-v1.1.1-linux-amd64.tar.gz"
 
@@ -19,5 +17,3 @@ if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
   "$AGE_BIN" --decrypt --output "${HOME}/.config/chezmoi/key.txt" "{{ .chezmoi.sourceDir }}/key.txt.age"
   chmod 600 "${HOME}/.config/chezmoi/key.txt"
 fi
-
-{{- end }}
