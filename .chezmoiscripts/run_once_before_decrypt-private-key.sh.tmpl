@@ -8,7 +8,7 @@ if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
   if ! command -v "$AGE_BIN" &> /dev/null; then
       AGE_TMP_DIR="/tmp/age"
       rm -rf "$AGE_TMP_DIR"; mkdir -p "$AGE_TMP_DIR"
-      curl -L "$AGE_DOWNLOAD_URL" | tar -xz --strip-components 1 -C "$AGE_TMP_DIR"
+      curl -sL "$AGE_DOWNLOAD_URL" | tar -xz --strip-components 1 -C "$AGE_TMP_DIR"
       AGE_BIN="$AGE_TMP_DIR/age"
       chmod +x "$AGE_BIN"
   fi
