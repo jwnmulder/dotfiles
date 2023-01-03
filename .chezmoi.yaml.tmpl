@@ -37,6 +37,11 @@ config_info: |
   {{ "" }}
   Generated for user={{ $username }}, hostname{{ .chezmoi.hostname }}
 
+encryption: age
+age:
+  identity: "~/.config/chezmoi/key.txt"
+  recipient: "age1cckqh88dv9m75dcd9ftkjqxuc6y8zsvp40yavdkp37l5cvajraxs0lxnlj"
+
 data:
   email: {{ $email }}
   name: {{ $name }}
@@ -45,8 +50,3 @@ data:
   is_wsl: {{ $is_wsl }}
   # desktop or server
   # personal or work
-
-encryption: "gpg"
-gpg:
-  recipient: "72856692E69B44EFE4DEE1B53E00B30213F541DD"
-  args: ["--quiet"]

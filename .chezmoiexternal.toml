@@ -1,5 +1,6 @@
 {{ $kustomizeVersion := "4.5.7" -}}
-{{ if .is_wsl }}
+
+{{ if .is_wsl -}}
 [".local/bin/bw"]
   type = "file"
   url = "https://vault.bitwarden.com/download/?app=cli&platform=linux"

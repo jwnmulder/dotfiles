@@ -1,4 +1,5 @@
 README.md
+key.txt.age
 
 {{ if eq .chezmoi.os "linux" }}
 .oh-my-zsh/cache
