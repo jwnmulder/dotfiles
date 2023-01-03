@@ -7,5 +7,5 @@ key.txt.age
 {{ end }}
 
 {{ if eq .chezmoi.os "windows" }}
-*
+**/*
 {{ end }}
