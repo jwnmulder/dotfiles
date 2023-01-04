@@ -1,22 +1,22 @@
+# chezmoi:template:missing-key=invalid
 config_info: |
+
+  {{- $data := include ".chezmoidata.yaml.age" | decrypt | fromYaml -}}
+  {{- $profiles := include ".chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
+
   {{- $email := env "DATA_email" -}}
   {{- if not $email -}}
   {{-   $email = promptStringOnce . "email" "What is your email address" -}}
   {{- end -}}
 
-  {{- $name := env "DATA_name" -}}
+  {{- $name := coalesce $data.name (env "DATA_name") -}}
   {{- if not $name -}}
   {{-   $name = promptStringOnce . "name" "What is your name" -}}
   {{- end -}}
 
-  {{- $personal_device := env "DATA_personal_device" -}}
-  {{- if not $personal_device -}}
-  {{-   $personal_device = promptBoolOnce . "personal_device" "true if this machine should have personal setup" -}}
-  {{- end -}}
-
-  {{- $work_device := env "DATA_work_device" -}}
-  {{- if not $work_device -}}
-  {{-   $work_device = promptBoolOnce . "work_device" "true if this machine should have work setup" -}}
+  {{- $profile := env "DATA_profile" -}}
+  {{- if not $profile -}}
+  {{-   $profile = promptStringOnce . "profile" "Which profile should be used for this machine? (personal/work1/work2)" -}}
   {{- end -}}
 
   {{- $is_wsl := false -}}
@@ -34,6 +34,9 @@ config_info: |
   {{-   $username = env "USERNAME" -}}
   {{- end -}}
 
+  {{- $personal_device := eq $profile "personal" -}}
+  {{- $work_device := not (eq $profile "personal") -}}
+
   {{ "" }}
   Generated for user={{ $username }}, hostname{{ .chezmoi.hostname }}
 
@@ -43,10 +46,13 @@ age:
   recipient: "age1cckqh88dv9m75dcd9ftkjqxuc6y8zsvp40yavdkp37l5cvajraxs0lxnlj"
 
 data:
+  profile: {{ $profile }}
   email: {{ $email }}
   name: {{ $name }}
   personal_device: {{ $personal_device }}
   work_device: {{ $work_device }}
   is_wsl: {{ $is_wsl }}
+  git:
+    signingkey: {{ $data.git.signingkey }}
+  profiles: # list of profiles {{ "\n" }}{{ include ".chezmoidata_profiles.yaml.age" | decrypt | fromYaml | toYaml | indent 4 }}
   # desktop or server
-  # personal or work

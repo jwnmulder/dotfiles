@@ -1,0 +1,15 @@
+[user]
+    name = {{ .name }}
+    signingkey = {{ .git.signingkey }}
+[includeIf "gitdir/i:~/.local/share/yadm/"]
+    path = config-personal
+[includeIf "gitdir/i:~/.local/share/chezmoi/"]
+    path = config-personal
+[includeIf "gitdir/i:~/data/personal/"]
+    path = config-personal
+[includeIf "gitdir/i:~/data/work/"]
+    path = config-work1
+[includeIf "gitdir/i:~/data/work/{{.profiles.work2.code }}/"]
+    path = config-work2
+[includeIf "gitdir/i:~/data/work/{{.profiles.work2.code }}-*/"]
+    path = config-work2
