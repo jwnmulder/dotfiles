@@ -6,7 +6,7 @@ PIP_PACKAGES=(
 )
 
 echo "Installing/updating pip packages: ${PIP_PACKAGES[@]}"
-python3 -m pip install --user --upgrade pip
-python3 -m pip install --user --upgrade ${PIP_PACKAGES[@]}
+/usr/bin/python3 -m pip install --user --upgrade pip
+/usr/bin/python3 -m pip install --user --upgrade ${PIP_PACKAGES[@]}
 
 {{ end }}
