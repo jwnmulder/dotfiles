@@ -5,9 +5,9 @@ config_info: |
   {{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) -}}
   {{-   $instructions := "" -}}
   {{-   if eq .chezmoi.os "windows" -}}
-  {{-     $instructions = output ".chezmoiscripts/decrypt-private-key-instructions.bat" .chezmoi.sourceDir -}}
+  {{-     $instructions = output ".bin/decrypt-private-key-instructions.bat" .chezmoi.sourceDir -}}
   {{-   else -}}
-  {{-     $instructions = output ".chezmoiscripts/decrypt-private-key-instructions.sh" .chezmoi.sourceDir -}}
+  {{-     $instructions = output ".bin/decrypt-private-key-instructions.sh" .chezmoi.sourceDir -}}
   {{-   end -}}
   {{-   writeToStdout "Missing key.txt. Please follow the instructions below.\n" writeToStdout $instructions -}}
   {{-   exit 1 -}}
