@@ -2,45 +2,6 @@
 config_info: |
   {{- $interactive := stdinIsATTY -}}
 
-  {{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) -}}
-  {{-   $instructions := "" -}}
-  {{-   if eq .chezmoi.os "windows" -}}
-  {{-     $instructions = output (print .chezmoi.sourceDir "/.bin/decrypt-private-key-instructions.bat") .chezmoi.sourceDir -}}
-  {{-   else -}}
-  {{-     $instructions = output (print .chezmoi.sourceDir "/.bin/decrypt-private-key-instructions.sh") .chezmoi.sourceDir -}}
-  {{-   end -}}
-  {{-   writeToStdout "Missing key.txt. Please follow the instructions below.\n" writeToStdout $instructions -}}
-  {{-   exit 1 -}}
-  {{- end -}}
-
-  {{- $data := include ".chezmoidata.yaml.age" | decrypt | fromYaml -}}
-  {{- $profiles := include ".chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
-
-  {{- $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
-  {{- range $i := until 5 -}}
-  {{-   if hasKey $profiles $profile -}}
-  {{-     break -}}
-  {{-   else -}}
-  {{-     $profile = promptString "Which profile should be used for this machine? (personal/work1/work2)" -}}
-  {{-   end -}}
-  {{-   if eq $i 4 -}}
-  {{-     writeToStdout "❌ ERROR: Invalid profile selected\n" -}}
-  {{-     exit 1 -}}
-  {{-   end -}}
-  {{- end -}}
-
-  {{- $profile_data := get $profiles $profile -}}
-
-  {{- $email := coalesce $profile_data.email (env "DATA_email") -}}
-  {{- if not $email -}}
-  {{-   $email = promptStringOnce . "email" "What is your email address" -}}
-  {{- end -}}
-
-  {{- $name := coalesce $data.name (env "DATA_name") -}}
-  {{- if not $name -}}
-  {{-   $name = promptStringOnce . "name" "What is your name" -}}
-  {{- end -}}
-
   {{- $is_wsl := false -}}
   {{- if .chezmoi.kernel -}}
   {{-   if hasKey .chezmoi.kernel "osrelease" -}}
@@ -56,8 +17,20 @@ config_info: |
   {{-   $username = env "USERNAME" -}}
   {{- end -}}
 
-  {{- $personal_device := eq $profile "personal" -}}
-  {{- $work_device := not (eq $profile "personal") -}}
+  {{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) -}}
+  {{-   $instructions := "" -}}
+  {{-   if eq .chezmoi.os "windows" -}}
+  {{-     $instructions = output (print .chezmoi.sourceDir "/.bin/decrypt-private-key-instructions.bat") .chezmoi.sourceDir -}}
+  {{-   else -}}
+  {{-     $instructions = output (print .chezmoi.sourceDir "/.bin/decrypt-private-key-instructions.sh") .chezmoi.sourceDir -}}
+  {{-   end -}}
+  {{-   writeToStdout "Missing key.txt. Please follow the instructions below.\n" writeToStdout $instructions -}}
+  {{-   exit 1 -}}
+  {{- end -}}
+
+  {{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml")) -}}
+  {{-   writeToStdout "WARNING: Please re-run chezmoi init to enable profile decription" -}}
+  {{- end -}}
 
   {{ "" }}
   Generated for user={{ $username }}, hostname={{ .chezmoi.hostname }}, generated_at={{ now | date "2006-01-02 15:04:05"}}
@@ -68,13 +41,47 @@ age:
   recipient: "age1cckqh88dv9m75dcd9ftkjqxuc6y8zsvp40yavdkp37l5cvajraxs0lxnlj"
 
 data:
+  is_wsl: {{ $is_wsl }}
+
+{{- if stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml") -}}
+{{-   $data := include ".chezmoidata.yaml.age" | decrypt | fromYaml -}}
+{{-   $profiles := include ".chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
+
+{{-   $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
+{{-   range $i := until 5 -}}
+{{-     if hasKey $profiles $profile -}}
+{{-       break -}}
+{{-     else -}}
+{{-       $profile = promptString "Which profile should be used for this machine? (personal/work1/work2)" -}}
+{{-     end -}}
+{{-     if eq $i 4 -}}
+{{-       writeToStdout "❌ ERROR: Invalid profile selected\n" -}}
+{{-       exit 1 -}}
+{{-     end -}}
+{{-   end -}}
+
+{{-   $profile_data := get $profiles $profile -}}
+
+{{-   $email := coalesce $profile_data.email (env "DATA_email") -}}
+{{-   if not $email -}}
+{{-     $email = promptStringOnce . "email" "What is your email address" -}}
+{{-   end -}}
+
+{{-   $name := coalesce $data.name (env "DATA_name") -}}
+{{-   if not $name -}}
+{{-     $name = promptStringOnce . "name" "What is your name" -}}
+{{-   end -}}
+
+{{-   $personal_device := eq $profile "personal" -}}
+{{-   $work_device := not (eq $profile "personal") -}}
+{{- "" }}
   profile: {{ $profile }}
   email: {{ $email }}
   name: {{ $name }}
   personal_device: {{ $personal_device }}
   work_device: {{ $work_device }}
-  is_wsl: {{ $is_wsl }}
   git:
     signingkey: {{ $data.git.signingkey }}
   profiles: # list of profiles {{ "\n" }}{{ $profiles | toYaml | indent 4 }}
   # desktop or server
+{{ end -}}

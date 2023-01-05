@@ -16,4 +16,5 @@ IF %ERRORLEVEL% NEQ 0 (
     set AGE_BIN=%AGE_TMP_DIR%/age.exe
 )
 
+mkdir "USERPROFILE%/.config/chezmoi" 2> NUL
 echo Decrypt the age key by running: %AGE_BIN% --decrypt --output "%USERPROFILE%/.config/chezmoi/key.txt" "%ENCRYPTED_KEY%"

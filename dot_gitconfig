@@ -1,3 +1,0 @@
-[user]
-    name = {{ .name }}
-    email = {{ .profiles.personal.email }}

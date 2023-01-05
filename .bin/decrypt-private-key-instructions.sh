@@ -12,4 +12,5 @@ if ! command -v "$AGE_BIN" &> /dev/null; then
     chmod +x "$AGE_BIN"
 fi
 
+mkdir -p "${HOME}/.config/chezmoi"
 echo Decrypt the age key by running: "$AGE_BIN" --decrypt --output "${HOME}/.config/chezmoi/key.txt" "$ENCRYPTED_KEY"

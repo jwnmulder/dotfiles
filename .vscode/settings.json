@@ -1,7 +1,6 @@
 {
     "files.associations": {
         "*.toml.tmpl": "toml",
-        "*.yaml.tmpl": "yaml",
         "*.sh.tmpl": "shellscript",
         "*.ps1.tmpl": "powershell",
         "dot_bashrc*": "shellscript",
