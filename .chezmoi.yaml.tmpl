@@ -60,7 +60,7 @@ config_info: |
   {{- $work_device := not (eq $profile "personal") -}}
 
   {{ "" }}
-  Generated for user={{ $username }}, hostname{{ .chezmoi.hostname }}
+  Generated for user={{ $username }}, hostname={{ .chezmoi.hostname }}, generated_at={{ now | date "2006-01-02 15:04:05"}}
 
 encryption: age
 age:
