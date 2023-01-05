@@ -1,10 +1,37 @@
 # chezmoi:template:missing-key=invalid
 config_info: |
+  {{- $interactive := stdinIsATTY -}}
+
+  {{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) -}}
+  {{-   $instructions := "" -}}
+  {{-   if eq .chezmoi.os "windows" -}}
+  {{-     $instructions = output ".chezmoiscripts/decrypt-private-key-instructions.bat" .chezmoi.sourceDir -}}
+  {{-   else -}}
+  {{-     $instructions = output ".chezmoiscripts/decrypt-private-key-instructions.sh" .chezmoi.sourceDir -}}
+  {{-   end -}}
+  {{-   writeToStdout "Missing key.txt. Please follow the instructions below.\n" writeToStdout $instructions -}}
+  {{-   exit 1 -}}
+  {{- end -}}
 
   {{- $data := include ".chezmoidata.yaml.age" | decrypt | fromYaml -}}
   {{- $profiles := include ".chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
 
-  {{- $email := env "DATA_email" -}}
+  {{- $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
+  {{- range $i := until 5 -}}
+  {{-   if hasKey $profiles $profile -}}
+  {{-     break -}}
+  {{-   else -}}
+  {{-     $profile = promptString "Which profile should be used for this machine? (personal/work1/work2)" -}}
+  {{-   end -}}
+  {{-   if eq $i 4 -}}
+  {{-     writeToStdout "❌ ERROR: Invalid profile selected\n" -}}
+  {{-     exit 1 -}}
+  {{-   end -}}
+  {{- end -}}
+
+  {{- $profile_data := get $profiles $profile -}}
+
+  {{- $email := coalesce $profile_data.email (env "DATA_email") -}}
   {{- if not $email -}}
   {{-   $email = promptStringOnce . "email" "What is your email address" -}}
   {{- end -}}
@@ -12,11 +39,6 @@ config_info: |
   {{- $name := coalesce $data.name (env "DATA_name") -}}
   {{- if not $name -}}
   {{-   $name = promptStringOnce . "name" "What is your name" -}}
-  {{- end -}}
-
-  {{- $profile := env "DATA_profile" -}}
-  {{- if not $profile -}}
-  {{-   $profile = promptStringOnce . "profile" "Which profile should be used for this machine? (personal/work1/work2)" -}}
   {{- end -}}
 
   {{- $is_wsl := false -}}
@@ -54,5 +76,5 @@ data:
   is_wsl: {{ $is_wsl }}
   git:
     signingkey: {{ $data.git.signingkey }}
-  profiles: # list of profiles {{ "\n" }}{{ include ".chezmoidata_profiles.yaml.age" | decrypt | fromYaml | toYaml | indent 4 }}
+  profiles: # list of profiles {{ "\n" }}{{ $profiles | toYaml | indent 4 }}
   # desktop or server
