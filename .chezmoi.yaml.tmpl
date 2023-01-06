@@ -47,40 +47,40 @@ data:
   is_wsl: {{ $is_wsl }}
   is_server: {{ $is_server }}
   is_desktop: {{ $is_desktop  }}
+  profile: >-
+    {{- if stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml") -}}
+    {{-   $data := include ".data/chezmoidata.yaml.age" | decrypt | fromYaml -}}
+    {{-   $profiles := include ".data/chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
 
-{{- if stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml") -}}
-{{-   $data := include ".data/chezmoidata.yaml.age" | decrypt | fromYaml -}}
-{{-   $profiles := include ".data/chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
+    {{-   $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
+    {{-   range $i := until 5 -}}
+    {{-     if hasKey $profiles $profile -}}
+    {{-       break -}}
+    {{-     else -}}
+    {{-       $profile = promptString "Which profile should be used for this machine? (personal/work1/work2)" -}}
+    {{-     end -}}
+    {{-     if eq $i 4 -}}
+    {{-       writeToStdout "❌ ERROR: Invalid profile selected\n" -}}
+    {{-       exit 1 -}}
+    {{-     end -}}
+    {{-   end -}}
 
-{{-   $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
-{{-   range $i := until 5 -}}
-{{-     if hasKey $profiles $profile -}}
-{{-       break -}}
-{{-     else -}}
-{{-       $profile = promptString "Which profile should be used for this machine? (personal/work1/work2)" -}}
-{{-     end -}}
-{{-     if eq $i 4 -}}
-{{-       writeToStdout "❌ ERROR: Invalid profile selected\n" -}}
-{{-       exit 1 -}}
-{{-     end -}}
-{{-   end -}}
+    {{-   $profile_data := get $profiles $profile -}}
 
-{{-   $profile_data := get $profiles $profile -}}
+    {{-   $email := coalesce $profile_data.email (env "DATA_email") -}}
+    {{-   if not $email -}}
+    {{-     $email = promptStringOnce . "email" "What is your email address" -}}
+    {{-   end -}}
 
-{{-   $email := coalesce $profile_data.email (env "DATA_email") -}}
-{{-   if not $email -}}
-{{-     $email = promptStringOnce . "email" "What is your email address" -}}
-{{-   end -}}
+    {{-   $name := coalesce $data.name (env "DATA_name") -}}
+    {{-   if not $name -}}
+    {{-     $name = promptStringOnce . "name" "What is your name" -}}
+    {{-   end -}}
 
-{{-   $name := coalesce $data.name (env "DATA_name") -}}
-{{-   if not $name -}}
-{{-     $name = promptStringOnce . "name" "What is your name" -}}
-{{-   end -}}
-
-{{-   $personal_device := eq $profile "personal" -}}
-{{-   $work_device := not (eq $profile "personal") -}}
-{{- "" }}
-  profile: {{ $profile }}
+    {{-   $personal_device := eq $profile "personal" -}}
+    {{-   $work_device := not (eq $profile "personal") -}}
+    {{-   "" }}
+    {{    $profile }}
   email: {{ $email }}
   name: {{ $name }}
   personal_device: {{ $personal_device }}
@@ -88,4 +88,4 @@ data:
   git:
     signingkey: {{ $data.git.signingkey }}
   profiles: # list of profiles {{ "\n" }}{{ $profiles | toYaml | indent 4 }}
-{{ end -}}
+    {{ end -}}
