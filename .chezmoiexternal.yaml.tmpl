@@ -1,0 +1,48 @@
+# {{ $kustomizeVersion := "4.5.7" -}}
+
+# {{ if .is_wsl -}}
+".local/bin/bw":
+  type: "file"
+  url: "https://vault.bitwarden.com/download/?app=cli&platform=linux"
+  executable: true
+  refreshPeriod: "168h"
+  filter:
+    command: "zcat"
+
+".local/bin/kustomize":
+  type: "file"
+  url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v{{ $kustomizeVersion }}/kustomize_v{{ $kustomizeVersion }}_linux_amd64.tar.gz"
+  executable: true
+  filter:
+    command: "tar"
+    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "kustomize"]
+
+".oh-my-zsh":
+  type: "archive"
+  url: "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+  exact: true
+  stripComponents: 1
+  refreshPeriod: "168h"
+
+".oh-my-zsh/custom/themes/powerlevel10k":
+  type: "archive"
+  url: "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
+  exact: true
+  stripComponents: 1
+  refreshPeriod: "168h"
+
+".oh-my-zsh/custom/plugins/zsh-autosuggestions":
+  type: "archive"
+  url: "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
+  exact: true
+  stripComponents: 1
+  refreshPeriod: "168h"
+
+".oh-my-zsh/custom/plugins/zsh-nvm":
+  type: "archive"
+  url: "https://github.com/lukechilds/zsh-nvm/archive/master.tar.gz"
+  exact: true
+  stripComponents: 1
+  refreshPeriod: "168h"
+
+# {{ end }}

@@ -2,7 +2,7 @@
 
 SETLOCAL
 
-set ENCRYPTED_KEY=%1/key.txt.age
+set ENCRYPTED_KEY=%1/.data/key.txt.age
 set AGE_BIN=age
 set AGE_DOWNLOAD_URL="https://github.com/FiloSottile/age/releases/download/v1.1.1/age-v1.1.1-windows-amd64.zip"
 set AGE_TMP_DIR=%TEMP%/age

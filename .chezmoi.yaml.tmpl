@@ -44,8 +44,8 @@ data:
   is_wsl: {{ $is_wsl }}
 
 {{- if stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml") -}}
-{{-   $data := include ".chezmoidata.yaml.age" | decrypt | fromYaml -}}
-{{-   $profiles := include ".chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
+{{-   $data := include ".data/chezmoidata.yaml.age" | decrypt | fromYaml -}}
+{{-   $profiles := include ".data/chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
 
 {{-   $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
 {{-   range $i := until 5 -}}

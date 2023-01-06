@@ -1,12 +1,17 @@
 {
     "files.associations": {
         "*.toml.tmpl": "toml",
+        "*.yaml.tmpl": "yaml",
         "*.sh.tmpl": "shellscript",
+        "*.bat.tmpl": "bat",
         "*.ps1.tmpl": "powershell",
         "dot_bashrc*": "shellscript",
         "dot_profile*": "shellscript",
         "dot_zshenv*": "shellscript",
         "dot_zprofile*": "shellscript",
-        "dot_zshrc*": "shellscript"
+        "dot_zshrc*": "shellscript",
     },
+    "go-template.patterns": [
+        "**/*.tmpl"
+    ],
 }
