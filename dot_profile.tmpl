@@ -26,17 +26,6 @@ if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Set PATH to include ~/.krew/bin if it exists
-if [ -d "${KREW_ROOT:-$HOME/.krew}"/bin ]; then
-    PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-fi
-
-# #user-binaries path
-# if [ ! -f $(systemd-path user-binaries) ]; then
-#   mkdir -p $(systemd-path user-binaries)
-# fi
-# PATH="$(systemd-path user-binaries):$PATH"
-
 # source files from ~/.profile.d
 if [ -d $HOME/.profile.d ]; then
   for i in $HOME/.profile.d/*; do
@@ -45,6 +34,12 @@ if [ -d $HOME/.profile.d ]; then
     fi
   done
   unset i
+fi
+
+{{ if .is_desktop }}
+# Set PATH to include ~/.krew/bin if it exists
+if [ -d "${KREW_ROOT:-$HOME/.krew}"/bin ]; then
+    PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 fi
 
 # Ansible defaults to ~/.ansible
@@ -56,6 +51,7 @@ export ANSIBLE_GALAXY_CACHE_DIR=$HOME/.cache/ansible/galaxy_cache
 # It is collected by Microsoft and shared with the community.
 # You can opt-out of telemetry by setting the DOTNET_CLI_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+{{ end }}
 
 {{ if .is_wsl }}
 # If running inside WSL

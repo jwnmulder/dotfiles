@@ -1,6 +1,6 @@
-# {{ $kustomizeVersion := "4.5.7" -}}
+# {{ $kustomizeVersion := "4.5.7" }}
 
-# {{ if .is_wsl -}}
+# {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
   type: "file"
   url: "https://vault.bitwarden.com/download/?app=cli&platform=linux"
@@ -17,6 +17,9 @@
     command: "tar"
     args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "kustomize"]
 
+# {{ end }}
+
+# {{ if eq .chezmoi.os "linux" }}
 ".oh-my-zsh":
   type: "archive"
   url: "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"

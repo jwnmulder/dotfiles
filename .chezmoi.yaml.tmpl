@@ -9,6 +9,9 @@ config_info: |
   {{-   end -}}
   {{- end -}}
 
+  {{- $is_desktop := or ($is_wsl) (eq .chezmoi.os "windows") -}}
+  {{- $is_server := not $is_desktop -}}
+
   {{- $sourceDir := .chezmoi.sourceDir -}}
   {{- $username := .chezmoi.username -}}
 
@@ -42,6 +45,8 @@ age:
 
 data:
   is_wsl: {{ $is_wsl }}
+  is_server: {{ $is_server }}
+  is_desktop: {{ $is_desktop  }}
 
 {{- if stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml") -}}
 {{-   $data := include ".data/chezmoidata.yaml.age" | decrypt | fromYaml -}}
