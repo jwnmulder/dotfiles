@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 ENCRYPTED_KEY="$1/.data/key.txt.age"
 AGE_BIN=age
