@@ -1,7 +1,7 @@
 {{- if .is_wsl -}}
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 PIP_PACKAGES=(
   pre-commit
