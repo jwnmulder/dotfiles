@@ -11,6 +11,8 @@ key.txt.age
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
+**/*.sh
+
 .config/git
 .config/zsh
 .bashrc
@@ -19,7 +21,8 @@ key.txt.age
 {{ end }}
 
 {{ if ne .chezmoi.os "windows" }}
+**/*.bat
+
 .gitconfig
 .config/winget
-**/*.bat
 {{ end }}
