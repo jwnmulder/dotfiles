@@ -9,6 +9,6 @@ PIP_PACKAGES=(
 
 echo "Installing/updating pip packages: ${PIP_PACKAGES[@]}"
 /usr/bin/python3 -m pip install --isolated --user --upgrade pip | { grep -v 'Requirement already satisfied' || true; }
-/usr/bin/python3 -m pip install --isolated --user --upgrade "${PIP_PACKAGES[@]}" | { grep -v 'Requirement already satisfied' || true; }
+/usr/bin/python3 -m pip install --isolated --user --upgrade ${PIP_PACKAGES[@]} | { grep -v 'Requirement already satisfied' || true; }
 
 {{ end }}
