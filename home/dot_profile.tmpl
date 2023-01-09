@@ -53,6 +53,9 @@ export ANSIBLE_GALAXY_CACHE_DIR=$HOME/.cache/ansible/galaxy_cache
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 {{ end }}
 
+# Python / pip settings
+export PIP_REQUIRE_VIRTUALENV=true
+
 {{ if .is_wsl }}
 # If running inside WSL
 if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
