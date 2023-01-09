@@ -1,3 +1,9 @@
+{{- /* .gitconfig for windows machines, linux machines are using ~/.config/git/config */ -}}
 [user]
     name = {{ .name }}
     email = {{ (get .profiles .profile).email }}
+
+{{ if eq .profile "work2" }}
+[http]
+    sslBackend = schannel
+{{ end }}
