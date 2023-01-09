@@ -3,7 +3,7 @@
     name = {{ .name }}
     email = {{ (get .profiles .profile).email }}
 
-{{ if eq .profile "work2" }}
+{{- if eq .profile "work2" }}
 [http]
     sslBackend = schannel
-{{ end }}
+{{- end }}
