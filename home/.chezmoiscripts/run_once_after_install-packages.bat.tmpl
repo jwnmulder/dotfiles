@@ -17,7 +17,7 @@ set scoop_packages=^
 
 @rem Winget packages
 winget list > "%TEMP%\\winget_list"
-(for %%a in (%winget_packages%) do ( 
+(for %%a in (%winget_packages%) do (
     FINDSTR "%%a" "%TEMP%\\winget_list" >NUL
     if !errorlevel! equ 1 (
         echo Installing winget package: %%a

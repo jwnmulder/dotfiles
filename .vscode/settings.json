@@ -9,9 +9,9 @@
         "dot_profile*": "shellscript",
         "dot_zshenv*": "shellscript",
         "dot_zprofile*": "shellscript",
-        "dot_zshrc*": "shellscript",
+        "dot_zshrc*": "shellscript"
     },
     "go-template.patterns": [
         "**/*.tmpl"
-    ],
+    ]
 }

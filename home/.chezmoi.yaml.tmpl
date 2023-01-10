@@ -14,7 +14,7 @@ config_info: |
 
   {{- $sourceDir := .chezmoi.sourceDir -}}
   {{- $username := .chezmoi.username -}}
-  
+
   {{- $script_ext := "sh" -}}
   {{- if eq .chezmoi.os "windows" -}}
   {{-   $script_ext = "bat" -}}
@@ -51,7 +51,7 @@ config_info: |
   {{- $email := .email -}}
 
   {{- if and
-        (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) 
+        (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml")) -}}
   {{-   $data = include ".data/chezmoidata.yaml.age" | decrypt | fromYaml -}}
   {{-   $profiles = include ".data/chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
