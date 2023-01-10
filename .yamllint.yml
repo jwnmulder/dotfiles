@@ -5,3 +5,5 @@ rules:
   comments-indentation: disable
   document-start: disable
   line-length: disable
+  truthy:
+    check-keys: false
