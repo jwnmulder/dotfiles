@@ -80,6 +80,10 @@ data:
   is_wsl: {{ $is_wsl }}
   is_server: {{ $is_server }}
   is_desktop: {{ $is_desktop  }}
+{{- if eq .chezmoi.os "linux" }}
+  uname:
+    machine: "{{ output "uname" "-m" | trim }}"
+{{- end }}
   profile: {{ $profile }}
   personal_device: {{ $personal_device }}
   work_device: {{ $work_device }}

@@ -32,7 +32,9 @@
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # os_icon               # os identifier
     dir                     # current directory
+{{- if ne .uname.machine "armv5tel" }}
     vcs                     # git status
+{{- end }}
     prompt_char             # prompt symbol
   )
 
