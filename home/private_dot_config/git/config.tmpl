@@ -3,6 +3,9 @@
     email = {{ (get .profiles .profile).email }}
     signingkey = {{ .git.signingkey }}
 
+[init]
+	defaultBranch = main
+
 [includeIf "gitdir/i:~/.local/share/yadm/"]
     path = config-personal
 [includeIf "gitdir/i:~/.local/share/chezmoi/"]
