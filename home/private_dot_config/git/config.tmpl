@@ -1,8 +1,10 @@
 [user]
     name = {{ .name }}
+{{- if get . "profiles" }}
     email = {{ (get .profiles .profile).email }}
-{{ if get . "git" -}}
     signingkey = {{ .git.signingkey }}
+{{- else }}
+    email = {{ .email }}
 {{- end}}
 
 [init]
@@ -13,7 +15,7 @@
 [includeIf "gitdir/i:~/.local/share/chezmoi/"]
     path = config-personal
 
-{{ if get . "profiles" -}}
+{{- if get . "profiles" }}
 [includeIf "gitdir/i:~/data/personal/"]
     path = config-personal
 [includeIf "gitdir/i:~/data/work/"]
