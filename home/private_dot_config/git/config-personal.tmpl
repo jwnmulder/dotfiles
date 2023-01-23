@@ -1,3 +1,5 @@
-[user]
+{{- if get . "profiles" }}
+    [user]
     name = {{ .name }}
     email = {{ .profiles.personal.email }}
+{{- end}}
