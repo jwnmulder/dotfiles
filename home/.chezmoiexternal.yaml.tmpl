@@ -17,6 +17,11 @@
     command: "tar"
     args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "kustomize"]
 
+".local/share/nvm":
+  type: "archive"
+  url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
+  stripComponents: 1
+  refreshPeriod: "168h"
 # {{ end }}
 
 # {{ if eq .chezmoi.os "linux" }}
