@@ -16,7 +16,7 @@ config_info: |
   {{-   end -}}
   {{- end -}}
 
-  {{- $is_desktop := or ($is_wsl) (eq .chezmoi.os "windows") -}}
+  {{- $is_desktop := or ($is_wsl) (eq .chezmoi.os "windows") (env "CODESPACES") (env "GITPOD_WORKSPACE_ID") -}}
   {{- $is_server := not $is_desktop -}}
 
   {{- $sourceDir := .chezmoi.sourceDir -}}
