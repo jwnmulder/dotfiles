@@ -4,11 +4,6 @@ config_info: |
   {{- $ephemeral := false -}}
   {{- $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
 
-  {{- if or (env "CODESPACES") (env "GITPOD_WORKSPACE_ID") -}}
-  {{-   $ephemeral = true -}}
-  {{-   $profile = "personal" -}}
-  {{- end -}}
-
   {{- $is_wsl := false -}}
   {{- if .chezmoi.kernel -}}
   {{-   if hasKey .chezmoi.kernel "osrelease" -}}
@@ -16,9 +11,15 @@ config_info: |
   {{-   end -}}
   {{- end -}}
 
-  {{- $is_desktop := or ($is_wsl) (eq .chezmoi.os "windows") (env "CODESPACES") (env "GITPOD_WORKSPACE_ID") -}}
-  {{- $is_server := not $is_desktop -}}
+  {{- $is_desktop := or ($is_wsl) (eq .chezmoi.os "windows") -}}
 
+  {{- if or (env "CODESPACES") (env "GITPOD_WORKSPACE_ID") -}}
+  {{-   $ephemeral = true -}}
+  {{-   $profile = "personal" -}}
+  {{-   $is_desktop = true -}}
+  {{- end -}}
+
+  {{- $is_server := not $is_desktop -}}
   {{- $sourceDir := .chezmoi.sourceDir -}}
   {{- $username := .chezmoi.username -}}
 
