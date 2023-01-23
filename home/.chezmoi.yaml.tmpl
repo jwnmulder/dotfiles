@@ -3,6 +3,8 @@ config_info: |
   {{- $interactive := stdinIsATTY -}}
   {{- $ephemeral := false -}}
   {{- $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
+  {{- $name := .name -}}
+  {{- $email := .email -}}
 
   {{- $is_wsl := false -}}
   {{- if .chezmoi.kernel -}}
@@ -17,9 +19,10 @@ config_info: |
   {{-   $ephemeral = true -}}
   {{-   $profile = "personal" -}}
   {{-   $is_desktop = true -}}
+  {{-   $name = coalesce (env "GITPOD_GIT_USER_NAME") .name -}}
+  {{-   $email = coalesce (env "GITPOD_GIT_USER_EMAIL") .email -}}
   {{- end -}}
 
-  {{- $is_server := not $is_desktop -}}
   {{- $sourceDir := .chezmoi.sourceDir -}}
   {{- $username := .chezmoi.username -}}
 
@@ -48,14 +51,13 @@ config_info: |
   {{- end -}}
 
   {{- $personal_device := eq $profile "personal" -}}
-  {{- $work_device := not (eq $profile "personal") -}}
+  {{- $work_device := ne $profile "personal" -}}
+  {{- $is_server := not $is_desktop -}}
 
   {{- $profiles := .profiles -}}
   {{- $data := "" -}}
   {{- $profile_data := "" -}}
-  {{- $name := .name -}}
   {{- $git := .git -}}
-  {{- $email := .email -}}
 
   {{- if and
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))
