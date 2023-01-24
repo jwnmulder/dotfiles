@@ -11,7 +11,7 @@
 
   "packageRules": [
     {
-      "packageNames": ["kubernetes-sigs/kustomize"],
+      "matchPackageNames": ["kubernetes-sigs/kustomize"],
       "extractVersion": "^kustomize\\/v(?<version>\\d+\\.\\d+\\.\\d+)$"
     },
     {
@@ -32,14 +32,11 @@
     {
       /*
         matcher for:
-          # renovate: datasource=github-releases depName=docker/compose
-          docker_compose_version: 1.25.0
-        matcher for:
-          docker_compose_version: 1.25.0 # renovate: datasource=github-releases depName=docker/compose
+          Version := "2.32.1" }}   # renovate: datasource=github-releases depName=direnv/direnv
       */
       "fileMatch": ["\\.tmpl$"],
       "matchStrings": [
-        "#\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*version.*: \"{0,1}(?<currentValue>.*?)\"{0,1}\\s"
+        "((?i)version)\\s*:=\\s*\"(?<currentValue>.*?)\"\\s*}}\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?"
       ],
       "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
     }
