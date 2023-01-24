@@ -37,7 +37,7 @@
         matcher for:
           docker_compose_version: 1.25.0 # renovate: datasource=github-releases depName=docker/compose
       */
-      "fileMatch": ["\\.yml$"],
+      "fileMatch": ["\\.tmpl$"],
       "matchStrings": [
         "#\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*version.*: \"{0,1}(?<currentValue>.*?)\"{0,1}\\s"
       ],
