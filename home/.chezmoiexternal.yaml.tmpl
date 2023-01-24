@@ -1,4 +1,5 @@
 # {{ $kustomizeVersion := "4.5.7" }}
+# {{ $direnvVersion := "2.32.2" }}
 
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
@@ -11,7 +12,7 @@
 
 ".local/bin/kustomize":
   type: "file"
-  url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v{{ $kustomizeVersion }}/kustomize_v{{ $kustomizeVersion }}_linux_amd64.tar.gz"
+  url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v{{ $kustomizeVersion }}/kustomize_v{{ $kustomizeVersion }}_linux_{{ .chezmoi.arch }}.tar.gz"
   executable: true
   filter:
     command: "tar"
@@ -22,6 +23,12 @@
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
   stripComponents: 1
   refreshPeriod: "168h"
+
+".local/bin/direnv":
+  type: "file"
+  url: "https://github.com/direnv/direnv/releases/download/v{{ $direnvVersion }}/direnv.linux-{{ .chezmoi.arch }}"
+  executable: true
+
 # {{ end }}
 
 # {{ if eq .chezmoi.os "linux" }}
