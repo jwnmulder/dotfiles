@@ -36,7 +36,7 @@
       */
       "fileMatch": ["\\.tmpl$"],
       "matchStrings": [
-        "([vV]ersion)\\s*:=\\s*\"(?<currentValue>.*?)\"\\s*}}\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?"
+        "([vV]ersion)\\s*:=\\s*\"(?<currentValue>.*?)\"\\s*}}\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
     }
