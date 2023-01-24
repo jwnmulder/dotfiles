@@ -1,5 +1,5 @@
-# {{ $kustomizeVersion := "4.5.7" }}
-# {{ $direnvVersion := "2.32.2" }}
+# {{ $kustomizeVersion := "4.5.7" }} # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
+# {{ $direnvVersion := "2.32.1" }}   # renovate: datasource=github-releases depName=direnv/direnv
 
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":

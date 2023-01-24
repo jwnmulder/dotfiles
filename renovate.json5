@@ -1,0 +1,47 @@
+{
+  "extends": [
+    "config:base",
+    ":enablePreCommit",
+    "github>whitesource/merge-confidence:beta"
+  ],
+
+  "major": {
+    "dependencyDashboardApproval": true
+  },
+
+  "packageRules": [
+    {
+      "packageNames": ["kubernetes-sigs/kustomize"],
+      "extractVersion": "^kustomize\\/v(?<version>\\d+\\.\\d+\\.\\d+)$"
+    },
+    {
+      "matchPaths": [".pre-commit-config.yaml"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "addLabels": ["automerge"]
+    },
+    {
+      "matchDatasources": ["github-releases"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "automerge": true,
+      "addLabels": ["automerge"]
+    }
+  ],
+
+  "regexManagers": [
+    {
+      /*
+        matcher for:
+          # renovate: datasource=github-releases depName=docker/compose
+          docker_compose_version: 1.25.0
+        matcher for:
+          docker_compose_version: 1.25.0 # renovate: datasource=github-releases depName=docker/compose
+      */
+      "fileMatch": ["\\.yml$"],
+      "matchStrings": [
+        "#\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*version.*: \"{0,1}(?<currentValue>.*?)\"{0,1}\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+    }
+  ]
+}
