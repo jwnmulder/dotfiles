@@ -15,6 +15,10 @@
       "extractVersion": "^kustomize\\/v(?<version>\\d+\\.\\d+\\.\\d+)$"
     },
     {
+        "matchPackageNames": ["shellcheck-py/shellcheck-py"],
+        "versioning": "pep440"
+    },
+    {
       "matchPaths": [".pre-commit-config.yaml"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
