@@ -1,5 +1,5 @@
-# {{ $kustomizeVersion := "4.5.7" }} # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
-# {{ $direnvVersion := "2.32.1" }}   # renovate: datasource=github-releases depName=direnv/direnv
+# {{ $kustomizeVersion := "v4.5.7" }} # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
+# {{ $direnvVersion := "v2.32.1" }}   # renovate: datasource=github-releases depName=direnv/direnv
 
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
@@ -12,7 +12,7 @@
 
 ".local/bin/kustomize":
   type: "file"
-  url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v{{ $kustomizeVersion }}/kustomize_v{{ $kustomizeVersion }}_linux_{{ .chezmoi.arch }}.tar.gz"
+  url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/{{ $kustomizeVersion }}/kustomize_{{ $kustomizeVersion }}_linux_{{ .chezmoi.arch }}.tar.gz"
   executable: true
   filter:
     command: "tar"
@@ -26,7 +26,7 @@
 
 ".local/bin/direnv":
   type: "file"
-  url: "https://github.com/direnv/direnv/releases/download/v{{ $direnvVersion }}/direnv.linux-{{ .chezmoi.arch }}"
+  url: "https://github.com/direnv/direnv/releases/download/{{ $direnvVersion }}/direnv.linux-{{ .chezmoi.arch }}"
   executable: true
 
 # {{ end }}
