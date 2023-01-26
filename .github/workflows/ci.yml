@@ -26,8 +26,6 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         run: |
           ./install.sh
-          ls -la
-          find ~
 
   windows:
     strategy:
