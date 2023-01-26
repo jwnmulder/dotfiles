@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # - name: Install prerequisites
+      #   run: |
+      #     apt-get update -q
+      #     apt-get install -y -q curl sudo
+
+      - name: Chezmoi init & apply
+        run: |
+          ./install.sh
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Chezmoi init & apply
+        shell: pwsh
+        run: |
+          (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
+          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
