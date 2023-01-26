@@ -11,6 +11,12 @@ on:
 
 jobs:
   linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - personal
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,15 +27,24 @@ jobs:
       #     apt-get install -y -q curl sudo
 
       - name: Chezmoi init & apply
+        env:
+          DATA_profile: ${{ matrix.profile }}
         run: |
           ./install.sh
 
   windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - personal
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
 
       - name: Chezmoi init & apply
+        env:
+          DATA_profile: ${{ matrix.profile }}
         shell: pwsh
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
