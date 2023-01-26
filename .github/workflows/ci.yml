@@ -21,16 +21,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Install prerequisites
-      #   run: |
-      #     apt-get update -q
-      #     apt-get install -y -q curl sudo
-
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
         run: |
           ./install.sh
+          ls -la
+          find ~
 
   windows:
     strategy:
