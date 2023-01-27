@@ -57,6 +57,9 @@ jobs:
           # Install winget
           scoop install winget
 
+          echo $env:Path
+          ls $HOMEPATH\scoop\shims
+
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
