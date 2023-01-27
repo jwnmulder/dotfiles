@@ -65,5 +65,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         shell: pwsh
         run: |
+          echo $env:Path
+          ls C:\Users\runneradmin\scoop\shims
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
           bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
