@@ -19,7 +19,7 @@ winget list > "%TEMP%\\winget_list"
     FINDSTR "%%a" "%TEMP%\\winget_list" >NUL
     if !errorlevel! equ 1 (
         echo Installing winget package: %%a
-        winget install --accept-package-agreements --accept-source-agreements --silent --scope user --exact --id "%%a"
+        winget install --accept-package-agreements --accept-source-agreements --silent --scope user --exact --source winget --id "%%a"
     )
 ))
 
