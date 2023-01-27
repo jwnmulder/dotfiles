@@ -16,6 +16,8 @@ jobs:
       matrix:
         profile:
           - personal
+          - work1
+          - work2
         container:
           - ubuntu:latest
           - debian:latest
