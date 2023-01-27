@@ -51,7 +51,7 @@ jobs:
         shell: pwsh
         run: |
           # Install scoop
-          irm get.scoop.sh | iex
+          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
 
           # Install winget
           $ProgressPreference='Silent'
