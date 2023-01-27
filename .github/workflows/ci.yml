@@ -52,7 +52,7 @@ jobs:
         run: |
           # Install scoop
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          echo "C:\Users\runneradmin\scoop\shims" >> $GITHUB_PATH
+          echo "##[add-path]C:\Users\runneradmin\scoop\shims"
 
           # Install winget
           scoop install winget
