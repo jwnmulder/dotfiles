@@ -5,7 +5,7 @@
     signingkey = {{ .git.signingkey }}
 {{- else }}
     email = {{ .email }}
-{{- end}}
+{{- end }}
 
 [init]
     defaultBranch = main
@@ -24,4 +24,4 @@
     path = config-work2
 [includeIf "gitdir/i:~/data/work/{{.profiles.work2.code }}-*/"]
     path = config-work2
-{{- end}}
+{{- end }}
