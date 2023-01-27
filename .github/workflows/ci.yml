@@ -14,13 +14,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - container: ubuntu:latest
-            prepare: apt-get update -q && apt-get install -y -q curl sudo
-            profile: personal
-          - container: debian:latest
-            prepare: apt-get update -q && apt-get install -y -q curl sudo
-            profile: personal
+        container:
+          - ubuntu:latest
+          - debian:latest
+        profile:
+          - personal
 
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
@@ -28,7 +26,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install prerequisites
-        run: ${{ matrix.prepare }}
+        run: apt-get update -q && apt-get install -y -q curl sudo
 
       - name: Chezmoi init & apply
         env:
