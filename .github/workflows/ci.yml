@@ -68,5 +68,6 @@ jobs:
           echo $env:Path
           ls C:\Users\runneradmin\scoop\shims
           scoop help
+          powershell -c "echo $env:Path"
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
           bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
