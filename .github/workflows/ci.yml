@@ -14,13 +14,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        profile:
-          - personal
         include:
           - container: ubuntu:latest
             prepare: apt-get update -q && apt-get install -y -q curl sudo
+            profile: personal
           - container: debian:latest
             prepare: apt-get update -q && apt-get install -y -q curl sudo
+            profile: personal
 
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
