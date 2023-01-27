@@ -6,13 +6,11 @@ setlocal enabledelayedexpansion
 set winget_packages=^
     Bitwarden.Bitwarden
 
-set scoop_packages=^
-    chezmoi
+set scoop_packages=
 {{ else }}
 set winget_packages=
 
-set scoop_packages=^
-    chezmoi
+set scoop_packages=
 {{ end }}
 
 @rem Winget packages
