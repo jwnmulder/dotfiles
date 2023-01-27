@@ -60,7 +60,6 @@ jobs:
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
-          PATH:
         shell: pwsh
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
