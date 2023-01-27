@@ -18,17 +18,17 @@ jobs:
           - personal
         include:
           - container: ubuntu:latest
-            # prepare: apt-get update -q && apt-get install -y -q curl sudo
+            prepare: apt-get update -q && apt-get install -y -q curl sudo
           - container: debian:latest
-            # prepare: apt-get update -q && apt-get install -y -q curl sudo
+            prepare: apt-get update -q && apt-get install -y -q curl sudo
 
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Install prerequisites
-      #   run: ${{ matrix.prepare }}
+      - name: Install prerequisites
+        run: ${{ matrix.prepare }}
 
       - name: Chezmoi init & apply
         env:
