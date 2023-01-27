@@ -52,13 +52,13 @@ jobs:
         run: |
           # Install scoop
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          echo "$env:HOMEPATH\scoop\shims" >> $GITHUB_PATH
+          echo "C:\Users\runneradmin\scoop\shims" >> $GITHUB_PATH
 
           # Install winget
           scoop install winget
 
           echo $env:Path
-          ls $env:HOMEPATH\scoop\shims
+          # ls $env:HOMEPATH\scoop\shims
 
       - name: Chezmoi init & apply
         env:
