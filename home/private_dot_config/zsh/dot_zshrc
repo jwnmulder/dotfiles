@@ -78,7 +78,7 @@ export NVM_COMPLETION=true
 zstyle ':omz:plugins:nvm' lazy yes
 
 # active plugins
-plugins=(z git zsh-autosuggestions nvm kubectl)
+plugins=(z git zsh-autosuggestions nvm kubectl aliases)
 
 source $ZSH/oh-my-zsh.sh
 
