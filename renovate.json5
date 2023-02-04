@@ -12,11 +12,11 @@
   "packageRules": [
     {
       "matchPackageNames": ["kubernetes-sigs/kustomize"],
-      "extractVersion": "^kustomize\\/v(?<version>\\d+\\.\\d+\\.\\d+)$"
+      "extractVersion": "^kustomize\\/(?<version>v\\d+\\.\\d+\\.\\d+)$"
     },
     {
-        "matchPackageNames": ["shellcheck-py/shellcheck-py"],
-        "versioning": "pep440"
+      "matchPackageNames": ["shellcheck-py/shellcheck-py"],
+      "versioning": "pep440"
     },
     {
       "matchPaths": [".pre-commit-config.yaml"],
