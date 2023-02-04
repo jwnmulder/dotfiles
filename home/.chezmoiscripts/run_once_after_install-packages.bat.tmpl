@@ -2,17 +2,13 @@
 
 setlocal enabledelayedexpansion
 
+set winget_packages=^
+    Starship.Starship
+set scoop_packages=
+
 {{ if eq .profile "personal" }}
-set winget_packages=^
-    JanDeDobbeleer.OhMyPosh^
+set winget_packages=%winget_packages%^
     Bitwarden.Bitwarden
-
-set scoop_packages=
-{{ else }}
-set winget_packages=^
-    JanDeDobbeleer.OhMyPosh
-
-set scoop_packages=
 {{ end }}
 
 @rem Winget packages
