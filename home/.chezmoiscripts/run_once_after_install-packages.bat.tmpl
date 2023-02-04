@@ -4,11 +4,13 @@ setlocal enabledelayedexpansion
 
 {{ if eq .profile "personal" }}
 set winget_packages=^
+    JanDeDobbeleer.OhMyPosh^
     Bitwarden.Bitwarden
 
 set scoop_packages=
 {{ else }}
-set winget_packages=
+set winget_packages=^
+    JanDeDobbeleer.OhMyPosh
 
 set scoop_packages=
 {{ end }}
