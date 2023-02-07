@@ -32,3 +32,8 @@ AppData
 {{ if not (and (eq .chezmoi.os "windows") (eq .profile "work1")) }}
 .npmrc
 {{ end }}
+
+{{ if ne .profile "work1" }}
+.m2
+{{ end }}
+
