@@ -6,8 +6,8 @@ key.txt.age
 {{ end }}
 
 {{ if eq .chezmoi.os "linux" }}
-.oh-my-zsh/cache/**
-.oh-my-zsh/custom/themes/powerlevel10k/**/*.zwc
+.local/share/oh-my-zsh/cache
+.local/share/oh-my-zsh/custom/themes/powerlevel10k/**/*.zwc
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
