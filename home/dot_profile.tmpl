@@ -60,6 +60,10 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/password-store
 # It is collected by Microsoft and shared with the community.
 # You can opt-out of telemetry by setting the DOTNET_CLI_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# XDG - gem
+export GEM_HOME="${XDG_DATA_HOME}"/gem
+export GEM_SPEC_CACHE="${XDG_CACHE_HOME}"/gem
 {{- end }}
 
 # Python / pip
@@ -75,6 +79,11 @@ export NVM_DIR="$XDG_DATA_HOME"/nvm
 export LESSHISTFILE="$XDG_STATE_HOME"/less/history
 # XDG - pylint
 export PYLINTHOME="${XDG_CACHE_HOME}"/pylint
+# XDG - AWS
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
+# XDG - Azure
+export AZURE_CONFIG_DIR="$XDG_DATA_HOME"/azure
 
 {{ if .is_wsl -}}
 # If running inside WSL
