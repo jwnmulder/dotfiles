@@ -2,11 +2,22 @@
 
 ## Setup dotfiles
 
+On Linux
+
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
 
 chezmoi init jwnmulder
-chezmoi apply
+chezmoi apply -v
+```
+
+On Windows
+
+```powershell
+winget install twpayne.chezmoi
+
+chezmoi init jwnmulder
+chezmoi apply -v
 ```
 
 ## Set ZSH as default shell
@@ -27,6 +38,6 @@ chezmoi apply
 ## Editing encrypted files
 
 ```bash
-.bin/edit-age-encrypted-in-vscode.sh .data/chezmoidata.yaml.age
-.bin/edit-age-encrypted-in-vscode.sh .data/chezmoidata_profiles.yaml.age
+bin/edit-age-encrypted-in-vscode.sh home/.data/chezmoidata.yaml.age
+bin/edit-age-encrypted-in-vscode.sh home/.data/chezmoidata_profiles.yaml.age
 ```

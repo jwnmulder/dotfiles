@@ -20,9 +20,9 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="$XDG_DATA_HOME"/oh-my-zsh
 
-ZSH_CUSTOM=~/.oh-my-zsh/custom
+ZSH_CUSTOM="$XDG_DATA_HOME"/oh-my-zsh/custom
 ZSH_THEME=powerlevel10k/powerlevel10k
 
 # Uncomment the following line to use case-sensitive completion.

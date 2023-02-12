@@ -33,35 +33,35 @@
 # {{ end }}
 
 # {{ if eq .chezmoi.os "linux" }}
-".oh-my-zsh":
+".local/share/oh-my-zsh":
   type: "archive"
   url: "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
-".oh-my-zsh/custom/themes/powerlevel10k":
+".local/share/oh-my-zsh/custom/themes/powerlevel10k":
   type: "archive"
   url: "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
-".oh-my-zsh/custom/plugins/zsh-autosuggestions":
+".local/share/oh-my-zsh/custom/plugins/zsh-autosuggestions":
   type: "archive"
   url: "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
-".oh-my-zsh/custom/plugins/zsh-nvm":
+".local/share/oh-my-zsh/custom/plugins/zsh-nvm":
   type: "archive"
   url: "https://github.com/lukechilds/zsh-nvm/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
-".oh-my-zsh/custom/plugins/fast-syntax-highlighting":
+".local/share/oh-my-zsh/custom/plugins/fast-syntax-highlighting":
   type: "archive"
   url: "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/master.tar.gz"
   exact: true
