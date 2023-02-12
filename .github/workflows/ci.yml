@@ -35,7 +35,8 @@ jobs:
           AGE_DECRYPT_PASS: ${{ secrets.AGE_DECRYPT_PASS }}
         run: |
           DECRYPT_CMD="age --decrypt --output ${HOME}/.config/chezmoi/key.txt home/.data/key.txt.age"
-          expect -c "spawn $DECRYPT_CMD; expect \"Enter passphrase\"; send \"${AGE_DECRYPT_PASS}\n\"; interact"
+          # expect -c "spawn $DECRYPT_CMD; expect \"Enter passphrase\"; send \"${AGE_DECRYPT_PASS}\n\"; interact"
+          $DECRYPT_CMD <<< "${AGE_DECRYPT_PASS}"
           ls -la ${HOME}/.config/chezmoi
 
       - name: Chezmoi init & apply
