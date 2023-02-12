@@ -28,13 +28,25 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install prerequisites
-        run: apt-get update -q && apt-get install -y -q curl sudo
+        run: apt-get update -q && apt-get install -y -q curl sudo age expect
+
+      - name: Decrypt age key
+        env:
+          AGE_DECRYPT_PASS: ${{ secrets.AGE_DECRYPT_PASS }}
+        run: |
+          DECRYPT_CMD="age --decrypt --output ${HOME}/.config/chezmoi/key.txt home/.data/key.txt.age"
+          expect -c "spawn $DECRYPT_CMD; expect \"Enter passphrase\"; send \"${AGE_DECRYPT_PASS}\n\"; interact"
 
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
         run: |
           ./install.sh
+
+      - name: Remove age key
+        if: always()
+        run: |
+          rm ${HOME}/.config/chezmoi/key.txt
 
   windows:
     strategy:
