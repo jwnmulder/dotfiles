@@ -23,6 +23,7 @@ config_info: |
   {{-   $email = coalesce (env "GITPOD_GIT_USER_EMAIL") .email -}}
   {{- end -}}
 
+  {{- $is_server := not $is_desktop -}}
   {{- $sourceDir := .chezmoi.sourceDir -}}
   {{- $username := .chezmoi.username -}}
 
@@ -33,7 +34,7 @@ config_info: |
   {{-   $username = env "USERNAME" -}}
   {{- end -}}
 
-  {{- if and $interactive (not $ephemeral) (not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))) -}}
+  {{- if and $interactive (not $ephemeral) (not $is_server) (not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))) -}}
   {{-   $instructions := output (print .chezmoi.sourceDir "/../bin/decrypt-private-key-instructions." $script_ext) .chezmoi.sourceDir -}}
   {{-   writeToStdout "Missing key.txt. Please follow the instructions below.\n" writeToStdout $instructions -}}
   {{- end -}}
@@ -52,7 +53,6 @@ config_info: |
 
   {{- $personal_device := eq $profile "personal" -}}
   {{- $work_device := ne $profile "personal" -}}
-  {{- $is_server := not $is_desktop -}}
 
   {{- $profiles := .profiles -}}
   {{- $data := "" -}}
