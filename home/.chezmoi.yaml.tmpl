@@ -67,7 +67,7 @@ config_info: |
 
   {{-   $name = $data.name -}}
   {{-   $git = $data.git -}}
-  {{- else if not $ephemeral -}}
+  {{- else if and (not $ephemeral) (not $is_server)  -}}
   {{-   writeToStdout "WARNING: Please re-run chezmoi init again to complete chezmoi.yaml data setup" -}}
   {{- end -}}
 
