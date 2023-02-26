@@ -36,6 +36,7 @@ jobs:
         run: |
           mkdir -p ${HOME}/.config/chezmoi
           echo "${{ secrets.CHEZMOI_KEY }}" | base64 -d > ${HOME}/.config/chezmoi/key.txt
+
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
@@ -63,6 +64,9 @@ jobs:
     container: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install prerequisites
+        run: apt-get update -q && apt-get install -y -q curl sudo
 
       - name: Chezmoi init & apply
         env:
