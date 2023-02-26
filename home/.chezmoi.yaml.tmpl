@@ -6,14 +6,14 @@ config_info: |
   {{- $name := .name -}}
   {{- $email := .email -}}
 
-  {{- $is_wsl := eq (env "IS_WSL") "true" -}}
+  {{- $is_wsl := false -}}
   {{- if .chezmoi.kernel -}}
   {{-   if hasKey .chezmoi.kernel "osrelease" -}}
   {{-     $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
   {{-   end -}}
   {{- end -}}
 
-  {{- $is_desktop := or ($is_wsl) (eq .chezmoi.os "windows") -}}
+  {{- $is_desktop := or ($is_wsl) (eq .chezmoi.os "windows") (eq (env "IS_DESKTOP") "true") -}}
 
   {{- if or (env "CODESPACES") (env "GITPOD_WORKSPACE_ID") -}}
   {{-   $ephemeral = true -}}

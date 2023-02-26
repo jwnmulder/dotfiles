@@ -40,7 +40,7 @@ jobs:
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
-          IS_WSL: "true"
+          IS_DESKTOP: "true"
         run: |
           ./install.sh
           ${HOME}/.local/bin/chezmoi data --format=yaml
