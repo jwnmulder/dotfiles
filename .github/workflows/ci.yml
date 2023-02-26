@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  linux-workstation:
+  linux-desktop:
     strategy:
       fail-fast: false
       matrix:
@@ -51,7 +51,7 @@ jobs:
       - uses: GuillaumeFalourd/assert-command-line-output@v2.1
         with:
           command_line: chezmoi data --format=yaml
-          contains: "is_server: false"
+          contains: "is_desktop: true"
           expected_result: PASSED
 
   linux-server:
