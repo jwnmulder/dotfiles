@@ -43,7 +43,6 @@ jobs:
           IS_DESKTOP: "true"
         run: |
           ./install.sh
-          ${HOME}/.local/bin/chezmoi data --format=yaml
 
       - name: Assert
         run: |
@@ -82,7 +81,6 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         run: |
           ./install.sh
-          ${HOME}/.local/bin/chezmoi data --format=yaml
 
       - name: Assert
         run: |
