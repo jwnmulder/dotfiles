@@ -42,7 +42,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         run: |
           ./install.sh
-          chezmoi data --format=yaml
+          ${HOME}/.local/bin/chezmoi data --format=yaml
 
       - name: Remove age key
         if: always()
@@ -79,7 +79,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         run: |
           ./install.sh
-          cat ${HOME}/.config/chezmoi/chezmoi.yaml
+          ${HOME}/.local/bin/chezmoi data --format=yaml
 
       - uses: GuillaumeFalourd/assert-command-line-output@v2.1
         with:
