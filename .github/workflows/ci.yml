@@ -35,11 +35,7 @@ jobs:
           AGE_DECRYPT_PASS: ${{ secrets.AGE_DECRYPT_PASS }}
         run: |
           mkdir -p ${HOME}/.config/chezmoi
-          ls -la home/.data
-          DECRYPT_CMD="age --decrypt --output ${HOME}/.config/chezmoi/key.txt home/.data/key.txt.age"
-          expect -c "spawn $DECRYPT_CMD; expect \"Enter passphrase\"; send \"${AGE_DECRYPT_PASS}\n\"; interact"
-          ls -la ${HOME}/.config/chezmoi
-
+          echo "${{ secrets.CHEZMOI_KEY }}" | base64 -d > ${HOME}/.config/chezmoi/key.txt
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
@@ -65,7 +61,7 @@ jobs:
       - name: Install prerequisites
         shell: pwsh
         run: |
-          # Install scoop
+          # Install scoop to install winget
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           echo "$HOME\scoop\shims" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
