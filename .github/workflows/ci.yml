@@ -44,17 +44,18 @@ jobs:
           ./install.sh
           ${HOME}/.local/bin/chezmoi data --format=yaml
 
+      - name: Assert
+        run: |
+          if ! grep -q "is_desktop: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
+            echo "::error file=chezmoi.yaml::is_desktop: true not found"
+            exit 1
+          fi
+
       - name: Remove age key
         if: always()
         run: |
           rm ${HOME}/.config/chezmoi/key.txt
 
-      - name: assert
-        run: |
-          if ! grep -q "is_desktop: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
-            echo 'is_desktop: true' not found
-            echo "::error file=chezmoi.yaml::is_desktop: true not found"
-          fi
 
   linux-server:
     strategy:
@@ -82,11 +83,12 @@ jobs:
           ./install.sh
           ${HOME}/.local/bin/chezmoi data --format=yaml
 
-      - uses: GuillaumeFalourd/assert-command-line-output@v2.1
-        with:
-          command_line: ${HOME}/.local/bin/chezmoi data --format=yaml
-          contains: "is_server: true"
-          expected_result: PASSED
+      - name: Assert
+        run: |
+          if ! grep -q "is_server: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
+            echo "::error file=chezmoi.yaml::is_server: true not found"
+            exit 1
+          fi
 
   windows-desktop:
     strategy:
