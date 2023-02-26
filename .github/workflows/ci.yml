@@ -51,7 +51,7 @@ jobs:
 
       - uses: GuillaumeFalourd/assert-command-line-output@v2.1
         with:
-          command_line: chezmoi data --format=yaml
+          command_line: ${HOME}/.local/bin/chezmoi data --format=yaml
           contains: "is_desktop: true"
           expected_result: PASSED
 
@@ -72,7 +72,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install prerequisites
-        run: apt-get update -q && apt-get install -y -q curl sudo
+        run: apt-get update -q && apt-get install -y -q curl
 
       - name: Chezmoi init & apply
         env:
@@ -83,11 +83,11 @@ jobs:
 
       - uses: GuillaumeFalourd/assert-command-line-output@v2.1
         with:
-          command_line: chezmoi data --format=yaml
+          command_line: ${HOME}/.local/bin/chezmoi data --format=yaml
           contains: "is_server: true"
           expected_result: PASSED
 
-  windows-workstation:
+  windows-desktop:
     strategy:
       fail-fast: false
       matrix:
