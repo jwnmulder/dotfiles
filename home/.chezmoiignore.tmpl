@@ -30,10 +30,10 @@ AppData
 .config/winget
 {{ end }}
 
-{{ if not and (.is_desktop) (eq .chezmoi.os "windows") (eq .profile "work1") }}
+{{ if not (and (.is_desktop) (eq .chezmoi.os "windows") (eq .profile "work1")) }}
 .npmrc
 {{ end }}
 
-{{ if not and (.is_desktop) (eq .profile "work1") }}
+{{ if not (and (.is_desktop) (eq .profile "work1")) }}
 .m2
 {{ end }}
