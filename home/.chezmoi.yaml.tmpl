@@ -6,7 +6,7 @@ config_info: |
   {{- $name := .name -}}
   {{- $email := .email -}}
 
-  {{- $is_wsl := false -}}
+  {{- $is_wsl := eq (env "IS_WSL") "true" -}}
   {{- if .chezmoi.kernel -}}
   {{-   if hasKey .chezmoi.kernel "osrelease" -}}
   {{-     $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
