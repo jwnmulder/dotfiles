@@ -6,6 +6,7 @@ repos:
       - id: check-executables-have-shebangs
       - id: check-merge-conflict
       - id: check-shebang-scripts-are-executable
+        exclude: ".*\\.tmpl"
       - id: check-json
       - id: check-yaml
         files: .*\.(yaml|yml)$
@@ -19,7 +20,7 @@ repos:
     rev: v0.9.0.2
     hooks:
       - id: shellcheck
-        exclude: ".*.zsh"
+        exclude: ".*\\.zsh"
 
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.29.0
