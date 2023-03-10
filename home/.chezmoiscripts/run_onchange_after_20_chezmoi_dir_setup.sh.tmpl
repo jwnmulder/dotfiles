@@ -6,6 +6,7 @@ set -euo pipefail
 cd "{{ .chezmoi.workingTree }}"
 
 # configure push via ssh
+git remote -v
 origin_push=$(git remote get-url --push origin)
 origin_push="${origin_push/https:\/\/github.com\//git@github.com:}"
 
