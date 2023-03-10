@@ -45,6 +45,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
           IS_DESKTOP: "true"
         run: |
+          git config --global --add safe.directory $(pwd)
           ./install.sh
 
       - name: Assert
