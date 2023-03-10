@@ -9,7 +9,7 @@ cd "{{ .chezmoi.workingTree }}"
 origin_push=$(git remote get-url --push origin) || true
 if [ ! -z "$origin_push" ]; then
   origin_push="${origin_push/https:\/\/github.com\//git@github.com:}"
-  echo git remote set-url --push origin "$origin_push"
+  git remote set-url --push origin "$origin_push"
 fi
 
 pre-commit install
