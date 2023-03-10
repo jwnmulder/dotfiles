@@ -1,7 +1,7 @@
 # dotfiles
 
 [![GitHub Actions pre-commit status](https://github.com/jwnmulder/dotfiles/workflows/pre-commit/badge.svg?branch=main)](https://github.com/jwnmulder/dotfiles/actions/workflows/pre-commit.yml?query=branch%3Amain)
-[![GitHub Actions ci status](https://github.com/jwnmulder/dotfiles/workflows/ci/badge.svg?branch=main)](https://github.com/jwnmulder/dotfiles/actions/workflows/ci.yml?query=branch%3Amain)
+[![GitHub Actions ci status](https://github.com/jwnmulder/dotfiles/workflows/CI/badge.svg?branch=main)](https://github.com/jwnmulder/dotfiles/actions/workflows/ci.yml?query=branch%3Amain)
 
 ## Setup dotfiles
 
