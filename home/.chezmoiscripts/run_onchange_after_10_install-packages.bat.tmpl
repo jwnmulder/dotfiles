@@ -10,6 +10,12 @@ set winget_packages=%winget_packages%^
     Bitwarden.Bitwarden
 {{ end }}
 
+{{ if eq .profile "work1" }}
+set winget_packages=%winget_packages%^
+    Bitwarden.Bitwarden^
+    Kubernetes.kubectl
+{{ end }}
+
 @rem Winget packages
 winget list > "%TEMP%\\winget_list"
 (for %%a in (%winget_packages%) do (
