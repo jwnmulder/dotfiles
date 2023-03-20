@@ -13,22 +13,22 @@ set -euo pipefail
   tar zxf "${KREW}.tar.gz" &&
   ./"${KREW}" install krew
 )
-{{ end }}
+{{ end -}}
 
-KREW_PACKAGES=(
-  oidc-login
-  sudo
-  cert-manager
-  ingress-nginx
-  deprecations
-  outdated
-  get-all
-  starboard
-  resource-capacity
-  open-svc
-  popeye
-)
+{{ $krew_packages := list
+  "oidc-login"
+  "sudo"
+  "cert-manager"
+  "ingress-nginx"
+  "deprecations"
+  "outdated"
+  "get-all"
+  "starboard"
+  "resource-capacity"
+  "open-svc"
+  "popeye"
+-}}
 
-$HOME/.krew/bin/kubectl-krew install ${KREW_PACKAGES[@]} 2>&1 | grep -v "Installing plugin"
+$HOME/.krew/bin/kubectl-krew install {{ $krew_packages | join " " }} 2>&1 | grep -v "Installing plugin"
 
-{{ end }}
+{{ end -}}

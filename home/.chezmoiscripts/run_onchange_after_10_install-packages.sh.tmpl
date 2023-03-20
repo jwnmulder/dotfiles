@@ -3,13 +3,13 @@
 
 set -euo pipefail
 
-PIP_PACKAGES=(
-  pre-commit
-  yq
-)
+{{ $pip_packages := list
+  "pre-commit"
+  "yq"
+-}}
 
-echo "Installing/updating pip packages: ${PIP_PACKAGES[@]}"
+echo "Installing/updating pip packages: {{ $pip_packages | join " " }}"
 python3 -m pip install --isolated --user --upgrade pip | { grep -v 'Requirement already satisfied' || true; }
-python3 -m pip install --isolated --user --upgrade ${PIP_PACKAGES[@]} | { grep -v 'Requirement already satisfied' || true; }
+python3 -m pip install --isolated --user --upgrade {{ $pip_packages | join " " }} | { grep -v 'Requirement already satisfied' || true; }
 
-{{ end }}
+{{ end -}}
