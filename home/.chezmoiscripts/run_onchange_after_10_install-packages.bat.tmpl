@@ -2,31 +2,33 @@
 
 setlocal enabledelayedexpansion
 
-set winget_packages=
-set scoop_packages=
+{{ $winget_packages := list -}}
+{{ $scoop_packages := list -}}
 
-{{ if eq .profile "personal" }}
-set winget_packages=%winget_packages%^
-    Bitwarden.Bitwarden
-{{ end }}
+{{ if eq .profile "personal" -}}
+{{   $winget_packages = concat $winget_packages (list
+     "Bitwarden.Bitwarden"
+     "Kubernetes.kubectl"
+     ) -}}
+{{ end -}}
 
-{{ if eq .profile "work1" }}
-set winget_packages=%winget_packages%^
-    Bitwarden.Bitwarden^
-    Kubernetes.kubectl
-{{ end }}
+{{ if eq .profile "work1" -}}
+{{   $winget_packages = concat $winget_packages (list
+     "Bitwarden.Bitwarden"
+     "Kubernetes.kubectl"
+     ) -}}
+{{ end -}}
 
 @rem Winget packages
-winget list > "%TEMP%\\winget_list"
-(for %%a in (%winget_packages%) do (
-    FINDSTR "%%a" "%TEMP%\\winget_list" >NUL
-    if !errorlevel! equ 1 (
-        echo Installing winget package: %%a
-        winget install --accept-package-agreements --accept-source-agreements --silent --scope user --exact --source winget --id "%%a"
-    )
-))
+{{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list && type %TEMP%\\winget_list") -}}
+{{ range $winget_packages -}}
+{{   if not (contains . $winget_list) -}}
+        echo Installing winget package '{{ .}}'
+        winget install --accept-package-agreements --accept-source-agreements --silent --scope user --exact --source winget --id {{ . }}
+{{   end -}}
+{{ end }}
 
 @rem Scoop packages
-if not "%scoop_packages%" == "" (
-    scoop install %scoop_packages%
-)
+{{ if gt (len $scoop_packages) 0 -}}
+  scoop install {{ $scoop_packages | join " " }}
+{{ end }}
