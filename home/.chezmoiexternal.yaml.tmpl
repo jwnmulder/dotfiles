@@ -1,7 +1,9 @@
-# {{ $kustomizeVersion := "v5.0.1" }} # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
-# {{ $helmVersion := "v3.11.2" }} # renovate: datasource=github-releases depName=helm/helm
-# {{ $direnvVersion := "v2.32.2" }}   # renovate: datasource=github-releases depName=direnv/direnv
-# {{ $starshipVersion := "v1.13.1" }}   # renovate: datasource=github-releases depName=starship/starship
+# {{ $kustomizeVersion := "v5.0.1" }}  # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
+# {{ $helmVersion := "v3.11.2" }}      # renovate: datasource=github-releases depName=helm/helm
+# {{ $direnvVersion := "v2.32.2" }}    # renovate: datasource=github-releases depName=direnv/direnv
+# {{ $starshipVersion := "v1.13.1" }}  # renovate: datasource=github-releases depName=starship/starship
+# {{ $fzfVersion := "0.38.0" }}        # renovate: datasource=github-releases depName=junegunn/fzf
+# {{ $fdVersion := "v8.7.0" }}         # renovate: datasource=github-releases depName=sharkdp/fd
 
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
@@ -33,7 +35,7 @@
   url: "https://github.com/direnv/direnv/releases/download/{{ $direnvVersion }}/direnv.linux-{{ .chezmoi.arch }}"
   executable: true
 
-".local/share/nvm":
+".local/share/nvm/":
   type: "archive"
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
   stripComponents: 1
@@ -41,35 +43,58 @@
 # {{ end }}
 
 # {{ if eq .chezmoi.os "linux" }}
-".local/share/oh-my-zsh":
+".local/bin/fzf":
+  type: "file"
+  url: https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-linux_{{ .chezmoi.arch }}.tar.gz
+  executable: true
+  filter:
+    command: "tar"
+    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "fzf"]
+
+".config/fzf/":
+    type: "archive"
+    url: "https://github.com/junegunn/fzf/archive/refs/tags/{{ $fzfVersion }}.tar.gz"
+    exact: true
+    stripComponents: 2
+    include: ["fzf-{{ $fzfVersion }}/shell/**"]
+
+".local/bin/fd":
+  type: "file"
+  url: "https://github.com/sharkdp/fd/releases/download/{{ $fdVersion }}/fd-{{ $fdVersion }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz"
+  executable: true
+  filter:
+    command: "tar"
+    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "--strip-components=1", "--wildcards", "*/fd"]
+
+".local/share/oh-my-zsh/":
   type: "archive"
   url: "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
-".local/share/oh-my-zsh/custom/themes/powerlevel10k":
+".local/share/oh-my-zsh/custom/themes/powerlevel10k/":
   type: "archive"
   url: "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
-".local/share/oh-my-zsh/custom/plugins/zsh-autosuggestions":
+".local/share/oh-my-zsh/custom/plugins/zsh-autosuggestions/":
   type: "archive"
   url: "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
-".local/share/oh-my-zsh/custom/plugins/zsh-nvm":
+".local/share/oh-my-zsh/custom/plugins/zsh-nvm/":
   type: "archive"
   url: "https://github.com/lukechilds/zsh-nvm/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
-".local/share/oh-my-zsh/custom/plugins/fast-syntax-highlighting":
+".local/share/oh-my-zsh/custom/plugins/fast-syntax-highlighting/":
   type: "archive"
   url: "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/master.tar.gz"
   exact: true
