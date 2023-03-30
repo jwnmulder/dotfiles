@@ -35,7 +35,7 @@ config_info: |
   {{- end -}}
 
   {{- if and $interactive (not $ephemeral) (not $is_server) (not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))) -}}
-  {{-   $instructions := output (print .chezmoi.workingTree "/../bin/decrypt-private-key-instructions." $script_ext) .chezmoi.workingTree -}}
+  {{-   $instructions := output (print .chezmoi.workingTree "/bin/decrypt-private-key-instructions." $script_ext) .chezmoi.workingTree -}}
   {{-   writeToStdout "Missing key.txt. Please follow the instructions below.\n" writeToStdout $instructions -}}
   {{- end -}}
 
