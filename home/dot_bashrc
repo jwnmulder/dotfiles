@@ -106,6 +106,16 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# source files from ~/.bashrc.d
+if [ -d $HOME/.bashrc.d ]; then
+  for i in $HOME/.bashrc.d/*; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+
 # enable programmable completion features
 if [ "x${BASH_VERSION-}" != x -a "x${PS1-}" != x -a "x${BASH_COMPLETION_VERSINFO-}" = x ]; then
     # Check for recent enough version of bash.
