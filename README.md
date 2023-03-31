@@ -8,10 +8,10 @@
 On Linux
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
 
-chezmoi init jwnmulder
-chezmoi apply -v
+~/.local/bin/chezmoi init jwnmulder
+~/.local/bin/chezmoi apply -v
 ```
 
 On Windows
