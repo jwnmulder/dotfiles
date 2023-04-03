@@ -1,13 +1,6 @@
-# for filename in $ZDOTDIR/{options,completion,keybindings,commands,prompt}.zsh; do
-for filename in "$HOME/.config/zsh/"*.zsh; do
-    source $filename
-done
-unset filename
-
-#direnv export
-if command -v direnv &> /dev/null; then
-    emulate zsh -c "$(direnv export zsh)"
-fi
+# direnv
+# As per https://github.com/romkatv/powerlevel10k#how-do-i-initialize-direnv-when-using-instant-prompt
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -16,8 +9,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# for filename in $ZDOTDIR/{options,completion,keybindings,commands,prompt}.zsh; do
+for filename in "$HOME/.config/zsh/"*.zsh; do
+    source $filename
+done
+unset filename
 
 # Path to your oh-my-zsh installation.
 export ZSH="$XDG_DATA_HOME"/oh-my-zsh
@@ -104,8 +100,7 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
-# direnv hook
-if command -v direnv &> /dev/null; then
-    emulate zsh -c "$(direnv hook zsh)"
-fi
+# direnv
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
+
 #zprof
