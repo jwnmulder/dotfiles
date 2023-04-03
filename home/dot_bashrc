@@ -106,11 +106,11 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# source files from ~/.bashrc.d
-if [ -d $HOME/.bashrc.d ]; then
-  for i in $HOME/.bashrc.d/*; do
-    if [ -r $i ]; then
-      . $i
+# source files from ~/.config/shellrc/bashrc.d
+if [ -d "$HOME/.config/shellrc/bashrc.d" ]; then
+  for i in "$HOME/.config/shellrc/bashrc.d/"*; do
+    if [ -r "$i" ] && [ -f "${i}" ]; then
+      . "$i"
     fi
   done
   unset i
@@ -132,6 +132,3 @@ fi
 if command -v direnv &> /dev/null; then
     eval "$(direnv hook bash)"
 fi
-
-# XDG - Bash
-export HISTFILE="$XDG_STATE_HOME"/bash/history
