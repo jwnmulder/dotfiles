@@ -10,16 +10,19 @@ key.txt.age
 .local/share/oh-my-zsh/custom/themes/powerlevel10k/**/*.zwc
 {{ end }}
 
+{{ if eq .chezmoi.os "windows" }}
+.config
+{{ end }}
+
 {{ if ne .chezmoi.os "linux" }}
 **/*.sh
 
-.config/git
-.config/zsh
 .local/share/bash-completion/**
 .bash_history
 .bashrc
 .profile
 .zshenv
+.hushlogin
 {{ end }}
 
 {{ if ne .chezmoi.os "windows" }}
