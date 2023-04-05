@@ -5,7 +5,7 @@ set -euo pipefail
 
 if ! command -v Xwayland &> /dev/null || ! command -v xfce4-session &> /dev/null; then
     echo "Xwayland not found, please install required packages using one of:"
-    echo "  - sudo apt install xwayland xfce4 xfce-goodies"
+    echo "  - sudo apt install xwayland xfce4 xfce4-goodies"
     exit 1
 fi
 
