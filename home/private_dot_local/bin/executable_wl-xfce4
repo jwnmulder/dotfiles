@@ -1,0 +1,18 @@
+{{ if .is_wsl -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v Xwayland &> /dev/null || ! command -v xfce4-session &> /dev/null; then
+    echo "Xwayland not found, please install required packages using one of:"
+    echo "  - sudo apt install xwayland xfce4 xfce-goodies"
+    exit 1
+fi
+
+Xwayland :1 &
+xw_pid=$!
+
+WAYLAND_DISPLAY= DISPLAY=:1 dbus-launch xfce4-session $@
+
+kill $xw_pid || killall Xwayland
+{{ end }}
