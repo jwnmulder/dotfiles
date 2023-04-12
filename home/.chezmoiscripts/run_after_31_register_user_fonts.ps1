@@ -27,7 +27,7 @@ Get-ChildItem $fontsPath -Filter *.ttf | foreach-object {
     } else {
       $fontType = ""
     }
-    
+
     $fontName = $shellFontFileTitle + ' ' + $fontType
 
     # Write-Host "Registering '${fontName}': ${fontFile}"
