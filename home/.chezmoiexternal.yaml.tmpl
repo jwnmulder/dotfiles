@@ -109,3 +109,30 @@
   url: "https://github.com/starship/starship/releases/download/{{ $starshipVersion }}/starship-x86_64-pc-windows-msvc.zip"
 
 # {{ end }}
+
+{{- if eq .chezmoi.os "windows" }}
+
+{{- $fontsDir := "" }}
+{{- if eq .chezmoi.os "linux" }}
+{{-   $fontsDir = ".local/share/fonts" }}
+{{- else if eq .chezmoi.os "windows" }}
+{{-   $fontsDir = "AppData/Local/Microsoft/Windows/Fonts" }}
+{{- end }}
+
+"{{ $fontsDir }}/MesloLGS NF Regular.ttf":
+  type: "file"
+  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Regular.ttf"
+  refreshPeriod: "168h"
+"{{ $fontsDir }}/MesloLGS NF Bold.ttf":
+  type: "file"
+  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold.ttf"
+  refreshPeriod: "168h"
+"{{ $fontsDir }}/MesloLGS NF Italic.ttf":
+  type: "file"
+  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Italic.ttf"
+  refreshPeriod: "168h"
+"{{ $fontsDir }}/MesloLGS NF Bold Italic.ttf":
+  type: "file"
+  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold Italic.ttf"
+  refreshPeriod: "168h"
+{{- end }}
