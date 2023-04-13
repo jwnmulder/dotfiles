@@ -116,7 +116,7 @@
 # {{- if eq .chezmoi.os "linux" }}
 # {{-   $fontsDir = ".local/share/fonts" }}
 # {{- else if eq .chezmoi.os "windows" }}
-# {{-   $fontsDir = "AppData/Local/Microsoft/Windows/Fonts" }}
+# {{-   $fontsDir = joinPath .chezmoi.cacheDir "fonts" }}
 # {{- end }}
 
 # Further configuration instructions on https://github.com/romkatv/powerlevel10k/blob/master/font.md
