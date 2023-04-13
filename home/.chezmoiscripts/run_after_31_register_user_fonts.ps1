@@ -12,14 +12,14 @@ function Get-FontName {
   param(
     [System.IO.FileInfo]$fontFile
   )
-  
+
   $fontFilePath = $fontFile.Directory.FullName
   $shellFolder = $shell.NameSpace($fontFilePath)
 
   $shellFontFile = $shellFolder.ParseName($fontFile.Name)
   $shellFontFileType = $shellFolder.GetDetailsOf($shellFontFile, 2)
   $shellFontFileTitle = $shellFolder.GetDetailsOf($shellFontFile, 21)
-    
+
 
   if ($shellFontFileType -Like '*TrueType font file*') {
     $fontType = "(TrueType)"
@@ -28,7 +28,7 @@ function Get-FontName {
   }
 
   $fontName = $shellFontFileTitle + ' ' + $fontType
-    
+
   return $fontName
 }
 
@@ -41,19 +41,19 @@ Get-ChildItem $downloadedFontsPath -Filter *.ttf | foreach-object {
 
   $srcFile = $_
   $dstFile = Get-Item (Join-Path $fontsPath $srcFile.Name) -ErrorAction SilentlyContinue
-  
+
   $fontOutdated = $dstFile -eq $null
   if (-not $fontOutdated) {
     $srcHash = (Get-FileHash $srcFile.FullName).Hash
     $dstHash = (Get-FileHash $dstFile.FullName).Hash
-    
+
     $fontOutdated = -not $srcHash -eq $dstHash
   }
-  
+
   if ($fontOutdated) {
     $fontName = Get-FontName $srcFile
     Write-Host "Font outdated, updating '$fontName'" -ForegroundColor Green
-  
+
     Remove-ItemProperty -Path $userFontsRegistryPath -Name $fontName -ErrorAction SilentlyContinue
 
     if ($dstFile) {
