@@ -1,42 +1,78 @@
 Set-StrictMode -Version latest
 $ErrorActionPreference = "Stop"
 
-# TODO: Updating Fonts in place was causing issues. Chezmoi will now download fonts to .cache/chezmoi/fonts"
-# which need to be installed by this script. For that we need to:
-# 1. check if a font is new or updated
-# 2. if updated, de-register font from regedit (and hope that Windows releases the file handle)
-# 3. Copy the font file from .cache/chezmoi/fonts to AppData/Local/Microsoft/Windows/Fonts
-# 4. re-register the font (this is the script below)
-
 $shell = New-Object -ComObject Shell.Application
-# $FONTS = 0x14
-# $objFolder = $shell.Namespace($FONTS)
 
+$downloadedFontsPath = "$env:USERPROFILE\.cache\chezmoi\fonts"
 $fontsPath = "$env:LOCALAPPDATA\Microsoft\Windows\Fonts"
-$shellFontsFolder = $shell.Namespace($fontsPath)
-
 $userFontsRegistryPath = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
+
+
+function Get-FontName {
+  param(
+    [System.IO.FileInfo]$fontFile
+  )
+  
+  $fontFilePath = $fontFile.Directory.FullName
+  $shellFolder = $shell.NameSpace($fontFilePath)
+
+  $shellFontFile = $shellFolder.ParseName($fontFile.Name)
+  $shellFontFileType = $shellFolder.GetDetailsOf($shellFontFile, 2)
+  $shellFontFileTitle = $shellFolder.GetDetailsOf($shellFontFile, 21)
+    
+
+  if ($shellFontFileType -Like '*TrueType font file*') {
+    $fontType = "(TrueType)"
+  } else {
+    $fontType = ""
+  }
+
+  $fontName = $shellFontFileTitle + ' ' + $fontType
+    
+  return $fontName
+}
+
 If (-not (Test-Path $userFontsRegistryPath)) {
   New-Item -Path $userFontsRegistryPath
 }
 
-Get-ChildItem $fontsPath -Filter *.ttf | foreach-object {
+# Copy or update existing fonts in the users local font dir
+Get-ChildItem $downloadedFontsPath -Filter *.ttf | foreach-object {
 
-    $fontFile = $_.FullName
-    $fontFileName = $_.Name
+  $srcFile = $_
+  $dstFile = Get-Item (Join-Path $fontsPath $srcFile.Name) -ErrorAction SilentlyContinue
+  
+  $fontOutdated = $dstFile -eq $null
+  if (-not $fontOutdated) {
+    $srcHash = (Get-FileHash $srcFile.FullName).Hash
+    $dstHash = (Get-FileHash $dstFile.FullName).Hash
+    
+    $fontOutdated = -not $srcHash -eq $dstHash
+  }
+  
+  if ($fontOutdated) {
+    $fontName = Get-FontName $srcFile
+    Write-Host "Font outdated, updating '$fontName'" -ForegroundColor Green
+  
+    Remove-ItemProperty -Path $userFontsRegistryPath -Name $fontName -ErrorAction SilentlyContinue
 
-    $shellFontFile = $shellFontsFolder.ParseName($fontFileName)
-    $shellFontFileType = $shellFontsFolder.GetDetailsOf($shellFontFile, 2)
-    $shellFontFileTitle = $shellFontsFolder.GetDetailsOf($shellFontFile, 21)
-
-    if ($shellFontFileType -Like '*TrueType font file*') {
-      $fontType = "(TrueType)"
-    } else {
-      $fontType = ""
+    if ($dstFile) {
+      # Delete file with -Force to avoid 'file used by another process' error
+      Remove-Item $dstFile.FullName -Force
     }
 
-    $fontName = $shellFontFileTitle + ' ' + $fontType
+    Copy-Item -Path $srcFile.FullName -Destination $fontsPath
+  }
+}
 
-    # Write-Host "Registering '${fontName}': ${fontFile}"
-    New-ItemProperty -Path $userFontsRegistryPath -Name $fontName -Value $fontFile -PropertyType String -Force | Out-Null
+# Register all fonts in Windows registry if not already done
+Get-ChildItem $fontsPath -Filter *.ttf | foreach-object {
+
+  $fontFileFullName = $_.FullName
+  $fontName = Get-FontName $_
+
+  if (-not (Get-ItemProperty -Path $userFontsRegistryPath -Name $fontName -ErrorAction SilentlyContinue)) {
+    Write-Host "Registering font '$fontName': $fontFileFullName"
+    New-ItemProperty -Path $userFontsRegistryPath -Name $fontName -Value $fontFileFullName -PropertyType String -Force | Out-Null
+  }
 }
