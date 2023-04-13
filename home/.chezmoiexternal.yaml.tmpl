@@ -136,4 +136,10 @@
   type: "file"
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold Italic.ttf"
   refreshPeriod: "168h"
+
+"{{ $fontsDir }}/":
+  type: "archive"
+  url: "https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip"
+  stripComponents: 1
+  include: ["ttf/*.ttf"]
 # {{- end }}
