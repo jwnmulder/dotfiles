@@ -110,15 +110,16 @@
 
 # {{ end }}
 
-{{- if eq .chezmoi.os "windows" }}
+# {{- if eq .chezmoi.os "windows" }}
 
-{{- $fontsDir := "" }}
-{{- if eq .chezmoi.os "linux" }}
-{{-   $fontsDir = ".local/share/fonts" }}
-{{- else if eq .chezmoi.os "windows" }}
-{{-   $fontsDir = "AppData/Local/Microsoft/Windows/Fonts" }}
-{{- end }}
+# {{- $fontsDir := "" }}
+# {{- if eq .chezmoi.os "linux" }}
+# {{-   $fontsDir = ".local/share/fonts" }}
+# {{- else if eq .chezmoi.os "windows" }}
+# {{-   $fontsDir = "AppData/Local/Microsoft/Windows/Fonts" }}
+# {{- end }}
 
+# Further configuration instructions on https://github.com/romkatv/powerlevel10k/blob/master/font.md
 "{{ $fontsDir }}/MesloLGS NF Regular.ttf":
   type: "file"
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Regular.ttf"
@@ -135,4 +136,4 @@
   type: "file"
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold Italic.ttf"
   refreshPeriod: "168h"
-{{- end }}
+# {{- end }}
