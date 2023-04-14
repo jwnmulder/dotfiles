@@ -9,7 +9,7 @@ if ! command -v Xwayland &> /dev/null || ! command -v xfce4-session &> /dev/null
   exit 1
 fi
 
-if [[ -z "${DBUS_SESSION_BUS_ADDRESS}" ]]; then
+if [[ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
 
   # No systemd / dbus on WSL,2 need to use Xwayland with dbus-launch
 
