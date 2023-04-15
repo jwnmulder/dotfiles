@@ -5,6 +5,7 @@ Set-StrictMode -Version latest
 $ErrorActionPreference = "Stop"
 
 function Update-ItemProperty {
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact='Low')]
     param(
         [Parameter(Mandatory = $True)][String]$Path,
         [Parameter(Mandatory = $True)][String]$Name,
@@ -15,7 +16,9 @@ function Update-ItemProperty {
     $CurrentValue = Get-ItemPropertyValue -Path $Path -Name $Name
     if ($Value -ne $CurrentValue) {
         Write-Output "$Description - Updating '$Name' from $CurrentValue to $Value"
-        Set-ItemProperty -Path $Path -Name $Name -Value $Value
+        if ($PSCmdlet.ShouldProcess("$Path - $Name=$Value")) {
+            Set-ItemProperty -Path $Path -Name $Name -Value $Value
+        }
     }
     else {
         Write-Output "$Description - Skipping, '$Name' already set to $Value"
@@ -27,7 +30,7 @@ Write-Output "Configuring Explorer, Taskbar, and System Tray..."
 # Explorer: Show hidden files by default: Show Files: 1, Hide Files: 2
 Update-ItemProperty -Description "Explorer: Show hidden files by default" `
     -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
-    -Name "Hidden" -Value 2
+    -Name "Hidden" -Value 1
 
 # Explorer: Show file extensions by default: Show Extensions: 0, Hide Extensions: 1
 Update-ItemProperty -Description "Explorer: Show file extensions by default" `

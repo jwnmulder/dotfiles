@@ -53,7 +53,7 @@ Get-ChildItem $downloadedFontsPath -Filter *.ttf -Recurse | foreach-object {
 
   if ($fontOutdated) {
     $fontName = Get-FontName $srcFile
-    Write-Host "Font outdated, updating '$fontName'" -ForegroundColor Green
+    Write-Output "Font outdated, updating '$fontName'"
 
     Remove-ItemProperty -Path $userFontsRegistryPath -Name $fontName -ErrorAction SilentlyContinue
 
@@ -73,7 +73,7 @@ Get-ChildItem $fontsPath -Filter *.ttf | foreach-object {
   $fontName = Get-FontName $_
 
   if (-not (Get-ItemProperty -Path $userFontsRegistryPath -Name $fontName -ErrorAction SilentlyContinue)) {
-    Write-Host "Registering font '$fontName': $fontFileFullName"
+    Write-Output "Registering font '$fontName': $fontFileFullName"
     New-ItemProperty -Path $userFontsRegistryPath -Name $fontName -Value $fontFileFullName -PropertyType String -Force | Out-Null
   }
 }
