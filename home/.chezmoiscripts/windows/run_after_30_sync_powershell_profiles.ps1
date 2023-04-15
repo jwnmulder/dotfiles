@@ -1,3 +1,6 @@
+Set-StrictMode -Version latest
+$ErrorActionPreference = "Stop"
+
 $userprofile_documents = "$env:USERPROFILE\Documents"
 $mydocuments = [environment]::getfolderpath("mydocuments")
 

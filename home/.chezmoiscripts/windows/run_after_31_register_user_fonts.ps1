@@ -23,7 +23,8 @@ function Get-FontName {
 
   if ($shellFontFileType -Like '*TrueType font file*') {
     $fontType = "(TrueType)"
-  } else {
+  }
+  else {
     $fontType = ""
   }
 
