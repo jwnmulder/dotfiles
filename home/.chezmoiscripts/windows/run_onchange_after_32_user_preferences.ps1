@@ -28,10 +28,10 @@ Write-Output "Configuring Explorer, Taskbar, and System Tray..."
 Update-ItemProperty -Description "Explorer: Show hidden files by default" `
     -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
     -Name "Hidden" -Value 2
-    
+
 # Explorer: Show file extensions by default: Show Extensions: 0, Hide Extensions: 1
 Update-ItemProperty -Description "Explorer: Show file extensions by default" `
     -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
-    -Name "HideFileExt" -Value 0 
+    -Name "HideFileExt" -Value 0
 
 Write-Output "Completed configuration of Explorer, Taskbar, and System Tray"
