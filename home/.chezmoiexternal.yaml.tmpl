@@ -1,9 +1,10 @@
-# {{ $kustomizeVersion := "v5.0.1" }}  # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
-# {{ $helmVersion := "v3.11.3" }}      # renovate: datasource=github-releases depName=helm/helm
-# {{ $direnvVersion := "v2.32.2" }}    # renovate: datasource=github-releases depName=direnv/direnv
-# {{ $starshipVersion := "v1.14.2" }}  # renovate: datasource=github-releases depName=starship/starship
-# {{ $fzfVersion := "0.39.0" }}        # renovate: datasource=github-releases depName=junegunn/fzf
-# {{ $fdVersion := "v8.7.0" }}         # renovate: datasource=github-releases depName=sharkdp/fd
+# {{ $kustomizeVersion := "v5.0.1" }}      # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
+# {{ $helmVersion := "v3.11.3" }}          # renovate: datasource=github-releases depName=helm/helm
+# {{ $direnvVersion := "v2.32.2" }}        # renovate: datasource=github-releases depName=direnv/direnv
+# {{ $starshipVersion := "v1.14.2" }}      # renovate: datasource=github-releases depName=starship/starship
+# {{ $fzfVersion := "0.39.0" }}            # renovate: datasource=github-releases depName=junegunn/fzf
+# {{ $fdVersion := "v8.7.0" }}             # renovate: datasource=github-releases depName=sharkdp/fd
+# {{ $backstageGoVersion := "0.6.0" }}     # renovate: datasource=github-releases depName=einride/backstage-go
 
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
@@ -40,6 +41,14 @@
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
   stripComponents: 1
   refreshPeriod: "168h"
+
+".local/bin/backstage":
+  type: "file"
+  url: "https://github.com/einride/backstage-go/releases/download/v{{ $backstageGoVersion }}/backstage-go_{{ $backstageGoVersion }}_linux_{{ .chezmoi.arch }}.tar.gz"
+  executable: true
+  filter:
+    command: "tar"
+    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "backstage"]
 # {{ end }}
 
 # {{ if eq .chezmoi.os "linux" }}
