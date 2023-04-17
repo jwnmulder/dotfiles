@@ -9,7 +9,7 @@ if [ ! -f "$ENCRYPTED_FILE" ]; then
   exit 1
 fi
 
-chezmoi decrypt "$ENCRYPTED_FILE" > /tmp/agefile.tmp.yaml & \
+chezmoi decrypt "$ENCRYPTED_FILE" > /tmp/agefile.tmp.yaml; \
 code --wait /tmp/agefile.tmp.yaml && \
 chezmoi encrypt /tmp/agefile.tmp.yaml > "$ENCRYPTED_FILE"; \
 rm /tmp/agefile.tmp.yaml

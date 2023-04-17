@@ -1,0 +1,9 @@
+{{ if eq .chezmoi.os "linux" -}}
+prefix=${XDG_DATA_HOME}/npm
+cache=${XDG_CACHE_HOME}/npm
+init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js
+{{- end }}
+
+{{ if and (.is_desktop) (eq .chezmoi.os "windows") (eq .profile "work1") }}
+{{   include ".chezmoitemplates/npm/dot_npmrc_work1.age" | decrypt }}
+{{- end }}
