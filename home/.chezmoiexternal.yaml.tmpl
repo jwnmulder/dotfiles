@@ -4,7 +4,7 @@
 # {{ $starshipVersion := "v1.14.2" }}      # renovate: datasource=github-releases depName=starship/starship
 # {{ $fzfVersion := "0.39.0" }}            # renovate: datasource=github-releases depName=junegunn/fzf
 # {{ $fdVersion := "v8.7.0" }}             # renovate: datasource=github-releases depName=sharkdp/fd
-# {{ $backstageGoVersion := "0.6.0" }}     # renovate: datasource=github-releases depName=einride/backstage-go
+# {{ $backstageGoVersion := "v0.6.0" }}    # renovate: datasource=github-releases depName=einride/backstage-go
 
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
@@ -44,7 +44,7 @@
 
 ".local/bin/backstage":
   type: "file"
-  url: "https://github.com/einride/backstage-go/releases/download/v{{ $backstageGoVersion }}/backstage-go_{{ $backstageGoVersion }}_linux_{{ .chezmoi.arch }}.tar.gz"
+  url: "https://github.com/einride/backstage-go/releases/download/{{ $backstageGoVersion}}/backstage-go_{{ $backstageGoVersion | trimPrefix "v" }}_linux_{{ .chezmoi.arch }}.tar.gz"
   executable: true
   filter:
     command: "tar"
