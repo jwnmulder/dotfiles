@@ -1,0 +1,29 @@
+{{- if .is_desktop -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if command -v apt-get &> /dev/null; then
+  echo "Running apt-get update/upgrade"
+  sudo apt-get update
+  sudo apt-get upgrade --autoremove
+fi
+
+if command -v pacman &> /dev/null; then
+  echo "Running pacman -Syu"
+  sudo pacman -Syu
+fi
+
+if command -v pip3 &> /dev/null; then
+  echo "Updating python3 user installed packages"
+  python3 -m pip install --isolated --user --upgrade pip
+  python3 -m pip list --outdated --user | cut -d ' ' -f1 | xargs -r -n1 python3 -m pip install --isolated --user --upgrade
+fi
+
+if command -v kubectl-krew &> /dev/null; then
+  echo "Updating kubectl krew user installed packages"
+  kubectl-krew update
+  kubectl-krew upgrade
+fi
+
+{{ end }}
