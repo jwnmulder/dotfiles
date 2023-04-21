@@ -54,7 +54,7 @@
 # {{ if eq .chezmoi.os "linux" }}
 ".local/bin/fzf":
   type: "file"
-  url: https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-linux_{{ .chezmoi.arch }}.tar.gz
+  url: https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-linux_{{ .chezmoi.arch | trimSuffix "tel" }}.tar.gz
   executable: true
   filter:
     command: "tar"
