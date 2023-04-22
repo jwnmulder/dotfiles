@@ -70,3 +70,11 @@ fi
 # It is collected by Microsoft and shared with the community.
 # You can opt-out of telemetry by setting the DOTNET_CLI_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+{{ if eq .chezmoi.arch "arm" -}}
+# Set default shell to zsh for Synology devices
+if [[ -x /opt/bin/zsh ]]; then
+  export SHELL=/opt/bin/zsh
+  exec /opt/bin/zsh
+fi
+{{- end }}
