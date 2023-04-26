@@ -19,6 +19,7 @@ if [[ -z "${DISPLAY:-}" ]]; then
   start_xfce4_cmd="DISPLAY=:1 $start_xfce4_cmd"
 fi
 
+# Wayland is not supported by xfce4, unset WAYLAND_DISPLAY
 start_xfce4_cmd="WAYLAND_DISPLAY= $start_xfce4_cmd"
 
 echo "Running xfce4 using: $start_xfce4_cmd"
