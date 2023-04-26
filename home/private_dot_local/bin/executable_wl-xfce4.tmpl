@@ -9,18 +9,23 @@ if ! command -v xfce4-session &> /dev/null; then
   exit 1
 fi
 
-start_xfce4_cmd="WAYLAND_DISPLAY= xfce4-session $@"
+start_xfce4_cmd="xfce4-session $@"
 
 if [[ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
   start_xfce4_cmd="dbus-launch $start_xfce4_cmd"
 fi
+
+if [[ -z "${DISPLAY:-}" ]]; then
+  start_xfce4_cmd="DISPLAY=:1 $start_xfce4_cmd"
+fi
+
+start_xfce4_cmd="WAYLAND_DISPLAY= $start_xfce4_cmd"
 
 echo "Running xfce4 using: $start_xfce4_cmd"
 
 if [[ -z "${DISPLAY:-}" ]]; then
 
   # No DISPLAY set. Start Xwayland first
-
   Xwayland :1 &
   xw_pid=$!
 
