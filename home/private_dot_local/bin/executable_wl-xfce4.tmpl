@@ -3,28 +3,34 @@
 
 set -euo pipefail
 
-if ! command -v Xwayland &> /dev/null || ! command -v xfce4-session &> /dev/null; then
-  echo "Xwayland not found, please install required packages using one of:"
-  echo "  - sudo apt install xwayland xfce4 xfce4-goodies"
+if ! command -v xfce4-session &> /dev/null; then
+  echo "xfce4 not found, please install required packages using one of:"
+  echo "  - sudo apt install xfce4 xfce4-goodies"
   exit 1
 fi
 
-if [[ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+start_xfce4_cmd="WAYLAND_DISPLAY= xfce4-session $@"
 
-  # No systemd / dbus on WSL,2 need to use Xwayland with dbus-launch
+if [[ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+  start_xfce4_cmd="dbus-launch $start_xfce4_cmd"
+fi
+
+echo "Running xfce4 using: $start_xfce4_cmd"
+
+if [[ -z "${DISPLAY:-}" ]]; then
+
+  # No DISPLAY set. Start Xwayland first
 
   Xwayland :1 &
   xw_pid=$!
 
-  WAYLAND_DISPLAY= DISPLAY=:1 dbus-launch xfce4-session $@
+  eval $start_xfce4_cmd
 
   kill $xw_pid || killall Xwayland
 
 else
 
-  # WSL + systemd: No need to start Xwayland or dbus
-
-  xfce4-session $@
+  eval $start_xfce4_cmd
 
 fi
 {{ end }}
