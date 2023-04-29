@@ -27,6 +27,7 @@ set -euo pipefail
   "resource-capacity"
   "open-svc"
   "popeye"
+  "explore"
 -}}
 
 $HOME/.krew/bin/kubectl-krew install {{ $krew_packages | join " " }} 2>&1 | grep -v "Installing plugin"
