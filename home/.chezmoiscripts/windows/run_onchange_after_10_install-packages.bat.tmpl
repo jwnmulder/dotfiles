@@ -9,6 +9,7 @@ setlocal enabledelayedexpansion
 {{   $winget_packages = concat $winget_packages (list
      "Bitwarden.Bitwarden"
      "Kubernetes.kubectl"
+     "direnv.direnv --rename direnv"
      ) -}}
 {{ end -}}
 
@@ -16,8 +17,10 @@ setlocal enabledelayedexpansion
 {{   $winget_packages = concat $winget_packages (list
      "Bitwarden.Bitwarden"
      "Kubernetes.kubectl"
+     "direnv.direnv --rename direnv"
      ) -}}
 {{ end -}}
+
 
 @rem Winget packages
 {{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list && type %TEMP%\\winget_list") -}}
