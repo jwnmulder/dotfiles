@@ -8,8 +8,23 @@ set -euo pipefail
   "yq"
 -}}
 
+# Install pipx
+{{ if not (stat (joinPath .chezmoi.homeDir ".local/bin/pipx")) }}
+  echo "Installing pipx"
+  curl -Ls https://github.com/pypa/pipx/releases/latest/download/pipx.pyz -o pipx.pyz && python3 pipx.pyz install pipx
+{{ end }}
+
 echo "Installing/updating pip packages: {{ $pip_packages | join " " }}"
-python3 -m pip install --isolated --user --upgrade pip | { grep -v 'Requirement already satisfied' || true; }
-python3 -m pip install --isolated --user --upgrade {{ $pip_packages | join " " }} | { grep -v 'Requirement already satisfied' || true; }
+{{ range $pip_packages -}}
+
+  # Removing pip installed package as this is not preferred inymore in PEP668
+  if python3 -m pip list | grep {{.}}; then
+    echo "Removing pip installed package '{{ . }}'"
+    python3 -m pip uninstall --isolated {{ . }} --yes
+  fi
+
+  echo Installing pipx package '{{ . }}'
+  .local/bin/pipx install {{ . }} --force
+{{ end }}
 
 {{ end -}}
