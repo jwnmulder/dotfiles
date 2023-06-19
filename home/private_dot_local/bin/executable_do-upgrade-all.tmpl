@@ -31,6 +31,14 @@ if command -v pip3 &> /dev/null; then
   echo "# pip3 - Done updating python3 user installed packages"
 fi
 
+if command -v pipx &> /dev/null; then
+  echo "# pipx - Updating python3 pipx packages"
+
+  pipx upgrade-all
+
+  echo "# pipx - Done updating python3 pipx packages"
+fi
+
 if command -v kubectl-krew &> /dev/null; then
   echo "# kubectl-krew - Updating kubectl krew user installed packages"
 
