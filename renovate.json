@@ -21,7 +21,7 @@
 
   "regexManagers": [
     {
-      "descrption": "toml regex matcher: 'Version := \"<currentValue>\" }}   # renovate: datasource=<datasource> depName=<depname>'",
+      "description": "toml regex matcher: 'Version := \"<currentValue>\" }}   # renovate: datasource=<datasource> depName=<depname>'",
       "fileMatch": ["\\.tmpl$"],
       "matchStrings": [
         "([vV]ersion)\\s*:=\\s*\"(?<currentValue>.*?)\"\\s*}}\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s"
