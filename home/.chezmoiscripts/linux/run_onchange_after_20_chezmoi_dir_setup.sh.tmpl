@@ -12,6 +12,6 @@ if [ ! -z "$origin_push" ]; then
   git remote set-url --push origin "$origin_push"
 fi
 
-PRE_COMMIT_BIN=$(command -v pre-commit | echo ~/.local/bin/pre-commit)
+PRE_COMMIT_BIN=$(command -v pre-commit || echo ~/.local/bin/pre-commit)
 "$PRE_COMMIT_BIN" install
 {{- end }}
