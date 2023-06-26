@@ -10,8 +10,7 @@ On Linux
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
 
-~/.local/bin/chezmoi init jwnmulder
-~/.local/bin/chezmoi apply -v
+~/.local/bin/chezmoi init --apply jwnmulder
 ```
 
 On Windows
@@ -19,8 +18,7 @@ On Windows
 ```powershell
 winget install twpayne.chezmoi
 
-chezmoi init jwnmulder
-chezmoi apply -v
+chezmoi init --apply jwnmulder
 ```
 
 ## Set ZSH as default shell
