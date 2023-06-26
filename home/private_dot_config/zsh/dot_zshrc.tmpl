@@ -77,7 +77,11 @@ export FZF_BASE="$HOME/.config/fzf"
 zstyle ':omz:plugins:nvm' lazy yes
 
 # active plugins
-plugins=(z git zsh-autosuggestions nvm kubectl aliases fzf)
+{{- if (.is_desktop) }}
+plugins=(z git zsh-autosuggestions kubectl aliases fzf nvm)
+{{- else -}}
+plugins=(z git zsh-autosuggestions kubectl aliases fzf)
+{{ end }}
 
 source $ZSH/oh-my-zsh.sh
 
