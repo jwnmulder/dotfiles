@@ -1,0 +1,4 @@
+{{- $bin := lookPath (joinPath .chezmoi.homeDir ".local/bin/trivy") | or (lookPath "kubectl") -}}
+{{- if $bin -}}
+{{- output $bin "completion" "bash" -}}
+{{- end kube}}
