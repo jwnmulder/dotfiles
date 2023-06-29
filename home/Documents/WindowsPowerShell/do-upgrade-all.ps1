@@ -13,5 +13,5 @@ if (Get-Command winget -ErrorAction SilentlyContinue) {
     Invoke-Expression $wingetUpgradeCommand
     Write-Host "# winget - Done running $wingetUpgradeCommand"
 }
-    
+
 Write-Host "do-upgrade-all - All done"
