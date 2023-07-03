@@ -1,6 +1,6 @@
-{{- $tar_args := (list "--extract" "--file" "/dev/stdin" "--gzip" "--to-stdout") -}}
+{{- $tar_args := concat (list "--extract" "--file" "/dev/stdin" "--gzip" "--to-stdout") . -}}
 type: file
   executable: true
   filter:
     command: tar
-    args: [{{ (concat $tar_args .) | quoteList | join ", " }}]
+    args: [{{ $tar_args | quoteList | join ", " }}]
