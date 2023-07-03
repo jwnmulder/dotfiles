@@ -6,7 +6,7 @@
 # {{ $fdVersion := "v8.7.0" }}             # renovate: datasource=github-releases depName=sharkdp/fd
 # {{ $backstageGoVersion := "v0.6.0" }}    # renovate: datasource=github-releases depName=einride/backstage-go
 # {{ $trivyVersion := "v0.43.0" }}         # renovate: datasource=github-releases depName=aquasecurity/trivy
-# {{ $ageVersion := "v1.1.1" }}             # renovate: datasource=github-releases depName=FiloSottile/age
+# {{ $ageVersion := "v1.1.1" }}            # renovate: datasource=github-releases depName=FiloSottile/age
 
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
@@ -18,20 +18,24 @@
     command: "zcat"
 
 ".local/bin/kustomize":
-  type: "file"
   url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/{{ $kustomizeVersion }}/kustomize_{{ $kustomizeVersion }}_linux_{{ .chezmoi.arch }}.tar.gz"
-  executable: true
-  filter:
-    command: "tar"
-    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "kustomize"]
+  {{ template "external/executable_tar_file.yaml.tmpl" (list "kustomize") }}
 
 ".local/bin/helm":
-  type: "file"
   url: "https://get.helm.sh/helm-{{ $helmVersion }}-linux-{{ .chezmoi.arch }}.tar.gz"
-  executable: true
-  filter:
-    command: "tar"
-    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "linux-{{ .chezmoi.arch }}/helm"]
+  {{ template "external/executable_tar_file.yaml.tmpl" (list (printf "linux-%s/helm" .chezmoi.arch)) }}
+
+".local/bin/backstage":
+  url: "https://github.com/einride/backstage-go/releases/download/{{ $backstageGoVersion}}/backstage-go_{{ $backstageGoVersion | trimPrefix "v" }}_linux_{{ .chezmoi.arch }}.tar.gz"
+  {{ template "external/executable_tar_file.yaml.tmpl" (list "backstage") }}
+
+".local/bin/age":
+  url: "https://github.com/FiloSottile/age/releases/download/{{ $ageVersion }}/age-{{ $ageVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+  {{ template "external/executable_tar_file.yaml.tmpl" (list "age/age") }}
+
+".local/bin/age-keygen":
+  url: "https://github.com/FiloSottile/age/releases/download/{{ $ageVersion }}/age-{{ $ageVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+  {{ template "external/executable_tar_file.yaml.tmpl" (list "age/age-keygen") }}
 
 ".local/bin/direnv":
   type: "file"
@@ -43,65 +47,30 @@
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
   stripComponents: 1
   refreshPeriod: "168h"
-
-".local/bin/backstage":
-  type: "file"
-  url: "https://github.com/einride/backstage-go/releases/download/{{ $backstageGoVersion}}/backstage-go_{{ $backstageGoVersion | trimPrefix "v" }}_linux_{{ .chezmoi.arch }}.tar.gz"
-  executable: true
-  filter:
-    command: "tar"
-    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "backstage"]
-
-".local/bin/age":
-    type: "file"
-    url: "https://github.com/FiloSottile/age/releases/download/{{ $ageVersion }}/age-{{ $ageVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-    executable: true
-    filter:
-      command: "tar"
-      args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "age/age"]
-".local/bin/age-keygen":
-    type: "file"
-    url: "https://github.com/FiloSottile/age/releases/download/{{ $ageVersion }}/age-{{ $ageVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-    executable: true
-    filter:
-        command: "tar"
-        args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "age/age-keygen"]
 # {{ end }}
 
 # {{ if eq .chezmoi.os "linux" }}
 ".local/bin/fzf":
-  type: "file"
   url: https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-linux_{{
       eq .chezmoi.arch "arm" | ternary (.uname.machine | trimSuffix "tel") .chezmoi.arch
     }}.tar.gz
-  executable: true
-  filter:
-    command: "tar"
-    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "fzf"]
+  {{ template "external/executable_tar_file.yaml.tmpl" (list "fzf") }}
 
 ".config/fzf/":
-    type: "archive"
-    url: "https://github.com/junegunn/fzf/archive/refs/tags/{{ $fzfVersion }}.tar.gz"
-    exact: true
-    stripComponents: 2
-    include: ["fzf-{{ $fzfVersion }}/shell/**"]
+  type: "archive"
+  url: "https://github.com/junegunn/fzf/archive/refs/tags/{{ $fzfVersion }}.tar.gz"
+  exact: true
+  stripComponents: 2
+  include: ["fzf-{{ $fzfVersion }}/shell/**"]
 
 # {{ if eq .chezmoi.arch "amd64" }}
 ".local/bin/fd":
-  type: "file"
   url: "https://github.com/sharkdp/fd/releases/download/{{ $fdVersion }}/fd-{{ $fdVersion }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz"
-  executable: true
-  filter:
-    command: "tar"
-    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "--strip-components=1", "--wildcards", "*/fd"]
+  {{ template "external/executable_tar_file.yaml.tmpl" (list "--strip-components=1" "--wildcards" "*/fd") }}
 
 ".local/bin/trivy":
-  type: "file"
   url: https://github.com/aquasecurity/trivy/releases/download/{{ $trivyVersion }}/trivy_{{ $trivyVersion | trimPrefix "v" }}_Linux-64bit.tar.gz
-  executable: true
-  filter:
-    command: "tar"
-    args: ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "trivy"]
+  {{ template "external/executable_tar_file.yaml.tmpl" (list "trivy") }}
 # {{ end }}
 
 ".local/share/oh-my-zsh/":
