@@ -17,7 +17,8 @@ function Update-ItemProperty {
     if ($Value -ne $CurrentValue) {
         Write-Output "$Description - Updating '$Name' from $CurrentValue to $Value"
         if ($PSCmdlet.ShouldProcess("$Path - $Name=$Value")) {
-            Set-ItemProperty -Path $Path -Name $Name -Value $Value
+            $keyName = $Path.Replace("HKCU:", "HKEY_CURRENT_USER")
+            [microsoft.win32.registry]::SetValue($keyName, $Name, $Value)
         }
     }
     else {
@@ -30,7 +31,7 @@ Write-Output "Configuring Explorer, Taskbar, and System Tray..."
 # Explorer: Show hidden files by default: Show Files: 1, Hide Files: 2
 Update-ItemProperty -Description "Explorer: Show hidden files by default" `
     -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
-    -Name "Hidden" -Value 1
+    -Name "Hidden" -Value 0
 
 # Explorer: Show file extensions by default: Show Extensions: 0, Hide Extensions: 1
 Update-ItemProperty -Description "Explorer: Show file extensions by default" `
