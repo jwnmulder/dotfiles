@@ -23,3 +23,12 @@
 .ansible
 .azure
 {{ end }}
+
+{{ if eq .chezmoi.os "windows" }}
+
+# Windows powershell profile cleanup
+Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+Documents\PowerShell\Microsoft.VSCode_profile.ps1
+Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+Documents\WindowsPowerShell\Microsoft.VSCode_profile.ps1
+{{ end }}
