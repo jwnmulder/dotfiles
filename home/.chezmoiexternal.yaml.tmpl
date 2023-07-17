@@ -10,7 +10,7 @@
 
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
-  type: "file"
+  type: file
   url: "https://vault.bitwarden.com/download/?app=cli&platform=linux"
   executable: true
   refreshPeriod: "168h"
@@ -18,32 +18,37 @@
     command: "zcat"
 
 ".local/bin/kustomize":
+  type: archive-file
   url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/{{ $kustomizeVersion }}/kustomize_{{ $kustomizeVersion }}_linux_{{ .chezmoi.arch }}.tar.gz"
-  {{ template "external/executable_tar_file.yaml.tmpl" (list "kustomize") }}
+  path: "kustomize"
 
 ".local/bin/helm":
+  type: archive-file
   url: "https://get.helm.sh/helm-{{ $helmVersion }}-linux-{{ .chezmoi.arch }}.tar.gz"
-  {{ template "external/executable_tar_file.yaml.tmpl" (list (printf "linux-%s/helm" .chezmoi.arch)) }}
+  path: "{{ printf "linux-%s/helm" .chezmoi.arch }}"
 
 ".local/bin/backstage":
+  type: archive-file
   url: "https://github.com/einride/backstage-go/releases/download/{{ $backstageGoVersion}}/backstage-go_{{ $backstageGoVersion | trimPrefix "v" }}_linux_{{ .chezmoi.arch }}.tar.gz"
-  {{ template "external/executable_tar_file.yaml.tmpl" (list "backstage") }}
+  path: "backstage"
 
 ".local/bin/age":
+  type: archive-file
   url: "https://github.com/FiloSottile/age/releases/download/{{ $ageVersion }}/age-{{ $ageVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-  {{ template "external/executable_tar_file.yaml.tmpl" (list "age/age") }}
+  path: "age/age"
 
 ".local/bin/age-keygen":
+  type: archive-file
   url: "https://github.com/FiloSottile/age/releases/download/{{ $ageVersion }}/age-{{ $ageVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-  {{ template "external/executable_tar_file.yaml.tmpl" (list "age/age-keygen") }}
+  path: "age/age-keygen"
 
 ".local/bin/direnv":
-  type: "file"
+  type: file
   url: "https://github.com/direnv/direnv/releases/download/{{ $direnvVersion }}/direnv.linux-{{ .chezmoi.arch }}"
   executable: true
 
 ".local/share/nvm/":
-  type: "archive"
+  type: archive
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
   stripComponents: 1
   refreshPeriod: "168h"
@@ -51,13 +56,14 @@
 
 # {{ if eq .chezmoi.os "linux" }}
 ".local/bin/fzf":
+  type: archive-file
   url: https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-linux_{{
       eq .chezmoi.arch "arm" | ternary (.uname.machine | trimSuffix "tel") .chezmoi.arch
     }}.tar.gz
-  {{ template "external/executable_tar_file.yaml.tmpl" (list "fzf") }}
+  path: "fzf"
 
 ".config/fzf/":
-  type: "archive"
+  type: archive
   url: "https://github.com/junegunn/fzf/archive/refs/tags/{{ $fzfVersion }}.tar.gz"
   exact: true
   stripComponents: 2
@@ -65,44 +71,46 @@
 
 # {{ if eq .chezmoi.arch "amd64" }}
 ".local/bin/fd":
+  type: archive-file
   url: "https://github.com/sharkdp/fd/releases/download/{{ $fdVersion }}/fd-{{ $fdVersion }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz"
-  {{ template "external/executable_tar_file.yaml.tmpl" (list "--strip-components=1" "--wildcards" "*/fd") }}
+  path: "fd-{{ $fdVersion }}-{{ .uname.machine }}-unknown-linux-gnu/fd"
 
 ".local/bin/trivy":
+  type: archive-file
   url: https://github.com/aquasecurity/trivy/releases/download/{{ $trivyVersion }}/trivy_{{ $trivyVersion | trimPrefix "v" }}_Linux-64bit.tar.gz
-  {{ template "external/executable_tar_file.yaml.tmpl" (list "trivy") }}
+  path: "trivy"
 # {{ end }}
 
 ".local/share/oh-my-zsh/":
-  type: "archive"
+  type: archive
   url: "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
 ".local/share/oh-my-zsh/custom/themes/powerlevel10k/":
-  type: "archive"
+  type: archive
   url: "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
 ".local/share/oh-my-zsh/custom/plugins/zsh-autosuggestions/":
-  type: "archive"
+  type: archive
   url: "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
 ".local/share/oh-my-zsh/custom/plugins/zsh-nvm/":
-  type: "archive"
+  type: archive
   url: "https://github.com/lukechilds/zsh-nvm/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"
 
 ".local/share/oh-my-zsh/custom/plugins/fast-syntax-highlighting/":
-  type: "archive"
+  type: archive
   url: "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/master.tar.gz"
   exact: true
   stripComponents: 1
@@ -112,7 +120,7 @@
 
 # {{ if eq .chezmoi.os "windows" }}
 "AppData/Local/starship":
-  type: "archive"
+  type: archive
   url: "https://github.com/starship/starship/releases/download/{{ $starshipVersion }}/starship-x86_64-pc-windows-msvc.zip"
 
 # {{ end }}
@@ -128,24 +136,24 @@
 
 # Further configuration instructions on https://github.com/romkatv/powerlevel10k/blob/master/font.md
 "{{ $fontsDir }}/MesloLGS NF Regular.ttf":
-  type: "file"
+  type: file
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Regular.ttf"
   refreshPeriod: "168h"
 "{{ $fontsDir }}/MesloLGS NF Bold.ttf":
-  type: "file"
+  type: file
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold.ttf"
   refreshPeriod: "168h"
 "{{ $fontsDir }}/MesloLGS NF Italic.ttf":
-  type: "file"
+  type: file
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Italic.ttf"
   refreshPeriod: "168h"
 "{{ $fontsDir }}/MesloLGS NF Bold Italic.ttf":
-  type: "file"
+  type: file
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold Italic.ttf"
   refreshPeriod: "168h"
 
 "{{ $fontsDir }}/":
-  type: "archive"
+  type: archive
   url: "https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip"
   stripComponents: 1
   include: ["ttf/*.ttf"]
