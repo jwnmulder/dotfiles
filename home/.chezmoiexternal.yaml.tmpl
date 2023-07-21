@@ -48,11 +48,12 @@
   executable: true
 
 ".local/bin/azcopy":
-  type: file
+  type: archive-file
   url: "https://aka.ms/downloadazcopy-v10-linux"
   stripComponents: 1
   refreshPeriod: "168h"
   path: "azcopy"
+  executable: true
 
 ".local/share/nvm/":
   type: archive
