@@ -47,11 +47,19 @@
   url: "https://github.com/direnv/direnv/releases/download/{{ $direnvVersion }}/direnv.linux-{{ .chezmoi.arch }}"
   executable: true
 
+".local/bin/azcopy":
+  type: file
+  url: "https://aka.ms/downloadazcopy-v10-linux"
+  stripComponents: 1
+  refreshPeriod: "168h"
+  path: "azcopy"
+
 ".local/share/nvm/":
   type: archive
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
   stripComponents: 1
   refreshPeriod: "168h"
+
 # {{ end }}
 
 # {{ if eq .chezmoi.os "linux" }}
