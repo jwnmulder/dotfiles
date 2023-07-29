@@ -21,10 +21,10 @@
 
   "regexManagers": [
     {
-      "description": "tmpl regex matcher: 'Version := \"<currentValue>\" }}   # renovate: datasource=<datasource> depName=<depname>'",
+      "description": "yaml regex matcher: ': \"<currentValue>\" }}   # renovate: datasource=<datasource> depName=<depname>'",
       "fileMatch": ["\\.tmpl$"],
       "matchStrings": [
-        "([vV]ersion)\\s*:=\\s*\"(?<currentValue>.*?)\"\\s*}}\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s"
+        ": \\s*\"*(?<currentValue>.*?)\"*\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
     }

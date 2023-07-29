@@ -1,13 +1,3 @@
-# {{ $kustomizeVersion := "v5.1.0" }}      # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
-# {{ $helmVersion := "v3.12.2" }}          # renovate: datasource=github-releases depName=helm/helm
-# {{ $direnvVersion := "v2.32.3" }}        # renovate: datasource=github-releases depName=direnv/direnv
-# {{ $starshipVersion := "v1.15.0" }}      # renovate: datasource=github-releases depName=starship/starship
-# {{ $fzfVersion := "0.42.0" }}            # renovate: datasource=github-releases depName=junegunn/fzf
-# {{ $fdVersion := "v8.7.0" }}             # renovate: datasource=github-releases depName=sharkdp/fd
-# {{ $backstageGoVersion := "v0.8.0" }}    # renovate: datasource=github-releases depName=einride/backstage-go
-# {{ $trivyVersion := "v0.43.1" }}         # renovate: datasource=github-releases depName=aquasecurity/trivy
-# {{ $ageVersion := "v1.1.1" }}            # renovate: datasource=github-releases depName=FiloSottile/age
-
 # {{ if and (.is_desktop) (eq .chezmoi.os "linux") }}
 ".local/bin/bw":
   type: file
@@ -19,32 +9,32 @@
 
 ".local/bin/kustomize":
   type: archive-file
-  url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/{{ $kustomizeVersion }}/kustomize_{{ $kustomizeVersion }}_linux_{{ .chezmoi.arch }}.tar.gz"
+  url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/{{ .versions.kustomize }}/kustomize_{{ .versions.kustomize }}_linux_{{ .chezmoi.arch }}.tar.gz"
   path: "kustomize"
 
 ".local/bin/helm":
   type: archive-file
-  url: "https://get.helm.sh/helm-{{ $helmVersion }}-linux-{{ .chezmoi.arch }}.tar.gz"
-  path: "{{ printf "linux-%s/helm" .chezmoi.arch }}"
+  url: "https://get.helm.sh/helm-{{ .versions.helm }}-linux-{{ .chezmoi.arch }}.tar.gz"
+  path: '{{ printf "linux-%s/helm" .chezmoi.arch }}'
 
 ".local/bin/backstage":
   type: archive-file
-  url: "https://github.com/einride/backstage-go/releases/download/{{ $backstageGoVersion}}/backstage-go_{{ $backstageGoVersion | trimPrefix "v" }}_linux_{{ .chezmoi.arch }}.tar.gz"
+  url: 'https://github.com/einride/backstage-go/releases/download/{{ .versions.backstage_go }}/backstage-go_{{ .versions.backstage_go | trimPrefix "v" }}_linux_{{ .chezmoi.arch }}.tar.gz'
   path: "backstage"
 
 ".local/bin/age":
   type: archive-file
-  url: "https://github.com/FiloSottile/age/releases/download/{{ $ageVersion }}/age-{{ $ageVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+  url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
   path: "age/age"
 
 ".local/bin/age-keygen":
   type: archive-file
-  url: "https://github.com/FiloSottile/age/releases/download/{{ $ageVersion }}/age-{{ $ageVersion }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+  url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
   path: "age/age-keygen"
 
 ".local/bin/direnv":
   type: file
-  url: "https://github.com/direnv/direnv/releases/download/{{ $direnvVersion }}/direnv.linux-{{ .chezmoi.arch }}"
+  url: "https://github.com/direnv/direnv/releases/download/{{ .versions.direnv }}/direnv.linux-{{ .chezmoi.arch }}"
   executable: true
 
 ".local/bin/azcopy":
@@ -66,27 +56,27 @@
 # {{ if eq .chezmoi.os "linux" }}
 ".local/bin/fzf":
   type: archive-file
-  url: https://github.com/junegunn/fzf/releases/download/{{ $fzfVersion }}/fzf-{{ $fzfVersion }}-linux_{{
+  url: https://github.com/junegunn/fzf/releases/download/{{ .versions.fzf }}/fzf-{{ .versions.fzf }}-linux_{{
       eq .chezmoi.arch "arm" | ternary (.uname.machine | trimSuffix "tel") .chezmoi.arch
     }}.tar.gz
   path: "fzf"
 
 ".config/fzf/":
   type: archive
-  url: "https://github.com/junegunn/fzf/archive/refs/tags/{{ $fzfVersion }}.tar.gz"
+  url: "https://github.com/junegunn/fzf/archive/refs/tags/{{ .versions.fzf }}.tar.gz"
   exact: true
   stripComponents: 2
-  include: ["fzf-{{ $fzfVersion }}/shell/**"]
+  include: ["fzf-{{ .versions.fzf }}/shell/**"]
 
 # {{ if eq .chezmoi.arch "amd64" }}
 ".local/bin/fd":
   type: archive-file
-  url: "https://github.com/sharkdp/fd/releases/download/{{ $fdVersion }}/fd-{{ $fdVersion }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz"
-  path: "fd-{{ $fdVersion }}-{{ .uname.machine }}-unknown-linux-gnu/fd"
+  url: "https://github.com/sharkdp/fd/releases/download/{{ .versions.fd }}/fd-{{ .versions.fd }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz"
+  path: "fd-{{ .versions.fd }}-{{ .uname.machine }}-unknown-linux-gnu/fd"
 
 ".local/bin/trivy":
   type: archive-file
-  url: https://github.com/aquasecurity/trivy/releases/download/{{ $trivyVersion }}/trivy_{{ $trivyVersion | trimPrefix "v" }}_Linux-64bit.tar.gz
+  url: https://github.com/aquasecurity/trivy/releases/download/{{ .versions.trivy }}/trivy_{{ .versions.trivy | trimPrefix "v" }}_Linux-64bit.tar.gz
   path: "trivy"
 # {{ end }}
 
@@ -130,7 +120,7 @@
 # {{ if eq .chezmoi.os "windows" }}
 "AppData/Local/starship":
   type: archive
-  url: "https://github.com/starship/starship/releases/download/{{ $starshipVersion }}/starship-x86_64-pc-windows-msvc.zip"
+  url: "https://github.com/starship/starship/releases/download/{{ .versions.starship }}/starship-x86_64-pc-windows-msvc.zip"
 
 # {{ end }}
 
