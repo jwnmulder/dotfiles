@@ -22,7 +22,7 @@
   "regexManagers": [
     {
       "description": "yaml regex matcher: ': \"<currentValue>\" }}   # renovate: datasource=<datasource> depName=<depname>'",
-      "fileMatch": ["\\.tmpl$"],
+      "fileMatch": ["\\.yaml$"],
       "matchStrings": [
         ": \\s*\"*(?<currentValue>.*?)\"*\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s"
       ],
