@@ -1,5 +1,5 @@
 versions:
-  kustomize: v5.1.0         # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
+  kustomize: v5.1.1         # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
   helm: v3.12.2             # renovate: datasource=github-releases depName=helm/helm
   direnv: v2.32.3           # renovate: datasource=github-releases depName=direnv/direnv
   starship: v1.16.0         # renovate: datasource=github-releases depName=starship/starship
