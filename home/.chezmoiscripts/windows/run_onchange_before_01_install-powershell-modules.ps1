@@ -8,3 +8,7 @@ if (-not ((Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Ins
 if (-not (Get-Module -Name PSScriptAnalyzer -ListAvailable)) {
     Install-Module -Name PSScriptAnalyzer -Scope CurrentUser
 }
+
+if (-not (Get-InstalledModule -Name "PowerShellGet" -MinimumVersion 2.0 -ErrorAction SilentlyContinue)) {
+    Install-Module PowerShellGet -Scope CurrentUser -MinimumVersion 2.0 -Force -AllowClobber
+}

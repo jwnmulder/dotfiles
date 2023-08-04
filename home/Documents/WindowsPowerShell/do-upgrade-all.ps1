@@ -1,6 +1,12 @@
+#Requires -Modules @{ ModuleName="PowerShellGet"; ModuleVersion="2.0.0" }
+
+Import-Module -Name "PowerShellGet"
+Import-Module -Name "PackageManagement"
+
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 
+#region winget
 if (Get-Command winget -ErrorAction SilentlyContinue) {
 
     $cmd = "winget upgrade --all --silent"
@@ -13,7 +19,9 @@ if (Get-Command winget -ErrorAction SilentlyContinue) {
     Invoke-Expression $cmd
     Write-Host "# winget - Done running $cmd" -ForegroundColor Green
 }
+#endregion
 
+#region scoop
 if (Get-Command scoop -ErrorAction SilentlyContinue) {
 
     $cmd = "scoop update --all"
@@ -32,19 +40,30 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
         Write-Host "# scoop - Done running $cmd" -ForegroundColor Green
     }
 }
+#endregion
 
-# Write-Host "# pwsh - Updating powershell modules"
+#region powershell modules
+Write-Host "# pwsh - Updating powershell modules"
 
-# $InstalledModules = Get-InstalledModule -ErrorAction SilentlyContinue
-# foreach ($mod in $InstalledModules) {
+$pwsh_cmd = "Update-Module -Confirm"
+if (-not $isAdmin) {
+    $pwsh_cmd += " -Scope CurrentUser"
+}
 
-#     $cmd = "Update-Module -Name " + $mod.Name
-#     Write-Host "# pwsh - Running $cmd"
-#     Invoke-Expression $cmd
-# }
-# Remove-Variable -Name "InstalledModules"
+Write-Host "# pwsh - Running $pwsh_cmd"
+Invoke-Expression $pwsh_cmd
+
+Write-Host "# pwsh - Cleanup of old powershell module versions"
+$InstalledModules = Get-InstalledModule
+foreach ($mod in $InstalledModules) {
+    $Latest = Get-InstalledModule $mod.Name; 
+    Get-InstalledModule $mod.Name -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Module
+}
+
+Remove-Variable -Name "pwsh_cmd"
+Remove-Variable -Name "InstalledModules"
 
 Write-Host "# pwsh - Done updating powershell modules" -ForegroundColor Green
-
+#endregion
 
 Write-Host "do-upgrade-all - All done"
