@@ -56,7 +56,7 @@ Invoke-Expression $pwsh_cmd
 Write-Host "# pwsh - Cleanup of old powershell module versions"
 $InstalledModules = Get-InstalledModule
 foreach ($mod in $InstalledModules) {
-    $Latest = Get-InstalledModule $mod.Name; 
+    $Latest = Get-InstalledModule $mod.Name;
     Get-InstalledModule $mod.Name -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Module
 }
 
