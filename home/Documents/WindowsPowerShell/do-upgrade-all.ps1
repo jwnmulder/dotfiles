@@ -33,4 +33,18 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
     }
 }
 
+# Write-Host "# pwsh - Updating powershell modules"
+
+# $InstalledModules = Get-InstalledModule -ErrorAction SilentlyContinue
+# foreach ($mod in $InstalledModules) {
+
+#     $cmd = "Update-Module -Name " + $mod.Name
+#     Write-Host "# pwsh - Running $cmd"
+#     Invoke-Expression $cmd
+# }
+# Remove-Variable -Name "InstalledModules"
+
+Write-Host "# pwsh - Done updating powershell modules" -ForegroundColor Green
+
+
 Write-Host "do-upgrade-all - All done"
