@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 #           User Preferences: Explorer, Taskbar, and System Tray
 # ------------------------------------------------------------------------------
-Set-StrictMode -Version latest
+Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
 function Update-ItemProperty {

@@ -1,4 +1,4 @@
-Set-StrictMode -Version latest
+Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
 $userprofile_documents = "$env:USERPROFILE\Documents"
