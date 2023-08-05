@@ -26,7 +26,7 @@ if (-not $PIPX_BIN) {
 
 {{ range $pip_packages -}}
   Write-Host Installing pipx package '{{ . }}'
-  $PIPX_BIN install {{ . }} --force
+  Invoke-Expression "$PIPX_BIN install {{ . }} --force"
 {{ end }}
 
 {{ end -}}
