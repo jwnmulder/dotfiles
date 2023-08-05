@@ -1,1 +1,6 @@
+# required for pre-commit shellcheck on Windows
 *.sh text eol=lf
+
+# required for pre-commit yamllint on Windows
+*.yaml text eol=lf
+*.yml text eol=lf
