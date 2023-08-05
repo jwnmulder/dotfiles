@@ -1,7 +1,7 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
-Import-Module PackageManagement
+Import-Module PackageManagement -MinimumVersion 1.4.8
 
 # '-ForceBootstrap' will Install the NuGet package provider if not already done
 Get-PackageProvider -Name "NuGet" -ForceBootstrap
