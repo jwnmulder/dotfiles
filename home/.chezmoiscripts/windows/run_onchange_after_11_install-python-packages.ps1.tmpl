@@ -14,6 +14,7 @@ $ErrorActionPreference = "Stop"
   $pipx_dst = [System.IO.Path]::GetTempPath() + "pipx.pyz"
   Invoke-WebRequest -Uri "https://github.com/pypa/pipx/releases/latest/download/pipx.pyz" -OutFile $pipx_dst
   py -3 $pipx_dst install pipx
+  where.exe pipx
 {{ end }}
 
 Write-Host "Installing/updating pipx packages: {{ $pip_packages | join " " }}"
