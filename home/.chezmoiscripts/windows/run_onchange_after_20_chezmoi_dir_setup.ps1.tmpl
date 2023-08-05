@@ -1,0 +1,13 @@
+Set-StrictMode -Version latest
+$ErrorActionPreference = "Stop"
+
+{{ if and (.is_desktop) (lookPath "git") -}}
+
+cd "{{ .chezmoi.workingTree }}"
+
+#setup pre-commit
+{{ if (lookPath "pre-commit.exe") -}}
+pre-commit.exe install
+{{- end }}
+
+{{- end }}
