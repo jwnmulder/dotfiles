@@ -1,6 +1,7 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+# Needed for GitHubs 'windows-latest' image. SOmehow version 1.4.7 is selected which is not working
 Import-Module PackageManagement -MinimumVersion 1.4.8
 
 # '-ForceBootstrap' will Install the NuGet package provider if not already done
