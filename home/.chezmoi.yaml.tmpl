@@ -62,8 +62,8 @@ config_info: |
   {{- if and
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml")) -}}
-  {{-   $data = include ".data/chezmoidata.yaml.age" | decrypt | fromYaml -}}
-  {{-   $profiles = include ".data/chezmoidata_profiles.yaml.age" | decrypt | fromYaml -}}
+  {{-   $data = include (joinPath .chezmoi.workingTree "home/.data/chezmoidata.yaml.age") | decrypt | fromYaml -}}
+  {{-   $profiles = include (joinPath .chezmoi.workingTree "home/.data/chezmoidata_profiles.yaml.age") | decrypt | fromYaml -}}
 
   {{-   $name = $data.name -}}
   {{-   $git = $data.git -}}
