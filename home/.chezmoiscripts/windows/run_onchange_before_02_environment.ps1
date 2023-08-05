@@ -1,15 +1,13 @@
 Set-StrictMode -Version latest
 $ErrorActionPreference = "Stop"
 
-Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\bin"
-
 function Add-EnvPath {
     param(
         [Parameter(Mandatory=$true)]
         [string] $Path,
 
         [ValidateSet('Machine', 'User', 'Session')]
-        [string] $Container = 'Session',
+        [string] $Container = 'Session'
     )
 
     if ($Container -ne 'Session') {
@@ -32,3 +30,5 @@ function Add-EnvPath {
         $env:Path = $envPaths -join ';'
     }
 }
+
+Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\bin"

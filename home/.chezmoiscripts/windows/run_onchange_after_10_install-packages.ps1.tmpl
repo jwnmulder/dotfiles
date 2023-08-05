@@ -1,6 +1,5 @@
-@echo off
-
-setlocal enabledelayedexpansion
+Set-StrictMode -Version latest
+$ErrorActionPreference = "Stop"
 
 {{ $winget_packages := list -}}
 {{ $scoop_packages := list -}}
@@ -19,17 +18,18 @@ setlocal enabledelayedexpansion
      ) -}}
 {{ end -}}
 
-
-@rem Winget packages
+#region Winget packages
 {{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list && type %TEMP%\\winget_list") -}}
 {{ range $winget_packages -}}
 {{   if not (contains . $winget_list) -}}
-        echo Installing winget package '{{ .}}'
+        Write-Host Installing winget package '{{ .}}'
         winget install --accept-package-agreements --accept-source-agreements --silent --scope user --exact --source winget --id {{ . }}
 {{   end -}}
 {{ end }}
+#endregion
 
-@rem Scoop packages
+#region Scoop packages
 {{ if gt (len $scoop_packages) 0 -}}
   scoop install {{ $scoop_packages | join " " }}
 {{ end }}
+#endregion

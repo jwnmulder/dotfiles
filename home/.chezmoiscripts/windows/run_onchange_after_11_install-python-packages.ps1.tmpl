@@ -1,0 +1,25 @@
+Set-StrictMode -Version latest
+$ErrorActionPreference = "Stop"
+
+{{- if and (.is_desktop) (lookPath "py.exe") -}}
+
+{{ $pip_packages := list
+  "pre-commit"
+  "yq"
+-}}
+
+# Install pipx
+{{ if not (stat (joinPath .chezmoi.homeDir ".local/bin/pipx.exe")) }}
+  Write-Host "Installing pipx"
+  $pipx_dst = [System.IO.Path]::GetTempPath() + "pipx.pyz"
+  Invoke-WebRequest -Uri "https://github.com/pypa/pipx/releases/latest/download/pipx.pyz" -OutFile $pipx_dst
+  py -3 pipx.pyz install pipx
+{{ end }}
+
+Write-Host "Installing/updating pipx packages: {{ $pip_packages | join " " }}"
+{{ range $pip_packages -}}
+  Write-Host Installing pipx package '{{ . }}'
+  .local/bin/pipx install {{ . }} --force
+{{ end }}
+
+{{ end -}}
