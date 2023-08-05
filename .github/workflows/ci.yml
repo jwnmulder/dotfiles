@@ -122,5 +122,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         shell: pwsh
         run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
           bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
