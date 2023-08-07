@@ -7,6 +7,11 @@
   filter:
     command: "zcat"
 
+".local/bin/kubectl":
+  type: file
+  url: "https://dl.k8s.io/release/{{ .versions.kubectl }}/bin/linux/{{ .chezmoi.arch }}/kubectl"
+  executable: true
+
 ".local/bin/kustomize":
   type: archive-file
   url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/{{ .versions.kustomize }}/kustomize_{{ .versions.kustomize }}_linux_{{ .chezmoi.arch }}.tar.gz"
