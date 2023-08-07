@@ -42,6 +42,17 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
 }
 #endregion
 
+#region kubectl-krew
+if (Get-Command kubectl-krew -ErrorAction SilentlyContinue) {
+
+    $cmd = "kubectl-krew upgrade"
+
+    Write-Host "# kubectl-krew - Running $cmd"
+    Invoke-Expression $cmd
+    Write-Host "# kubectl-krew - Done running $cmd" -ForegroundColor Green
+}
+#endregion
+
 #region powershell modules
 Write-Host "# pwsh - Updating powershell modules"
 
