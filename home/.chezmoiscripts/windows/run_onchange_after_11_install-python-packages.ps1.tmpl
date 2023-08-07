@@ -3,11 +3,6 @@ $ErrorActionPreference = "Stop"
 
 {{- if and (.is_desktop) (lookPath "py.exe") -}}
 
-{{ $pip_packages := list
-  "pre-commit"
-  "yq"
--}}
-
 # Install pipx
 {{ if not (stat (joinPath .chezmoi.homeDir ".local/bin/pipx.exe")) }}
   Write-Host "Installing pipx"
@@ -16,14 +11,14 @@ $ErrorActionPreference = "Stop"
   py -3 $PIPX_DST install pipx
 {{ end }}
 
-Write-Host "Installing/updating pipx packages: {{ $pip_packages | join " " }}"
+Write-Host "Installing/updating pipx packages: {{ .pipx_packages | join " " }}"
 
 $PIPX_BIN = (Get-Command pipx.exe -ErrorAction SilentlyContinue).Source
 if (-not $PIPX_BIN) {
     $PIPX_BIN = "$env:USERPROFILE\.local\bin\pipx"
 }
 
-{{ range $pip_packages -}}
+{{ range .pipx_packages -}}
   Write-Host Installing pipx package '{{ . }}'
   Invoke-Expression "& '$PIPX_BIN' install {{ . }} --force"
 {{ end }}
