@@ -14,6 +14,19 @@ pipx_packages:
   - pre-commit
   - yq
 
+scoop_packages: []
+
+winget_packages:
+  all:
+    - JernejSimoncic.Wget
+    - Microsoft.WindowsTerminal
+  personal:
+    - Bitwarden.Bitwarden
+    - Kubernetes.kubectl
+  work1:
+    - Bitwarden.Bitwarden
+    - Kubernetes.kubectl
+
 kubectl_krew_plugins:
   - oidc-login
   - sudo

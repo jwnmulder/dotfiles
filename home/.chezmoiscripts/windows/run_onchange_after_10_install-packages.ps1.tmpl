@@ -2,21 +2,8 @@ Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
 {{ $winget_packages := list -}}
-{{ $scoop_packages := list -}}
-
-{{ if eq .profile "personal" -}}
-{{   $winget_packages = concat $winget_packages (list
-     "Bitwarden.Bitwarden"
-     "Kubernetes.kubectl"
-     ) -}}
-{{ end -}}
-
-{{ if eq .profile "work1" -}}
-{{   $winget_packages = concat $winget_packages (list
-     "Bitwarden.Bitwarden"
-     "Kubernetes.kubectl"
-     ) -}}
-{{ end -}}
+{{ $winget_packages = concat $winget_packages (coalesce (get .winget_packages "all") list) -}}
+{{ $winget_packages = concat $winget_packages (coalesce (get .winget_packages .profile) list) -}}
 
 #region Winget packages
 {{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list && type %TEMP%\\winget_list") -}}
@@ -29,7 +16,7 @@ $ErrorActionPreference = "Stop"
 #endregion
 
 #region Scoop packages
-{{ if gt (len $scoop_packages) 0 -}}
-  scoop install {{ $scoop_packages | join " " }}
+{{ if gt (len .scoop_packages) 0 -}}
+  scoop install {{ .scoop_packages | join " " }}
 {{ end }}
 #endregion
