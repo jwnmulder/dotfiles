@@ -1,0 +1,10 @@
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+{{ if not (lookPath "scoop") -}}
+Write-Host "Installing scoop"
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod get.scoop.sh | Invoke-Expression
+{{- end }}
+
+scoop bucket add extras
