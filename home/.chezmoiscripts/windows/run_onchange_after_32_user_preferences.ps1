@@ -26,7 +26,7 @@ function Update-ItemProperty {
     }
 }
 
-Write-Output "Configuring Explorer, Taskbar, and System Tray..."
+Write-Output "Configuring Windows user preferences"
 
 # Explorer: Show hidden files by default: Show Files: 1, Hide Files: 2
 Update-ItemProperty -Description "Explorer: Show hidden files by default" `
@@ -38,4 +38,8 @@ Update-ItemProperty -Description "Explorer: Show file extensions by default" `
     -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
     -Name "HideFileExt" -Value 0
 
-Write-Output "Completed configuration of Explorer, Taskbar, and System Tray"
+Update-ItemProperty -Description "Search: Bing search disabled" `
+    -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" `
+    -Name "BingSearchEnabled" -Value 0
+
+Write-Output "Completed configuration of Windows user preferences"
