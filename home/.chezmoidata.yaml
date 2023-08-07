@@ -9,3 +9,17 @@ versions:
   backstage_go: v0.8.0      # renovate: datasource=github-releases depName=einride/backstage-go
   trivy: v0.44.0            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.1.1               # renovate: datasource=github-releases depName=FiloSottile/age
+
+kubectl_krew_plugins:
+  - oidc-login
+  - sudo
+  - cert-manager
+  - ingress-nginx
+  - deprecations
+  - outdated
+  - get-all
+  - starboard
+  - resource-capacity
+  - open-svc
+  - popeye
+  - explore
