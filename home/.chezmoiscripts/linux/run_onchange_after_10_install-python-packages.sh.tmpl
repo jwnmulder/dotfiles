@@ -3,19 +3,14 @@
 
 set -euo pipefail
 
-{{ $pip_packages := list
-  "pre-commit"
-  "yq"
--}}
-
 # Install pipx
 {{ if not (stat (joinPath .chezmoi.homeDir ".local/bin/pipx")) }}
   echo "Installing pipx"
   curl -Ls https://github.com/pypa/pipx/releases/latest/download/pipx.pyz -o pipx.pyz && python3 pipx.pyz install pipx
 {{ end }}
 
-echo "Installing/updating pipx packages: {{ $pip_packages | join " " }}"
-{{ range $pip_packages -}}
+echo "Installing/updating pipx packages: {{ .pipx_packages | join " " }}"
+{{ range .pipx_packages -}}
 
   # Removing pip installed package as this is not preferred inymore in PEP668
   if python3 -m pip list | grep {{.}}; then

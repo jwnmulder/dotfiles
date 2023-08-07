@@ -10,6 +10,10 @@ versions:
   trivy: v0.44.0            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.1.1               # renovate: datasource=github-releases depName=FiloSottile/age
 
+pipx_packages:
+  - pre-commit
+  - yq
+
 kubectl_krew_plugins:
   - oidc-login
   - sudo
