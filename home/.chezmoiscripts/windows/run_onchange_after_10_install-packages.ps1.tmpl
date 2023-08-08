@@ -1,9 +1,9 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
-{{ $winget_packages := list -}}
-{{ $winget_packages = concat $winget_packages (coalesce (get .winget_packages "all") list) -}}
-{{ $winget_packages = concat $winget_packages (coalesce (get .winget_packages .profile) list) -}}
+{{ $winget_packages := concat
+  (coalesce (get .winget_packages "all") list)
+  (coalesce (get .winget_packages .profile) list) -}}
 
 #region Winget packages
 {{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list && type %TEMP%\\winget_list") -}}
