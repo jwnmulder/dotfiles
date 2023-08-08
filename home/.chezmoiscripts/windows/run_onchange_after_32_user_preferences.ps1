@@ -13,16 +13,23 @@ function Update-ItemProperty {
         [Parameter(Mandatory = $True)][String]$Description
     )
 
-    $CurrentValue = Get-ItemPropertyValue -Path $Path -Name $Name
-    if ($Value -ne $CurrentValue) {
-        Write-Output "$Description - Updating '$Name' from $CurrentValue to $Value"
-        if ($PSCmdlet.ShouldProcess("$Path - $Name=$Value")) {
-            $keyName = $Path.Replace("HKCU:", "HKEY_CURRENT_USER")
-            [microsoft.win32.registry]::SetValue($keyName, $Name, $Value)
+    if (!(Test-Path $Path)) {
+        # if ($PSCmdlet.ShouldProcess("$Path")) {
+        #     New-Item -Path $Path -Force
+        # }
+        Write-Host "WARN: Skipping $Name as $Path does not exist" -ForegroundColor DarkYellow
+    } else {
+        $CurrentValue = Get-ItemPropertyValue -Path $Path -Name $Name
+        if ($Value -ne $CurrentValue) {
+            Write-Output "$Description - Updating '$Name' from $CurrentValue to $Value"
+            if ($PSCmdlet.ShouldProcess("$Path - $Name=$Value")) {
+                $keyName = $Path.Replace("HKCU:", "HKEY_CURRENT_USER")
+                [microsoft.win32.registry]::SetValue($keyName, $Name, $Value)
+            }
         }
-    }
-    else {
-        Write-Output "$Description - Skipping, '$Name' already set to $Value"
+        else {
+            Write-Output "$Description - Skipping, '$Name' already set to $Value"
+        }
     }
 }
 
