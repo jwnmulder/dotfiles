@@ -19,15 +19,21 @@ function Update-ItemProperty {
         # }
         Write-Host "WARN: Skipping $Name as $Path does not exist" -ForegroundColor DarkYellow
     } else {
+        if (!(Get-ItemProperty -Path $Path -Name $Name -ErrorAction SilentlyContinue)) {
+            Write-Output "$Description - Creating registry key $Name in $Path"
+            New-ItemProperty -Path $Path -Name $Name | Out-Null
+        }
         $CurrentValue = Get-ItemPropertyValue -Path $Path -Name $Name
-        if ($Value -ne $CurrentValue) {
+
+        if (!$Value.equals($CurrentValue)) {
             Write-Output "$Description - Updating '$Name' from $CurrentValue to $Value"
             if ($PSCmdlet.ShouldProcess("$Path - $Name=$Value")) {
+                # Using [microsoft.win32.registry]::SetValue instead of
+                # Set-ItemPropertyValue as it updates the registry type at the same time
                 $keyName = $Path.Replace("HKCU:", "HKEY_CURRENT_USER")
                 [microsoft.win32.registry]::SetValue($keyName, $Name, $Value)
             }
-        }
-        else {
+        } else {
             Write-Output "$Description - Skipping, '$Name' already set to $Value"
         }
     }
