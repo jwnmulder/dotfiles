@@ -53,6 +53,6 @@ Update-ItemProperty -Description "Explorer: Show file extensions by default" `
 
 Update-ItemProperty -Description "Search: Bing search disabled" `
     -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" `
-    -Name "BingSearchEnabled" -Value 0
+    -Name "BingSearchEnabledJWTEST" -Value 0
 
 Write-Output "Completed configuration of Windows user preferences"
