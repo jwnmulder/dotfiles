@@ -2,8 +2,12 @@ Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
 {{ $winget_packages := concat
-  (coalesce (get .winget_packages "all") list)
-  (coalesce (get .winget_packages .profile) list) -}}
+  (dig "all" list .winget_packages)
+  (dig .profile list .winget_packages) -}}
+
+{{ $scoop_packages := concat
+  (dig "all" list .scoop_packages)
+  (dig .profile list .scoop_packages) -}}
 
 #region Winget packages
 {{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list && type %TEMP%\\winget_list") -}}
@@ -16,7 +20,7 @@ $ErrorActionPreference = "Stop"
 #endregion
 
 #region Scoop packages
-{{ if gt (len .scoop_packages) 0 -}}
-  scoop install {{ .scoop_packages | join " " }}
+{{ if gt (len $scoop_packages) 0 -}}
+  scoop install {{ $scoop_packages | join " " }}
 {{ end }}
 #endregion

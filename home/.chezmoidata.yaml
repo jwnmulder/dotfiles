@@ -11,10 +11,12 @@ versions:
   age: v1.1.1               # renovate: datasource=github-releases depName=FiloSottile/age
 
 pipx_packages:
-  - pre-commit
-  - yq
+  all:
+    - pre-commit
+    - yq
 
-scoop_packages: []
+scoop_packages:
+  all: []
 
 winget_packages:
   all:
