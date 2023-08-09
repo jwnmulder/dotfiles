@@ -16,11 +16,13 @@ set -euo pipefail
 echo "Installing/updating pipx packages: {{ $pipx_packages | join " " }}"
 {{ range $pipx_packages -}}
 
+{{ if (lookPath "pip") -}}
   # Removing pip installed package as this is not preferred inymore in PEP668
   if python3 -m pip list | grep {{.}}; then
     echo "Removing pip installed package '{{ . }}'"
     python3 -m pip uninstall --isolated {{ . }} --yes
   fi
+{{- end }}
 
   echo Installing pipx package '{{ . }}'
   .local/bin/pipx install {{ . }} --force
