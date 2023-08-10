@@ -7,7 +7,7 @@ versions:
   fzf: "0.42.0"             # renovate: datasource=github-releases depName=junegunn/fzf
   fd: v8.7.0                # renovate: datasource=github-releases depName=sharkdp/fd
   backstage_go: v0.8.0      # renovate: datasource=github-releases depName=einride/backstage-go
-  trivy: v0.44.0            # renovate: datasource=github-releases depName=aquasecurity/trivy
+  trivy: v0.44.1            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.1.1               # renovate: datasource=github-releases depName=FiloSottile/age
 
 pipx_packages:
