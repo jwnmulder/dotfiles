@@ -24,6 +24,10 @@
 .ansible
 .azure
 .azcopy
+
+# Removal of old dotfiles
+.config/shellrc/profile.d/31_wsl_ssh_agent
+
 {{ end }}
 
 {{ if eq .chezmoi.os "windows" }}

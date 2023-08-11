@@ -6,18 +6,17 @@
 # https://github.com/rupor-github/win-gpg-agent
 
 if ! command -v socat &> /dev/null; then
-  echo "socat not found, please install required packages using one of:"
+  echo "wsl2-ssh-gpg-proxy: socat not found, please install required packages using one of:"
   echo "  - sudo apt install socat"
   return
 fi
 
-# SSH Socket
+{{ $win_username := output "bash" "-c" "cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
 
 load_wsl2_ssh_env() {
   # Needs to be /mnt/c/ for performance reasons, see https://github.com/BlackReloaded/wsl2-ssh-pageant/issues/24
   # wsl2_ssh_pageant_bin="$HOME/.local/win/wsl2-ssh-pageant.exe"
-  win_username=$(cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n')
-  wsl2_ssh_pageant_bin="/mnt/c/Users/${win_username}/.ssh/wsl2-ssh-pageant.exe"
+  wsl2_ssh_pageant_bin="/mnt/c/Users/{{ $win_username }}/.local/bin/wsl2-ssh-pageant.exe"
 
   # gpg_config_basepath="C\:/Users/${USER}/AppData/Roaming/gnupg"
   gpg_config_basepath=$(gpgconf.exe --list-dirs | grep socketdir | cut -f2- -d: | tr -d '\r\n')
@@ -27,6 +26,7 @@ load_wsl2_ssh_env() {
   gpg_config_basepath=${gpg_config_basepath/\%3a/\\\:}
 }
 
+# SSH and GPG sockets
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
 export GPG_AGENT_SOCK=$(gpgconf --list-dir agent-socket)
 
@@ -71,7 +71,6 @@ if ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
 fi
 
 unset load_wsl2_ssh_env
-unset win_username
 unset wsl2_ssh_pageant_bin
 unset gpg_config_basepath
 
