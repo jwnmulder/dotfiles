@@ -1,5 +1,7 @@
 $env:STARSHIP_CONFIG = "$HOME\AppData\Local\starship\starship.toml"
-Invoke-Expression (&"$HOME\AppData\Local\starship\starship.exe" init powershell)
+
+# https://github.com/starship/starship/issues/2057#issuecomment-831336770
+&"$HOME\AppData\Local\starship\starship.exe" init powershell --print-full-init | Out-String | Invoke-Expression
 
 Set-Alias do-upgrade-all $HOME\Documents\WindowsPowerShell\do-upgrade-all.ps1
 
