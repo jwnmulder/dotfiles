@@ -47,7 +47,7 @@ if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
     rm -f "$SSH_AUTH_SOCK"
     load_wsl2_ssh_env
     if test -x "$wsl2_ssh_pageant_bin"; then
-      (setsid nohup socat UNIX-LISTEN:"$SSH_AUTH_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --verbose --logfile /var/log/ssh-gpg-wsl2-proxy-ssh.log" >/dev/null 2>&1 &)
+      (setsid nohup socat UNIX-LISTEN:"$SSH_AUTH_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-ssh.log" >/dev/null 2>&1 &)
     else
       echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
     fi
@@ -63,7 +63,7 @@ if ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
     rm -f "$GPG_AGENT_SOCK"
     load_wsl2_ssh_env
     if test -x "$wsl2_ssh_pageant_bin"; then
-      (setsid nohup socat UNIX-LISTEN:"$GPG_AGENT_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --gpg S.gpg-agent --gpgConfigBasepath $gpg_config_basepath --verbose --logfile /var/log//ssh-gpg-wsl2-proxy-gpg.log" >/dev/null 2>&1 &)
+      (setsid nohup socat UNIX-LISTEN:"$GPG_AGENT_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --gpg S.gpg-agent --gpgConfigBasepath $gpg_config_basepath --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-gpg.log" >/dev/null 2>&1 &)
     else
       echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
     fi
