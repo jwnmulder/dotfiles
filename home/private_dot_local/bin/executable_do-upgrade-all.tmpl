@@ -1,4 +1,4 @@
-{{- if .is_desktop -}}
+{{- if and (.is_desktop) (eq .chezmoi.os "linux") -}}
 #!/usr/bin/env bash
 
 set -euo pipefail

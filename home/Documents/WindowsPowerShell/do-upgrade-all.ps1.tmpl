@@ -1,4 +1,4 @@
-{{- if .is_desktop -}}
+{{- if and (.is_desktop) (eq .chezmoi.os "windows") -}}
 #Requires -Modules @{ ModuleName="PowerShellGet"; ModuleVersion="2.0.0" }
 
 Import-Module -Name "PowerShellGet"
