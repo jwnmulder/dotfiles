@@ -48,6 +48,14 @@ if command -v kubectl-krew &> /dev/null; then
   echo "# kubectl-krew - Done updating kubectl krew user installed packages"
 fi
 
+if command -v chezmoi &> /dev/null; then
+  echo "# chezmoi - Upgrading chezmoi"
+
+  chezmoi upgrade
+
+  echo "# chezmoi - Done upgrading chezmoi"
+fi
+
 echo "do-upgrade-all - All done"
 
 {{ end }}
