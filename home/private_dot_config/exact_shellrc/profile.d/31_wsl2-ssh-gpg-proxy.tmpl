@@ -1,0 +1,78 @@
+{{ if .is_wsl -}}
+
+# Inspired by
+# https://dev.to/dzerycz/the-ultimate-guide-to-yubikey-on-wsl2-part-2-kli
+# https://d3vffli1wot2ak.cloudfront.net/yubikey-wsl2.html
+# https://github.com/rupor-github/win-gpg-agent
+
+if ! command -v socat &> /dev/null; then
+  echo "socat not found, please install required packages using one of:"
+  echo "  - sudo apt install socat"
+  return
+fi
+
+# SSH Socket
+
+load_wsl2_ssh_env() {
+  # Needs to be /mnt/c/ for performance reasons, see https://github.com/BlackReloaded/wsl2-ssh-pageant/issues/24
+  # wsl2_ssh_pageant_bin="$HOME/.local/win/wsl2-ssh-pageant.exe"
+  win_username=$(cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n')
+  wsl2_ssh_pageant_bin="/mnt/c/Users/${win_username}/.ssh/wsl2-ssh-pageant.exe"
+
+  # gpg_config_basepath="C\:/Users/${USER}/AppData/Roaming/gnupg"
+  gpg_config_basepath=$(gpgconf.exe --list-dirs | grep socketdir | cut -f2- -d: | tr -d '\r\n')
+
+  # escape characters so that C%3a\Users\${USER}\AppData\Roaming\gnupg becomes C\:/Users/${USER}/AppData/Roaming/gnupg
+  gpg_config_basepath=${gpg_config_basepath//\\/\/}
+  gpg_config_basepath=${gpg_config_basepath/\%3a/\\\:}
+}
+
+export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+export GPG_AGENT_SOCK=$(gpgconf --list-dir agent-socket)
+
+# Workaround for https://github.com/BlackReloaded/wsl2-ssh-pageant/issues/38
+# New wsl2-ssh-pageant.exe are created automatically upon reconnect
+if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
+  taskkill.exe /IM "wsl2-ssh-pageant.exe" /F > /dev/null 2>&1
+elif ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
+  taskkill.exe /IM "wsl2-ssh-pageant.exe" /F > /dev/null 2>&1
+fi
+
+# Relay $SSH_AUTH_SOCK using socat
+# Removing Linux SSH socket and replacing it by link to wsl2-ssh-pageant socket
+# if ! socat OPEN:/dev/null UNIX-CONNECT:$SSH_AUTH_SOCK > /dev/null 2>&1; then
+if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
+  ({
+    pkill -f "socat.*$SSH_AUTH_SOCK"
+    rm -f "$SSH_AUTH_SOCK"
+    load_wsl2_ssh_env
+    if test -x "$wsl2_ssh_pageant_bin"; then
+      (setsid nohup socat UNIX-LISTEN:"$SSH_AUTH_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-ssh.log" >/dev/null 2>&1 &)
+    else
+      echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
+    fi
+  } &)
+fi
+
+# Relay $GPG_AGENT_SOCK using socat
+# Removing Linux GPG socket and replacing it by link to wsl2-ssh-pageant socket
+# if ! socat OPEN:/dev/null UNIX-CONNECT:$GPG_AGENT_SOCK > /dev/null 2>&1; then
+if ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
+  ({
+    pkill -f "socat.*$GPG_AGENT_SOCK"
+    rm -f "$GPG_AGENT_SOCK"
+    load_wsl2_ssh_env
+    if test -x "$wsl2_ssh_pageant_bin"; then
+      (setsid nohup socat UNIX-LISTEN:"$GPG_AGENT_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --gpg S.gpg-agent --gpgConfigBasepath $gpg_config_basepath --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-gpg.log" >/dev/null 2>&1 &)
+    else
+      echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
+    fi
+  } &)
+fi
+
+unset load_wsl2_ssh_env
+unset win_username
+unset wsl2_ssh_pageant_bin
+unset gpg_config_basepath
+
+{{- end }}

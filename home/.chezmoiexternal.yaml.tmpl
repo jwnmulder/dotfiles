@@ -127,6 +127,9 @@
   type: archive
   url: "https://github.com/starship/starship/releases/download/{{ .versions.starship }}/starship-x86_64-pc-windows-msvc.zip"
 
+".local/bin/wsl2-ssh-pageant.exe":
+  type: file
+  url: "https://github.com/BlackReloaded/wsl2-ssh-pageant/releases/download/{{ .wsl2_ssh_pageant_version }}/wsl2-ssh-pageant.exe"
 # {{ end }}
 
 # {{- if eq .chezmoi.os "windows" }}
