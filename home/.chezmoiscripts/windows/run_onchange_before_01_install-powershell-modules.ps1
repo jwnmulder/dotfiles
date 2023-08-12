@@ -16,7 +16,7 @@ if (-not (Get-InstalledModule -Name "PowerShellGet" -MinimumVersion 2.0 -ErrorAc
 }
 
 # PSScriptAnalyzer
-if (-not (Get-Module -Name PSScriptAnalyzer -ListAvailable)) {
+if (-not (Get-InstalledModule -Name PSScriptAnalyzer)) {
     Install-Module -Name PSScriptAnalyzer -Scope CurrentUser
 }
 

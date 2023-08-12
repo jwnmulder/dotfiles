@@ -7,7 +7,6 @@ $downloadedFontsPath = "$env:USERPROFILE\.cache\chezmoi\fonts"
 $fontsPath = "$env:LOCALAPPDATA\Microsoft\Windows\Fonts"
 $userFontsRegistryPath = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
 
-
 function Get-FontName {
   param(
     [System.IO.FileInfo]$fontFile
@@ -19,7 +18,6 @@ function Get-FontName {
   $shellFontFile = $shellFolder.ParseName($fontFile.Name)
   $shellFontFileType = $shellFolder.GetDetailsOf($shellFontFile, 2)
   $shellFontFileTitle = $shellFolder.GetDetailsOf($shellFontFile, 21)
-
 
   if ($shellFontFileType -Like '*TrueType font file*') {
     $fontType = "(TrueType)"

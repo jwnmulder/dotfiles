@@ -17,7 +17,7 @@ function Update-ItemProperty {
         # if ($PSCmdlet.ShouldProcess("$Path")) {
         #     New-Item -Path $Path -Force
         # }
-        Write-Host "WARN: Skipping $Name as $Path does not exist" -ForegroundColor DarkYellow
+        Write-Output "WARN: Skipping $Name as $Path does not exist"
     } else {
         if (!(Get-ItemProperty -Path $Path -Name $Name -ErrorAction SilentlyContinue)) {
             Write-Output "$Description - Creating registry key $Name in $Path"
@@ -52,7 +52,7 @@ Update-ItemProperty -Description "Explorer: Show file extensions by default" `
     -Name "HideFileExt" -Value 0
 
 Update-ItemProperty -Description "Search: Bing search disabled" `
-    -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" `
-    -Name "BingSearchEnabledJWTEST" -Value 0
+    -Path "HKCU:\SOFTWARE\MicrosoftJW\Windows\CurrentVersion\Search" `
+    -Name "BingSearchEnabled" -Value 0
 
 Write-Output "Completed configuration of Windows user preferences"

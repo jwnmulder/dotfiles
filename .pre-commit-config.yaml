@@ -34,3 +34,17 @@ repos:
     hooks:
       - id: detect-secrets
         args: ["--exclude-files", ".chezmoi.yaml.tmpl"]
+
+  - repo: local
+    hooks:
+      - id: psscriptanalyzer
+        name: PSScriptAnalyzer
+        description: |
+          PSScriptAnalyzer provides script analysis and checks for potential code defects in the scripts
+          by applying a group of built-in or customized rules on the scripts being analyzed
+        language: system
+        files: '.*\.(ps1|ps1\.tmpl)$'
+        entry: >-
+          pwsh -Command Install-Module -Name PSScriptAnalyzer; Import-Module PSScriptAnalyzer; Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit
+          -ExcludeRule PSAvoidUsingInvokeExpression
+        pass_filenames: false
