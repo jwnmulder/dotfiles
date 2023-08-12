@@ -23,10 +23,11 @@ winget_packages:
   all:
     - JernejSimoncic.Wget
     - Microsoft.WindowsTerminal
-    - jqlang.jq
+    - Microsoft.VisualStudioCode
   personal:
     - Bitwarden.Bitwarden
     - Kubernetes.kubectl
+    - jqlang.jq
   work1:
     - Bitwarden.Bitwarden
     - Kubernetes.kubectl
