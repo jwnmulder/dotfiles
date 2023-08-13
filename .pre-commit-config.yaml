@@ -42,9 +42,9 @@ repos:
         description: |
           PSScriptAnalyzer provides script analysis and checks for potential code defects in the scripts
           by applying a group of built-in or customized rules on the scripts being analyzed
-        language: system
+        language: script
         files: '.*\.(ps1|ps1\.tmpl)$'
         entry: >-
-          pwsh -Command Install-Module -Name PSScriptAnalyzer; Import-Module PSScriptAnalyzer; Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit
+          bin/pwsh-Invoke-ScriptAnalyzer.ps1 -Path . -Recurse -EnableExit
           -ExcludeRule PSAvoidUsingInvokeExpression
         pass_filenames: false
