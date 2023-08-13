@@ -11,20 +11,25 @@ if ! command -v socat &> /dev/null; then
   return
 fi
 
-{{ $win_username := output "bash" "-c" "cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
+{{- /* get username via windows process */ -}}
+{{- $win_username := output "bash" "-c" "cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
 
-load_wsl2_ssh_env() {
-  # Needs to be /mnt/c/ for performance reasons, see https://github.com/BlackReloaded/wsl2-ssh-pageant/issues/24
-  # wsl2_ssh_pageant_bin="$HOME/.local/win/wsl2-ssh-pageant.exe"
-  wsl2_ssh_pageant_bin="/mnt/c/Users/{{ $win_username }}/.local/bin/wsl2-ssh-pageant.exe"
+{{- /*  get config_basepath by running gpgconf.exe in a windows process */ -}}
+{{- $win_gpg_config_basepath := output "bash" "-c" "gpgconf.exe --list-dirs socketdir | tr -d '\r\n'" }}
 
-  # gpg_config_basepath="C\:/Users/${USER}/AppData/Roaming/gnupg"
-  gpg_config_basepath=$(gpgconf.exe --list-dirs | grep socketdir | cut -f2- -d: | tr -d '\r\n')
+# Needs to be /mnt/c/ for performance reasons, see https://github.com/BlackReloaded/wsl2-ssh-pageant/issues/24
+wsl2_ssh_pageant_bin="/mnt/c/Users/{{ $win_username }}/.local/bin/wsl2-ssh-pageant.exe"
 
-  # escape characters so that C%3a\Users\${USER}\AppData\Roaming\gnupg becomes C\:/Users/${USER}/AppData/Roaming/gnupg
-  gpg_config_basepath=${gpg_config_basepath//\\/\/}
-  gpg_config_basepath=${gpg_config_basepath/\%3a/\\\:}
-}
+# escape characters so that C:\Users\${USER}\AppData\Roaming\gnupg becomes C\:/Users/${USER}/AppData/Roaming/gnupg
+win_gpg_config_basepath="{{ $win_gpg_config_basepath | replace "\\" "/" | replace ":" "\\:" }}"
+
+# In case win_gpg_config_basepath could not be determined during chezmoi applying the template
+if test -z "$win_gpg_config_basepath"; then
+  win_gpg_config_basepath=$(gpgconf.exe --list-dirs socketdir | tr -d '\r\n')
+
+  win_gpg_config_basepath=${win_gpg_config_basepath//\\/\/}
+  win_gpg_config_basepath=${win_gpg_config_basepath/:/\\\:}
+fi
 
 # SSH and GPG sockets
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
@@ -45,7 +50,6 @@ if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
   ({
     pkill -f "socat.*$SSH_AUTH_SOCK"
     rm -f "$SSH_AUTH_SOCK"
-    load_wsl2_ssh_env
     if test -x "$wsl2_ssh_pageant_bin"; then
       (setsid nohup socat UNIX-LISTEN:"$SSH_AUTH_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-ssh.log" >/dev/null 2>&1 &)
     else
@@ -61,17 +65,15 @@ if ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
   ({
     pkill -f "socat.*$GPG_AGENT_SOCK"
     rm -f "$GPG_AGENT_SOCK"
-    load_wsl2_ssh_env
     if test -x "$wsl2_ssh_pageant_bin"; then
-      (setsid nohup socat UNIX-LISTEN:"$GPG_AGENT_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --gpg S.gpg-agent --gpgConfigBasepath $gpg_config_basepath --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-gpg.log" >/dev/null 2>&1 &)
+      (setsid nohup socat UNIX-LISTEN:"$GPG_AGENT_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --gpg S.gpg-agent --gpgConfigBasepath $win_gpg_config_basepath --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-gpg.log" >/dev/null 2>&1 &)
     else
       echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
     fi
   } &)
 fi
 
-unset load_wsl2_ssh_env
 unset wsl2_ssh_pageant_bin
-unset gpg_config_basepath
+unset win_gpg_config_basepath
 
 {{- end }}
