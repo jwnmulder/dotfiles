@@ -1,6 +1,10 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+if (-not (Get-InstalledModule -Name "PackageManagement" -MinimumVersion 1.4.8 -ErrorAction SilentlyContinue)) {
+    Install-Module PackageManagement -Scope CurrentUser -MinimumVersion 1.4.8 -Force -AllowClobber
+}
+
 # Needed for GitHubs 'windows-latest' image. Somehow version 1.4.7 is selected which is not working
 Import-Module PackageManagement -MinimumVersion 1.4.8
 
