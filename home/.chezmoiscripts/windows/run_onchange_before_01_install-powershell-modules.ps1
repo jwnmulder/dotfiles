@@ -5,6 +5,8 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
 Get-Module PowerShellGet, PackageManagement -ListAvailable -ErrorAction SilentlyContinue
 
+Import-Module PowerShellGet
+
 if (-not (Get-InstalledModule -Name "PackageManagement" -MinimumVersion 1.4.8 -ErrorAction SilentlyContinue)) {
     Install-Module PackageManagement -Scope CurrentUser -MinimumVersion 1.4.8 -Force -AllowClobber
 }
@@ -12,15 +14,15 @@ if (-not (Get-InstalledModule -Name "PackageManagement" -MinimumVersion 1.4.8 -E
 # Needed for GitHubs 'windows-latest' image. Somehow version 1.4.7 is selected which is not working
 Import-Module PackageManagement -MinimumVersion 1.4.8
 
+if (-not (Get-InstalledModule -Name "PowerShellGet" -MinimumVersion 2.0 -ErrorAction SilentlyContinue)) {
+    Install-Module PowerShellGet -Scope CurrentUser -MinimumVersion 2.0 -Force -AllowClobber
+}
+
 # '-ForceBootstrap' will Install the NuGet package provider if not already done
 Get-PackageProvider -Name "NuGet" -ForceBootstrap
 
 if (-not ((Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue).InstallationPolicy -eq "Trusted")) {
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-}
-
-if (-not (Get-InstalledModule -Name "PowerShellGet" -MinimumVersion 2.0 -ErrorAction SilentlyContinue)) {
-    Install-Module PowerShellGet -Scope CurrentUser -MinimumVersion 2.0 -Force -AllowClobber
 }
 
 # PSScriptAnalyzer
