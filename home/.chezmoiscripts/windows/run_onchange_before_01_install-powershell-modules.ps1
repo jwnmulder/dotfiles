@@ -1,14 +1,13 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+Write-Output $PSVersionTable
+Write-Output $env:PSModulePath
+
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
-Get-Module PowerShellGet, PackageManagement -ListAvailable -ErrorAction SilentlyContinue
-
-Import-Module PowerShellGet
-
-if (-not (Get-InstalledModule -Name "PackageManagement" -MinimumVersion 1.4.8 -ErrorAction SilentlyContinue)) {
-    Install-Module PackageManagement -Scope CurrentUser -MinimumVersion 1.4.8 -Force -AllowClobber
+if (-not (Get-InstalledModule -Name "PackageManagement" -MinimumVersion 1.4.8.0 -ErrorAction SilentlyContinue)) {
+    Install-Module PackageManagement -Scope CurrentUser -MinimumVersion 1.4.8.0 -Force -AllowClobber
 }
 
 # Needed for GitHubs 'windows-latest' image. Somehow version 1.4.7 is selected which is not working
