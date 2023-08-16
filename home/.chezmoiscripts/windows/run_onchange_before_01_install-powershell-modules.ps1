@@ -1,6 +1,7 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+Get-ExecutionPolicy
 Get-Module PowerShellGet, PackageManagement -ListAvailable -ErrorAction SilentlyContinue
 
 if (-not (Get-InstalledModule -Name "PackageManagement" -MinimumVersion 1.4.8 -ErrorAction SilentlyContinue)) {
