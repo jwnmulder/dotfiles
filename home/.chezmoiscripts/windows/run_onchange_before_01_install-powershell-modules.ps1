@@ -1,6 +1,8 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+Get-Module PowerShellGet, PackageManagement -ListAvailable -ErrorAction SilentlyContinue
+
 if (-not (Get-InstalledModule -Name "PackageManagement" -MinimumVersion 1.4.8 -ErrorAction SilentlyContinue)) {
     Install-Module PackageManagement -Scope CurrentUser -MinimumVersion 1.4.8 -Force -AllowClobber
 }
