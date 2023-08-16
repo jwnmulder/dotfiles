@@ -120,7 +120,7 @@ jobs:
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
-        shell: pwsh
+        shell: powershell
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
           bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
