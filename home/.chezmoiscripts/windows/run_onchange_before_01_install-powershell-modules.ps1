@@ -1,8 +1,8 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
-Write-Output $PSVersionTable
-Write-Output $env:PSModulePath
+$PSVersion = $PSVersionTable.PSVersion.ToString()
+Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
