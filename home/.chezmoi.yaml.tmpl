@@ -102,6 +102,10 @@ data:
   git:
     signingkey: {{ $git.signingkey }}
 {{- end }}
+{{- if $data.password_store }}
+  password_store:
+    repo: {{ $data.password_store.repo }}
+{{- end }}
 {{- if $profiles }}
   profiles:
 {{ $profiles | toYaml | indent 4 }}
