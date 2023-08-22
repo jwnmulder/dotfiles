@@ -54,26 +54,18 @@ config_info: |
   {{- $personal_device := eq $profile "personal" -}}
   {{- $work_device := ne $profile "personal" -}}
 
-  {{- $profiles := .profiles -}}
-  {{- $data := "" -}}
-  {{- $profile_data := "" -}}
-  {{- $git := .git -}}
-
+  {{- $enc_data := dict -}}
   {{- if and
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml")) -}}
-  {{-   $data = include (joinPath .chezmoi.workingTree "home/.data/chezmoidata.yaml.age") | decrypt | fromYaml -}}
-  {{-   $profiles = include (joinPath .chezmoi.workingTree "home/.data/chezmoidata_profiles.yaml.age") | decrypt | fromYaml -}}
-
-  {{-   $name = $data.name -}}
-  {{-   $git = $data.git -}}
+  {{-   $enc_data = include (joinPath .chezmoi.workingTree "home/.data/chezmoidata.yaml.age") | decrypt | fromYaml -}}
   {{- else if and (not $ephemeral) (not $is_server)  -}}
   {{-   writeToStdout "WARNING: Please re-run chezmoi init again to complete chezmoi.yaml data setup" -}}
   {{- end -}}
 
+  {{- $profiles := coalesce $enc_data.profiles .profiles -}}
   {{- if $profiles -}}
-  {{-   $profile_data = get $profiles $profile -}}
-
+  {{-   $profile_data := get $profiles $profile -}}
   {{-   $email = $profile_data.email -}}
   {{- end -}}
 
@@ -98,14 +90,19 @@ data:
   work_device: {{ $work_device }}
   email: {{ $email }}
   name: {{ $name }}
+
+{{- $git := coalesce $enc_data.git .git -}}
 {{- if $git }}
   git:
     signingkey: {{ $git.signingkey }}
 {{- end }}
-{{- if $data.password_store }}
+
+{{- $password_store := coalesce $enc_data.password_store .password_store -}}
+{{- if $password_store }}
   password_store:
-    repo: {{ $data.password_store.repo }}
+    repo: {{ $password_store.repo }}
 {{- end }}
+
 {{- if $profiles }}
   profiles:
 {{ $profiles | toYaml | indent 4 }}

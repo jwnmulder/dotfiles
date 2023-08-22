@@ -40,5 +40,4 @@ chezmoi apply
 
 ```bash
 bin/edit-age-encrypted-in-vscode.sh home/.data/chezmoidata.yaml.age
-bin/edit-age-encrypted-in-vscode.sh home/.data/chezmoidata_profiles.yaml.age
 ```
