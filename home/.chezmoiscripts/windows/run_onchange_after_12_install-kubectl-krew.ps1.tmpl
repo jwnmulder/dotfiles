@@ -1,0 +1,16 @@
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+{{ if and (.is_desktop) (lookPath "git") -}}
+
+# Need to wait for https://github.com/kubernetes-sigs/krew/issues/631 to be resolved
+
+# Install krew
+{{ if not (stat (joinPath .chezmoi.homeDir ".krew/bin/krew.exe")) }}
+  Write-Host "Installing kubectl-krew"
+  $KREW_TMP_BIN = [System.IO.Path]::GetTempPath() + "krew.exe"
+  Invoke-WebRequest -Uri "https://github.com/kubernetes-sigs/krew/releases/download/v0.4.4/krew.exe" -OutFile $KREW_TMP_BIN
+  &"$KREW_TMP_BIN" install krew
+{{ end }}
+
+{{- end }}
