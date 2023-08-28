@@ -12,7 +12,7 @@ if ! command -v socat &> /dev/null; then
 fi
 
 {{- /* get username via windows process */ -}}
-{{- $win_username := output "bash" "-c" "cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
+{{- $win_username := output "bash" "-c" "set -o pipefail && cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
 
 {{- /*  get config_basepath by running gpgconf.exe in a windows process */ -}}
 {{- $win_gpg_config_basepath := output "bash" "-c" "gpgconf.exe --list-dirs socketdir | tr -d '\r\n'" }}
