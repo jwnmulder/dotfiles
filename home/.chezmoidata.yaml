@@ -10,6 +10,8 @@ versions:
   trivy: v0.45.1            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.1.1               # renovate: datasource=github-releases depName=FiloSottile/age
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
+  gitleaks: v8.18.0         # renovate: datasource=github-releases depName=gitleaks/gitleaks
+  trufflehog: v3.56.1       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
 
 pipx_packages:
   all:

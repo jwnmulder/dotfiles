@@ -39,7 +39,7 @@
 
 ".local/bin/direnv":
   type: file
-  url: "https://github.com/direnv/direnv/releases/download/{{ .versions.direnv }}/direnv.linux-{{ .chezmoi.arch }}"
+  url: "https://github.com/direnv/direnv/releases/download/{{ .versions.direnv }}/direnv.{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
   executable: true
 
 ".local/bin/azcopy":
@@ -50,11 +50,24 @@
   path: "azcopy"
   executable: true
 
+".local/bin/gitleaks":
+  type: archive-file
+  url: 'https://github.com/gitleaks/gitleaks/releases/download/{{ .versions.gitleaks }}/gitleaks_{{ .versions.gitleaks | trimPrefix "v" }}_{{ .chezmoi.os }}_{{ .uname.machine | replace "x86_" "x" }}.tar.gz'
+  path: "gitleaks"
+  executable: true
+
+".local/bin/trufflehog":
+  type: archive-file
+  url: 'https://github.com/trufflesecurity/trufflehog/releases/download/{{ .versions.trufflehog }}/trufflehog_{{ .versions.trufflehog | trimPrefix "v" }}_{{ .chezmoi.os }}_{{ .chezmoi.arch }}.tar.gz'
+  path: "trufflehog"
+  executable: true
+
 ".local/share/nvm/":
   type: archive
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
   stripComponents: 1
   refreshPeriod: "168h"
+
 
 # {{ end }}
 
