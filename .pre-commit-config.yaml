@@ -35,6 +35,11 @@ repos:
       - id: detect-secrets
         args: ["--exclude-files", ".chezmoi.yaml.tmpl"]
 
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.16.1
+    hooks:
+      - id: gitleaks
+
   - repo: local
     hooks:
       - id: psscriptanalyzer
