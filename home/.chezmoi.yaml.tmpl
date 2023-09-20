@@ -34,10 +34,7 @@ config_info: |
   {{-   $username = env "USERNAME" -}}
   {{- end -}}
 
-  {{- if and $interactive (not $ephemeral) (not $is_server) (not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))) -}}
-  {{-   $instructions := output (print .chezmoi.workingTree "/bin/decrypt-private-key-instructions." $script_ext) .chezmoi.workingTree -}}
-  {{-   writeToStdout "Missing key.txt. Please follow the instructions below.\n" writeToStdout $instructions -}}
-  {{- end -}}
+  {{- $use_encrypted_data := and $interactive (not $ephemeral) (not $is_server) -}}
 
   {{- range $i := until 5 -}}
   {{-   if regexMatch "^((personal)|(work\\d))$" $profile -}}
@@ -59,8 +56,6 @@ config_info: |
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml")) -}}
   {{-   $enc_data = include (joinPath .chezmoi.workingTree "home/.data/chezmoidata.yaml.age") | decrypt | fromYaml -}}
-  {{- else if and (not $ephemeral) (not $is_server)  -}}
-  {{-   writeToStdout "WARNING: Please re-run chezmoi init again to complete chezmoi.yaml data setup" -}}
   {{- end -}}
 
   {{- $profiles := coalesce $enc_data.profiles .profiles -}}
@@ -78,6 +73,7 @@ age:
   recipient: "age1cckqh88dv9m75dcd9ftkjqxuc6y8zsvp40yavdkp37l5cvajraxs0lxnlj"
 
 data:
+  use_encrypted_data: {{ $use_encrypted_data }}
   is_wsl: {{ $is_wsl }}
   is_server: {{ $is_server }}
   is_desktop: {{ $is_desktop  }}
