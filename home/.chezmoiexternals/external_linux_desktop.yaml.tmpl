@@ -1,0 +1,72 @@
+# {{ if and (eq .chezmoi.os "linux") (.is_desktop) }}
+
+".local/bin/bw":
+  type: file
+  url: "https://vault.bitwarden.com/download/?app=cli&platform=linux"
+  executable: true
+  refreshPeriod: "168h"
+  filter:
+    command: "zcat"
+
+".local/bin/kubectl":
+  type: file
+  url: "https://dl.k8s.io/release/{{ .versions.kubectl }}/bin/linux/{{ .chezmoi.arch }}/kubectl"
+  executable: true
+
+".local/bin/kustomize":
+  type: archive-file
+  url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/{{ .versions.kustomize }}/kustomize_{{ .versions.kustomize }}_linux_{{ .chezmoi.arch }}.tar.gz"
+  path: "kustomize"
+
+".local/bin/helm":
+  type: archive-file
+  url: "https://get.helm.sh/helm-{{ .versions.helm }}-linux-{{ .chezmoi.arch }}.tar.gz"
+  path: '{{ printf "linux-%s/helm" .chezmoi.arch }}'
+
+".local/bin/backstage":
+  type: archive-file
+  url: 'https://github.com/einride/backstage-go/releases/download/{{ .versions.backstage_go }}/backstage-go_{{ .versions.backstage_go | trimPrefix "v" }}_linux_{{ .chezmoi.arch }}.tar.gz'
+  path: "backstage"
+
+".local/bin/age":
+  type: archive-file
+  url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+  path: "age/age"
+
+".local/bin/age-keygen":
+  type: archive-file
+  url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+  path: "age/age-keygen"
+
+".local/bin/direnv":
+  type: file
+  url: "https://github.com/direnv/direnv/releases/download/{{ .versions.direnv }}/direnv.{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
+  executable: true
+
+".local/bin/azcopy":
+  type: archive-file
+  url: "https://aka.ms/downloadazcopy-v10-linux"
+  stripComponents: 1
+  refreshPeriod: "168h"
+  path: "azcopy"
+  executable: true
+
+".local/bin/gitleaks":
+  type: archive-file
+  url: 'https://github.com/gitleaks/gitleaks/releases/download/{{ .versions.gitleaks }}/gitleaks_{{ .versions.gitleaks | trimPrefix "v" }}_{{ .chezmoi.os }}_{{ .uname.machine | replace "x86_" "x" }}.tar.gz'
+  path: "gitleaks"
+  executable: true
+
+".local/bin/trufflehog":
+  type: archive-file
+  url: 'https://github.com/trufflesecurity/trufflehog/releases/download/{{ .versions.trufflehog }}/trufflehog_{{ .versions.trufflehog | trimPrefix "v" }}_{{ .chezmoi.os }}_{{ .chezmoi.arch }}.tar.gz'
+  path: "trufflehog"
+  executable: true
+
+".local/share/nvm/":
+  type: archive
+  url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
+  stripComponents: 1
+  refreshPeriod: "168h"
+
+# {{ end }}

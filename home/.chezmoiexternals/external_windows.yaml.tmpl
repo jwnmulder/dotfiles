@@ -1,0 +1,11 @@
+# {{ if eq .chezmoi.os "windows" }}
+
+"AppData/Local/starship":
+  type: archive
+  url: "https://github.com/starship/starship/releases/download/{{ .versions.starship }}/starship-x86_64-pc-windows-msvc.zip"
+
+".local/bin/wsl2-ssh-pageant.exe":
+  type: file
+  url: "https://github.com/BlackReloaded/wsl2-ssh-pageant/releases/download/{{ .versions.wsl2_ssh_pageant }}/wsl2-ssh-pageant.exe"
+
+# {{ end }}
