@@ -96,6 +96,43 @@ jobs:
             exit 1
           fi
 
+
+  linux-server-arm:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - personal
+        container:
+          - ubuntu:latest
+
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install prerequisites
+        run: apt-get update -q && apt-get install -y -q python3 python3-pip curl
+
+      - name: Setup PATH
+        run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
+
+      - name: Chezmoi init & apply
+        uses: pguyot/arm-runner-action@v2
+        env:
+          DATA_profile: ${{ matrix.profile }}
+        with:
+          base_image: dietpi:rpi_armv7_bullseye
+          commands: |
+            ./install.sh
+
+      - name: Assert
+        run: |
+          if ! grep -q "is_server: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
+            echo "::error file=chezmoi.yaml::is_server: true not found"
+            exit 1
+          fi
+
   windows-desktop:
     strategy:
       fail-fast: false
