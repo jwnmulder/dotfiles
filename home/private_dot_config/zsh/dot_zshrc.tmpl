@@ -79,7 +79,7 @@ zstyle ':omz:plugins:nvm' lazy yes
 # active plugins
 {{- if (.is_desktop) }}
 plugins=(z git zsh-autosuggestions kubectl aliases fzf nvm)
-{{- else -}}
+{{- else }
 plugins=(z git zsh-autosuggestions kubectl aliases fzf)
 {{ end }}
 
