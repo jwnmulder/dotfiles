@@ -126,8 +126,6 @@ jobs:
             mkdir -p results
             cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
             chmod -R a+r results
-          #  ${HOME}/.local/bin/chezmoi data
-          # ./install.sh v2.37.0
 
       - name: Assert
         run: |
