@@ -123,7 +123,7 @@ jobs:
             ./install.sh
             pwd
             ls -la
-            echo "${HOME}/.local/bin"
+            ls -la "${HOME}/.local/bin"
             chezmoi data
           # ./install.sh v2.37.0
 
