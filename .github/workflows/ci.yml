@@ -124,7 +124,9 @@ jobs:
             pwd
             ls -la
             ls -la "${HOME}/.local/bin"
-            chezmoi data
+            ls -la ${HOME}/.config/chezmoi
+            cat ${HOME}/.config/chezmoi/chezmoi.yaml
+            ${HOME}/.local/bin/chezmoi data
           # ./install.sh v2.37.0
 
       - name: Assert
