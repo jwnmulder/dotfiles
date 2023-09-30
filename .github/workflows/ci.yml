@@ -121,19 +121,15 @@ jobs:
           # cpu: pxa250
           commands: |
             ./install.sh
-            pwd
-            ls -la
-            ls -la "${HOME}/.local/bin"
-            ls -la ${HOME}/.config/chezmoi
-            cat ${HOME}/.config/chezmoi/chezmoi.yaml
-            ${HOME}/.local/bin/chezmoi data
+            cp ${HOME}/.config/chezmoi/chezmoi.yaml chezmoi.yaml
+          #  ${HOME}/.local/bin/chezmoi data
           # ./install.sh v2.37.0
 
       - name: Assert
         run: |
-          ls -la "${HOME}/.local/bin"
-          ls -la ${HOME}/.config/chezmoi
-          cat ${HOME}/.config/chezmoi/chezmoi.yaml
+          pwd
+          ls -la
+          cp chezmoi.yaml ${HOME}/.config/chezmoi/chezmoi.yaml
           if ! grep -q "is_server: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
             echo "::error file=chezmoi.yaml::is_server: true not found"
             exit 1
