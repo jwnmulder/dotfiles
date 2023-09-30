@@ -120,7 +120,7 @@ jobs:
           # cpu: cortex-a7:cortex-a53
           # cpu: pxa250
           commands: |
-            ./install.sh v2.40.0
+            ./install.sh v2.37.0
 
       - name: Assert
         run: |
