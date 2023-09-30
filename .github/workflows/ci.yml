@@ -121,6 +121,8 @@ jobs:
           # cpu: pxa250
           commands: |
             ./install.sh
+            pwd
+            ls -la
           # ./install.sh v2.37.0
 
       - name: Assert
