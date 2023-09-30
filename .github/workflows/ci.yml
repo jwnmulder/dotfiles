@@ -118,7 +118,7 @@ jobs:
         with:
           base_image: dietpi:rpi_armv6_bullseye
           # cpu: cortex-a7:cortex-a53
-          # cpu: pxa250
+          cpu: pxa250
           commands: |
             ./install.sh v2.37.0
 
