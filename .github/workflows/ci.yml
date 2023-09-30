@@ -123,6 +123,7 @@ jobs:
             ./install.sh
             pwd
             ls -la
+            chezmoi data
           # ./install.sh v2.37.0
 
       - name: Assert
