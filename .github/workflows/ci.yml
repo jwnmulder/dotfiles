@@ -119,7 +119,7 @@ jobs:
           base_image: dietpi:rpi_armv7_bullseye
           cpu: cortex-a7:cortex-a53
           commands: |
-            ./install.sh v2.37.0
+            ./install.sh v2.40.0
 
       - name: Assert
         run: |
