@@ -97,7 +97,7 @@ jobs:
           fi
 
 
-  linux-server-armv5:
+  linux-server-armv7:
     strategy:
       fail-fast: false
       matrix:
@@ -116,11 +116,12 @@ jobs:
         env:
           DATA_profile: ${{ matrix.profile }}
         with:
-          base_image: dietpi:rpi_armv6_bullseye
-          # cpu: cortex-a7:cortex-a53
-          cpu: pxa250
+          base_image: dietpi:rpi_armv7_bullseye
+          cpu: cortex-a7
+          # cpu: pxa250
           commands: |
-            ./install.sh v2.37.0
+            ./install.sh
+          # ./install.sh v2.37.0
 
       - name: Assert
         run: |
