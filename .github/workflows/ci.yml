@@ -119,6 +119,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         with:
           base_image: dietpi:rpi_armv7_bullseye
+          cpu: cortex-a7:cortex-a53
           commands: |
             ./install.sh v2.27.0
 
