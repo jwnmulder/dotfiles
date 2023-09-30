@@ -131,10 +131,7 @@ jobs:
 
       - name: Assert
         run: |
-          pwd
-          ls -la
-          cp results/chezmoi.yaml ${HOME}/.config/chezmoi/chezmoi.yaml
-          if ! grep -q "is_server: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
+          if ! grep -q "is_server: true" results/chezmoi.yaml; then
             echo "::error file=chezmoi.yaml::is_server: true not found"
             exit 1
           fi
