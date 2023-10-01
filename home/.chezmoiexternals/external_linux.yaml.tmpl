@@ -12,14 +12,6 @@
   exact: true
   stripComponents: 2
   include: ["fzf-{{ .versions.fzf }}/shell/**"]
-
-".local/bin/eza":
-  type: archive-file
-  url: https://github.com/eza-community/eza/releases/download/{{ .versions.eza }}/eza_{{
-      eq .chezmoi.arch "amd64" | ternary "x86_64" .chezmoi.arch }}-unknown-linux-gnu{{
-      eq .chezmoi.arch "arm" | ternary "eabihf" "" }}.tar.gz
-  stripComponents: 1
-  path: "eza"
 # {{ end }}
 
 # {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
@@ -32,6 +24,14 @@
   type: archive-file
   url: https://github.com/aquasecurity/trivy/releases/download/{{ .versions.trivy }}/trivy_{{ .versions.trivy | trimPrefix "v" }}_Linux-64bit.tar.gz
   path: "trivy"
+
+".local/bin/eza":
+  type: archive-file
+  url: https://github.com/eza-community/eza/releases/download/{{ .versions.eza }}/eza_{{
+      eq .chezmoi.arch "amd64" | ternary "x86_64" .chezmoi.arch }}-unknown-linux-gnu{{
+      eq .chezmoi.arch "arm" | ternary "eabihf" "" }}.tar.gz
+  stripComponents: 1
+  path: "eza"
 # {{ end }}
 
 # {{ if eq .chezmoi.os "linux" }}
