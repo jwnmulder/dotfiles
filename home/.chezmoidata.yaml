@@ -11,7 +11,7 @@ versions:
   age: v1.1.1               # renovate: datasource=github-releases depName=FiloSottile/age
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
   gitleaks: v8.18.0         # renovate: datasource=github-releases depName=gitleaks/gitleaks
-  trufflehog: v3.57.0       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
+  trufflehog: v3.58.0       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
   eza: v0.14.0              # renovate: datasource=github-releases depName=eza-community/eza
 
 pipx_packages:
