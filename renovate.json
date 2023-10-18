@@ -4,6 +4,8 @@
     "github>jwnmulder/renovate-config"
   ],
 
+  "assignees": [ "jwnmulder" ],
+
   "packageRules": [
     {
       "matchPaths": [".pre-commit-config.yaml"],
