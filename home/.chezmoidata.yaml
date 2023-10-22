@@ -13,6 +13,7 @@ versions:
   gitleaks: v8.18.0         # renovate: datasource=github-releases depName=gitleaks/gitleaks
   trufflehog: v3.60.1       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
   eza: v0.15.0              # renovate: datasource=github-releases depName=eza-community/eza
+  bat: v0.24.0              # renovate: datasource=github-releases depName=sharkdp/bat
 
 pipx_packages:
   all:

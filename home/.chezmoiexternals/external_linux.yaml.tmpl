@@ -4,7 +4,7 @@
   url: https://github.com/junegunn/fzf/releases/download/{{ .versions.fzf }}/fzf-{{ .versions.fzf }}-linux_{{
       eq .chezmoi.arch "arm" | ternary (.uname.machine | trunc 5) .chezmoi.arch
     }}.tar.gz
-  path: "fzf"
+  path: fzf
 
 ".config/fzf/":
   type: archive
@@ -12,18 +12,26 @@
   exact: true
   stripComponents: 2
   include: ["fzf-{{ .versions.fzf }}/shell/**"]
+
+".local/bin/bat":
+  type: archive-file
+  url: https://github.com/sharkdp/bat/releases/download/{{ .versions.bat }}/bat-{{ .versions.bat }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz
+  stripComponents: 1
+  path: bat
+
 # {{ end }}
 
 # {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
 ".local/bin/fd":
   type: archive-file
   url: "https://github.com/sharkdp/fd/releases/download/{{ .versions.fd }}/fd-{{ .versions.fd }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz"
-  path: "fd-{{ .versions.fd }}-{{ .uname.machine }}-unknown-linux-gnu/fd"
+  stripComponents: 1
+  path: fd
 
 ".local/bin/trivy":
   type: archive-file
   url: https://github.com/aquasecurity/trivy/releases/download/{{ .versions.trivy }}/trivy_{{ .versions.trivy | trimPrefix "v" }}_Linux-64bit.tar.gz
-  path: "trivy"
+  path: trivy
 
 ".local/bin/eza":
   type: archive-file
@@ -31,9 +39,11 @@
       eq .chezmoi.arch "amd64" | ternary "x86_64" .chezmoi.arch }}-unknown-linux-gnu{{
       eq .chezmoi.arch "arm" | ternary "eabihf" "" }}.tar.gz
   stripComponents: 1
-  path: "eza"
+  path: eza
+
 # {{ end }}
 
+# ZSH related resources
 # {{ if eq .chezmoi.os "linux" }}
 ".local/share/oh-my-zsh/":
   type: archive
