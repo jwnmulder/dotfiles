@@ -41,6 +41,11 @@
   stripComponents: 1
   path: bat
 
+".local/bin/dasel":
+  type: file
+  url: https://github.com/TomWright/dasel/releases/download/{{ .versions.dasel }}/dasel_linux_amd64
+  executable: true
+
 # {{ end }}
 
 # ZSH related resources
