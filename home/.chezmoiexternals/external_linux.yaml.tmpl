@@ -13,12 +13,6 @@
   stripComponents: 2
   include: ["fzf-{{ .versions.fzf }}/shell/**"]
 
-".local/bin/bat":
-  type: archive-file
-  url: https://github.com/sharkdp/bat/releases/download/{{ .versions.bat }}/bat-{{ .versions.bat }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz
-  stripComponents: 1
-  path: bat
-
 # {{ end }}
 
 # {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
@@ -40,6 +34,12 @@
       eq .chezmoi.arch "arm" | ternary "eabihf" "" }}.tar.gz
   stripComponents: 1
   path: eza
+
+".local/bin/bat":
+  type: archive-file
+  url: https://github.com/sharkdp/bat/releases/download/{{ .versions.bat }}/bat-{{ .versions.bat }}-{{ .uname.machine }}-unknown-linux-gnu.tar.gz
+  stripComponents: 1
+  path: bat
 
 # {{ end }}
 
