@@ -21,9 +21,10 @@
     }
   ],
 
-  "regexManagers": [
+  "customManagers": [
     {
       "description": "yaml regex matcher: ': \"<currentValue>\" }}   # renovate: datasource=<datasource> depName=<depname>'",
+      "customType": "regex",
       "fileMatch": ["\\.yaml$"],
       "matchStrings": [
         ": \\s*\"*(?<currentValue>.*?)\"*\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s"
