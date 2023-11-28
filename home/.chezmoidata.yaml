@@ -14,7 +14,7 @@ versions:
   trufflehog: v3.63.1       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
   eza: v0.16.1              # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.24.0              # renovate: datasource=github-releases depName=sharkdp/bat
-  dasel: v2.4.1             # renovate: datasource=github-releases depName=TomWright/dasel
+  dasel: v2.5.0             # renovate: datasource=github-releases depName=TomWright/dasel
 
 pipx_packages:
   all:
