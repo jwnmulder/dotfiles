@@ -1,11 +1,7 @@
-{{- if .is_desktop -}}
+{{- if lookPath "python3" -}}
 #!/usr/bin/env bash
 
 set -euo pipefail
-
-{{ $pipx_packages := concat
-  (dig "all" list .pipx_packages)
-  (dig .profile list .pipx_packages) -}}
 
 # Install pipx
 {{ if not (stat (joinPath .chezmoi.homeDir ".local/bin/pipx")) }}
@@ -13,19 +9,18 @@ set -euo pipefail
   curl -Ls https://github.com/pypa/pipx/releases/download/{{ .versions.pipx_installer }}/pipx.pyz -o pipx.pyz && python3 pipx.pyz install pipx
 {{ end }}
 
+{{- if .is_desktop -}}
+
+{{ $pipx_packages := concat
+  (dig "all" list .pipx_packages)
+  (dig .profile list .pipx_packages) -}}
+
 echo "Installing/updating pipx packages: {{ $pipx_packages | join " " }}"
 {{ range $pipx_packages -}}
-
-{{ if (lookPath "pip") -}}
-  # Removing pip installed package as this is not preferred inymore in PEP668
-  if python3 -m pip list | grep {{.}}; then
-    echo "Removing pip installed package '{{ . }}'"
-    python3 -m pip uninstall --isolated {{ . }} --yes
-  fi
-{{- end }}
-
   echo Installing pipx package '{{ . }}'
-  .local/bin/pipx install {{ . }} --force
+  .local/bin/pipx install {{ . }} --quiet --force
 {{ end }}
+
+{{ end -}}
 
 {{ end -}}
