@@ -108,4 +108,4 @@ source $ZSH/oh-my-zsh.sh
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 # rtx hook
-(( ${+commands[rtx]} )) && emulate zsh -c "$(rtx activate zsh)"
+(( ${+commands[rtx]} )) && emulate zsh -c "$(rtx activate --status zsh)"
