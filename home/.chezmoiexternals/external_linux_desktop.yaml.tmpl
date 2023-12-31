@@ -63,6 +63,12 @@
   path: "trufflehog"
   executable: true
 
+".local/bin/rtx":
+  type: archive-file
+  url: 'https://github.com/jdx/rtx/releases/download/{{ .versions.rtx }}/rtx-{{ .versions.rtx }}-{{ .chezmoi.os }}-x64.tar.gz'
+  path: "rtx/bin/rtx"
+  executable: true
+
 ".local/share/nvm/":
   type: archive
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"

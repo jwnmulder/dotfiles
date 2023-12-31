@@ -16,6 +16,7 @@ versions:
   eza: v0.17.0              # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.24.0              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v2.5.0             # renovate: datasource=github-releases depName=TomWright/dasel
+  rtx: v2023.12.40          # renovate: datasource=github-releases depName=jdx/rtx
 
 pipx_packages:
   all:

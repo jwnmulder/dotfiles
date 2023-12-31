@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ range (glob (joinPath .chezmoi.homeDir ".local/share/oh-my-zsh/completions/*")) -}}
+# {{ include . | sha256sum }}
+{{ end -}}
+
+# Sometimes zsh's completion cache is outdated after running chezmoi
+# Lets just clean it so it gets recreated
+if [ -d "${HOME}/.config/zsh" ]; then
+  echo "Resetting zsh completion cache, will be regenerated automatically on next zsh start"
+  rm -f "${HOME}/.config/zsh/".zcompdump*
+fi
