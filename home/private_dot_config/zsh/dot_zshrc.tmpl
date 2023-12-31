@@ -104,7 +104,8 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
-# direnv
+# direnv hook
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
-#zprof
+# rtx hook
+(( ${+commands[rtx]} )) && emulate zsh -c "$(rtx activate zsh)"

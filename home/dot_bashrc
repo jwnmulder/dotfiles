@@ -132,3 +132,8 @@ fi
 if command -v direnv &> /dev/null; then
   eval "$(direnv hook bash)"
 fi
+
+# rtx hook
+if command -v rtx &> /dev/null; then
+  eval "$(rtx activate bash)"
+fi
