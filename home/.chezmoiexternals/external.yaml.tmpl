@@ -9,24 +9,37 @@
 
 # {{- if eq .chezmoi.os "windows" }}
 
-"{{ $fontsDir }}/MesloLGS NF Regular.ttf":
+"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF Regular.ttf":
   type: file
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Regular.ttf"
   refreshPeriod: "168h"
-"{{ $fontsDir }}/MesloLGS NF Bold.ttf":
+"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF Bold.ttf":
   type: file
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold.ttf"
   refreshPeriod: "168h"
-"{{ $fontsDir }}/MesloLGS NF Italic.ttf":
+"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF Italic.ttf":
   type: file
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Italic.ttf"
   refreshPeriod: "168h"
-"{{ $fontsDir }}/MesloLGS NF Bold Italic.ttf":
+"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF Bold Italic.ttf":
   type: file
   url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold Italic.ttf"
   refreshPeriod: "168h"
 
-"{{ $fontsDir }}/":
+"{{ $fontsDir }}/CaskaydiaCoveNerdFont":
+  type: archive
+  url: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/CascadiaCode.tar.xz"
+  include:
+    - CaskaydiaCoveNerdFont-Bold.ttf
+    - CaskaydiaCoveNerdFont-BoldItalic.ttf
+    - CaskaydiaCoveNerdFont-Italic.ttf
+    - CaskaydiaCoveNerdFont-Regular.ttf
+    - CaskaydiaCoveNerdFontMono-Bold.ttf
+    - CaskaydiaCoveNerdFontMono-BoldItalic.ttf
+    - CaskaydiaCoveNerdFontMono-Italic.ttf
+    - CaskaydiaCoveNerdFontMono-Regular.ttf
+
+"{{ $fontsDir }}/CascadiaCode":
   type: archive
   url: "https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip"
   stripComponents: 1
