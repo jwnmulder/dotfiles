@@ -2,6 +2,9 @@
 # As per https://github.com/romkatv/powerlevel10k#how-do-i-initialize-direnv-when-using-instant-prompt
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
 
+# rtx hook
+(( ${+commands[rtx]} )) && emulate zsh -c "$(rtx activate --status zsh)"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -106,6 +109,3 @@ source $ZSH/oh-my-zsh.sh
 
 # direnv hook
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
-
-# rtx hook
-(( ${+commands[rtx]} )) && emulate zsh -c "$(rtx activate --status zsh)"
