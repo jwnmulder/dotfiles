@@ -5,26 +5,14 @@
 # {{-   $fontsDir = ".cache/chezmoi/fonts" }}
 # {{- end }}
 
-# Further configuration instructions on https://github.com/romkatv/powerlevel10k/blob/master/font.md
-
 # {{- if eq .chezmoi.os "windows" }}
 
-"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF Regular.ttf":
+# {{-   range list "Regular" "Bold" "Italic" "Bold Italic" }}
+"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF {{ . }}.ttf":
   type: file
-  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Regular.ttf"
+  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF {{ . }}.ttf"
   refreshPeriod: "168h"
-"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF Bold.ttf":
-  type: file
-  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold.ttf"
-  refreshPeriod: "168h"
-"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF Italic.ttf":
-  type: file
-  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Italic.ttf"
-  refreshPeriod: "168h"
-"{{ $fontsDir }}/MesloLGS NF/MesloLGS NF Bold Italic.ttf":
-  type: file
-  url: "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold Italic.ttf"
-  refreshPeriod: "168h"
+# {{-   end }}
 
 "{{ $fontsDir }}/CaskaydiaCoveNerdFont":
   type: archive
