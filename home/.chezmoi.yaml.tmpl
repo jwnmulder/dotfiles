@@ -72,6 +72,13 @@ age:
   identity: "~/.config/chezmoi/key.txt"
   recipient: "age1cckqh88dv9m75dcd9ftkjqxuc6y8zsvp40yavdkp37l5cvajraxs0lxnlj"
 
+interpreters:
+  ps1:
+    # Prefer PowerShell Core over PowerShell Desktop
+    # https://github.com/PowerShell/PowerShell/issues/8635#issuecomment-454028787
+    command: '{{ if lookPath "pwsh.exe" }}pwsh.exe{{ else }}powershell.exe{{ end }}'
+    args: ["-NoLogo", "-NoProfile"]
+
 data:
   use_encrypted_data: {{ $use_encrypted_data }}
   is_wsl: {{ $is_wsl }}
@@ -79,7 +86,7 @@ data:
   is_desktop: {{ $is_desktop  }}
 {{- if eq .chezmoi.os "linux" }}
   uname:
-    machine: "{{ output "uname" "-m" | trim }}"
+    machine: '{{ output "uname" "-m" | trim }}'
 {{- end }}
   profile: {{ $profile }}
   personal_device: {{ $personal_device }}
