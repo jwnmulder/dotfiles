@@ -18,7 +18,7 @@ set -euo pipefail
 echo "Installing/updating pipx packages: {{ $pipx_packages | join " " }}"
 {{ range $pipx_packages -}}
   echo Installing pipx package '{{ . }}'
-  .local/bin/pipx install {{ . }} --quiet --force
+  .local/bin/pipx install {{ . }} --force
 {{ end }}
 
 {{ end -}}

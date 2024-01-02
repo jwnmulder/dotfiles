@@ -5,6 +5,10 @@ $env:STARSHIP_CONFIG = "$HOME\AppData\Local\starship\starship.toml"
 
 Set-Alias do-upgrade-all $HOME\Documents\WindowsPowerShell\do-upgrade-all.ps1
 
+# WSL Interop (https://github.com/mikebattista/PowerShell-WSL-Interop)
+# Installation: Install-Module WslInterop -Force
+# Import-WslCommand "cat", "cp", "echo", "find", "grep", "head", "ls", "mv", "rm", "sed", "touch", "tree", "which"
+
 . $HOME\Documents\WindowsPowerShell\completions\_chezmoi.ps1
 
 {{ if (lookPath "az") -}}
