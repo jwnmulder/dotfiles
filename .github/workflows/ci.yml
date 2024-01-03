@@ -138,11 +138,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        profile:
+          - personal
         shell:
           - powershell
           - pwsh
-        profile:
-          - personal
 
     runs-on: windows-latest
     steps:
@@ -165,7 +165,8 @@ jobs:
         shell: powershell
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
-          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
+          echo "Running chezmoi init --apply"
+          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE --verbose
 
       - name: Chezmoi init & apply - pwsh
         if: matrix.shell == 'pwsh'
@@ -174,4 +175,5 @@ jobs:
         shell: pwsh
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | pwsh -c -
-          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
+          echo "Running chezmoi init --apply"
+          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE --verbose
