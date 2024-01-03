@@ -5,8 +5,14 @@ $ErrorActionPreference = "Stop"
 
 # Setup modules for PowerShell Desktop version < 5.1
 powershell.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-modules.ps1"
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
 
 # Setup modules for PowerShell Core version > 6
 # {{- if lookPath "pwsh.exe" }}
 # pwsh.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-modules.ps1"
+# if ($LASTEXITCODE -ne 0) {
+#     exit $LASTEXITCODE
+# }
 # {{- end}}
