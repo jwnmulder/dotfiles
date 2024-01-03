@@ -142,8 +142,8 @@ jobs:
           - personal
         shell:
           - pwsh
+          - pwsh-in-powershell
           - powershell
-          - powershell-in-pwsh
 
     runs-on: windows-latest
     steps:
