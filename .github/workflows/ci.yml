@@ -168,7 +168,7 @@ jobs:
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
           echo "Running chezmoi init --apply"
-          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE --verbose
+          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
 
       - name: Chezmoi init & apply - pwsh
         if: matrix.shell == 'pwsh'
@@ -179,7 +179,7 @@ jobs:
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | pwsh -c -
           echo "Running chezmoi init --apply"
-          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE --verbose
+          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
 
       - name: Chezmoi init & apply - pwsh-in-powershell
         if: matrix.shell == 'pwsh-in-powershell'
@@ -190,4 +190,4 @@ jobs:
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
           echo "Running chezmoi init --apply"
-          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE --verbose
+          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
