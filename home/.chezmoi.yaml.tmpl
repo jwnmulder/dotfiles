@@ -77,7 +77,7 @@ interpreters:
     # Prefer PowerShell Core over PowerShell Desktop
     # https://github.com/PowerShell/PowerShell/issues/8635#issuecomment-454028787
     command: '{{ if env "CHEZMOI_PS1_COMMAND" }}{{ env "CHEZMOI_PS1_COMMAND" }}{{ else if lookPath "pwsh.exe" }}pwsh.exe{{ else }}powershell.exe{{ end }}'
-    args: ["-NoLogo", "-NoProfile"]
+    args: ["-NoLogo"]
 
 data:
   use_encrypted_data: {{ $use_encrypted_data }}
