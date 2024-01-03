@@ -141,8 +141,9 @@ jobs:
         profile:
           - personal
         shell:
-          - powershell
           - pwsh
+          - powershell
+          - powershell-in-pwsh
 
     runs-on: windows-latest
     steps:
@@ -162,6 +163,7 @@ jobs:
         if: matrix.shell == 'powershell'
         env:
           DATA_profile: ${{ matrix.profile }}
+          CHEZMOI_PS1_COMMAND: powershell.exe
         shell: powershell
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
@@ -172,6 +174,18 @@ jobs:
         if: matrix.shell == 'pwsh'
         env:
           DATA_profile: ${{ matrix.profile }}
+          CHEZMOI_PS1_COMMAND: pwsh.exe
+        shell: pwsh
+        run: |
+          (irm -useb https://get.chezmoi.io/ps1) | pwsh -c -
+          echo "Running chezmoi init --apply"
+          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE --verbose
+
+      - name: Chezmoi init & apply - powershell-in-pwsh
+        if: matrix.shell == 'powershell-in-pwsh'
+        env:
+          DATA_profile: ${{ matrix.profile }}
+          CHEZMOI_PS1_COMMAND: powershell.exe
         shell: pwsh
         run: |
           (irm -useb https://get.chezmoi.io/ps1) | pwsh -c -
