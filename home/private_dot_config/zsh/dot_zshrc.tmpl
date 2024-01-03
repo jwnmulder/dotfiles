@@ -107,7 +107,7 @@ source $ZSH/oh-my-zsh.sh
 # direnv hook
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
-# rtx hook
+# mise hook
 # This requires typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet as --status
-# will write to console when an rtx supported tool file is found
-(( ${+commands[rtx]} )) && emulate zsh -c "$(rtx activate --status zsh)"
+# will write to console when an mise supported tool file is found
+(( ${+commands[mise]} )) && emulate zsh -c "$(mise activate --status zsh)"
