@@ -69,6 +69,11 @@
   path: "mise/bin/mise"
   executable: true
 
+".local/bin/multi-gitter":
+  type: archive-file
+  url: 'https://github.com/lindell/multi-gitter/releases/download/{{ .versions.multi_gitter }}/multi-gitter_{{ .versions.multi_gitter | trimPrefix "v" }}_Linux_{{ .uname.machine }}.tar.gz'
+  path: "multi-gitter"
+
 ".local/share/nvm/":
   type: archive
   url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
