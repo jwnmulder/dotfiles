@@ -16,7 +16,7 @@ versions:
   eza: v0.17.0              # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.24.0              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v2.5.0             # renovate: datasource=github-releases depName=TomWright/dasel
-  mise: v2024.1.13          # renovate: datasource=github-releases depName=jdx/mise
+  mise: v2024.1.14          # renovate: datasource=github-releases depName=jdx/mise
   multi_gitter: v0.49.1     # renovate: datasource=github-releases depName=lindell/multi-gitter
 
 pipx_packages:
