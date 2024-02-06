@@ -6,6 +6,8 @@
 
   "assignees": [ "jwnmulder" ],
 
+  "rebaseWhen": "conflicted",
+
   "packageRules": [
     {
       "matchFileNames": [".pre-commit-config.yaml"],
