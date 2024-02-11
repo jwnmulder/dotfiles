@@ -36,7 +36,7 @@ jobs:
       - name: Cache Chezmoi external
         uses: actions/cache@v4
         with:
-          path: "${HOME}/.cache/chezmoi/external"
+          path: "~/.cache/chezmoi/external"
           key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.container }}-chezmoi-external
 
       - name: Decrypt age key
@@ -53,6 +53,7 @@ jobs:
         run: |
           git config --global --add safe.directory $(pwd)
           ./install.sh
+          ls -la ${HOME}/.cache/chezmoi/external
 
       - name: Assert
         run: |
