@@ -33,6 +33,12 @@ jobs:
       - name: Setup PATH
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
+      - name: Cache Chezmoi external
+        uses: actions/cache@v4
+        with:
+          path: "${HOME}/.cache/chezmoi/external"
+          key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.container }}-chezmoi-external
+
       - name: Decrypt age key
         env:
           AGE_DECRYPT_PASS: ${{ secrets.AGE_DECRYPT_PASS }}
@@ -83,6 +89,12 @@ jobs:
       - name: Setup PATH
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
+      - name: Cache Chezmoi external
+        uses: actions/cache@v4
+        with:
+          path: "${HOME}/.cache/chezmoi/external"
+          key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.container }}-chezmoi-external
+
       - name: Chezmoi init & apply
         env:
           DATA_profile: ${{ matrix.profile }}
@@ -95,7 +107,6 @@ jobs:
             echo "::error file=chezmoi.yaml::is_server: true not found"
             exit 1
           fi
-
 
   linux-server-armv7:
     strategy:
@@ -110,6 +121,12 @@ jobs:
 
       - name: Setup PATH
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
+
+      - name: Cache Chezmoi external
+        uses: actions/cache@v4
+        with:
+          path: "${HOME}/.cache/chezmoi/external"
+          key: ${{ runner.os }}-${{ matrix.profile }}-chezmoi-external
 
       - name: Chezmoi init & apply
         uses: pguyot/arm-runner-action@v2
