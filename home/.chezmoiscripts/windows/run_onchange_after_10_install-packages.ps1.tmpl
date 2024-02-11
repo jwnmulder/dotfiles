@@ -14,7 +14,12 @@ $ErrorActionPreference = "Stop"
 {{ range $winget_packages -}}
 {{   if not (contains . $winget_list) -}}
         Write-Host Installing winget package '{{ .}}'
-        winget install --accept-package-agreements --accept-source-agreements --silent --scope user --exact --source winget --id {{ . }}
+        winget install `
+          --scope user --exact --source winget --id {{ . }} `
+          --accept-source-agreements `
+          --accept-package-agreements `
+          --silent `
+          --disable-interactivity
 {{   end -}}
 {{ end }}
 #endregion
