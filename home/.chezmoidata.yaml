@@ -23,6 +23,7 @@ pipx_packages:
   all:
     - pre-commit
     - yq
+    - ruff
 
 scoop_packages:
   all: []
