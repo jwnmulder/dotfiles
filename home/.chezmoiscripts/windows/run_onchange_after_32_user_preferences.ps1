@@ -52,7 +52,11 @@ Update-ItemProperty -Description "Explorer: Show file extensions by default" `
     -Name "HideFileExt" -Value 0
 
 Update-ItemProperty -Description "Search: Bing search disabled" `
-    -Path "HKCU:\SOFTWARE\MicrosoftJW\Windows\CurrentVersion\Search" `
+    -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" `
     -Name "BingSearchEnabled" -Value 0
+
+Update-ItemProperty -Description "Outlook: Allow copying meetings" `
+    -Path "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Calendar" `
+    -Name "EnableMeetingCopy" -Value 1
 
 Write-Output "Completed configuration of Windows user preferences"
