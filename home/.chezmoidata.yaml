@@ -12,7 +12,7 @@ versions:
   age: v1.1.1               # renovate: datasource=github-releases depName=FiloSottile/age
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
   gitleaks: v8.18.2         # renovate: datasource=github-releases depName=gitleaks/gitleaks
-  trufflehog: v3.67.6       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
+  trufflehog: v3.67.7       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
   eza: v0.18.3              # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.24.0              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v2.6.0             # renovate: datasource=github-releases depName=TomWright/dasel
