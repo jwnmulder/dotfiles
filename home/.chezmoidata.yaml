@@ -17,7 +17,7 @@ versions:
   bat: v0.24.0              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v2.6.0             # renovate: datasource=github-releases depName=TomWright/dasel
   mise: v2024.2.16          # renovate: datasource=github-releases depName=jdx/mise
-  multi_gitter: v0.50.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
+  multi_gitter: v0.50.1     # renovate: datasource=github-releases depName=lindell/multi-gitter
 
 pipx_packages:
   all:
