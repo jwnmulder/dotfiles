@@ -134,7 +134,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         with:
           # base_image: dietpi:rpi_armv7_bullseye
-          base_image: https://dietpi.com/downloads/images/DietPi_Container-ARMv7-Bullseye.img.xz
+          base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv7-Bookworm.img.xz
           cpu: cortex-a7
           copy_artifact_path: results
           # cpu: pxa250
