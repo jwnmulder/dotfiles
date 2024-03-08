@@ -174,8 +174,9 @@ jobs:
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           echo "$HOME\scoop\shims" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-          # Install winget
+          # Install winget & chezmoi
           scoop install winget
+          scoop install chezmoi
 
       - name: Chezmoi init & apply - powershell
         if: matrix.shell == 'powershell'
@@ -184,7 +185,6 @@ jobs:
           CHEZMOI_PS1_COMMAND: powershell.exe
         shell: powershell
         run: |
-          (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
           echo "Running chezmoi init --apply"
           bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
 
@@ -195,7 +195,6 @@ jobs:
           CHEZMOI_PS1_COMMAND: pwsh.exe
         shell: pwsh
         run: |
-          (irm -useb https://get.chezmoi.io/ps1) | pwsh -c -
           echo "Running chezmoi init --apply"
           bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
 
@@ -206,6 +205,5 @@ jobs:
           CHEZMOI_PS1_COMMAND: pwsh.exe
         shell: powershell
         run: |
-          (irm -useb https://get.chezmoi.io/ps1) | powershell -c -
           echo "Running chezmoi init --apply"
           bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
