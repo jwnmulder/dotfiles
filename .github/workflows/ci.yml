@@ -186,7 +186,7 @@ jobs:
         shell: powershell
         run: |
           echo "Running chezmoi init --apply"
-          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
+          chezmoi init --apply --source $Env:GITHUB_WORKSPACE
 
       - name: Chezmoi init & apply - pwsh
         if: matrix.shell == 'pwsh'
@@ -196,7 +196,7 @@ jobs:
         shell: pwsh
         run: |
           echo "Running chezmoi init --apply"
-          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
+          chezmoi init --apply --source $Env:GITHUB_WORKSPACE
 
       - name: Chezmoi init & apply - pwsh-in-powershell
         if: matrix.shell == 'pwsh-in-powershell'
@@ -206,4 +206,4 @@ jobs:
         shell: powershell
         run: |
           echo "Running chezmoi init --apply"
-          bin/chezmoi.exe init --apply --source $Env:GITHUB_WORKSPACE
+          chezmoi init --apply --source $Env:GITHUB_WORKSPACE
