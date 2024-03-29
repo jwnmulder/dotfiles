@@ -1,0 +1,3 @@
+{{- if and .is_wsl (lookPath "wslview") }}
+export BROWSER=wslview
+{{- end }}
