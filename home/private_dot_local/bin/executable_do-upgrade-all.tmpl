@@ -20,6 +20,20 @@ if command -v pacman &> /dev/null; then
   echo "# pacman - Done running pacman -Syu"
 fi
 
+if command -v flatpak &> /dev/null; then
+  echo "# flatpak - Running flatpak update --user"
+
+  flatpak update --user
+
+  echo "# flatpak - Done running flatpak update --user"
+
+  echo "# flatpak - Running flatpak update --system"
+
+  sudo flatpak update --system
+
+  echo "# flatpak - Done running flatpak update --system"
+fi
+
 if command -v pip3 &> /dev/null; then
   echo "# pip3 - Updating python3 user installed packages"
 
