@@ -8,7 +8,7 @@ versions:
   fzf: "0.50.0"             # renovate: datasource=github-releases depName=junegunn/fzf
   fd: v9.0.0                # renovate: datasource=github-releases depName=sharkdp/fd
   backstage_go: v0.8.0      # renovate: datasource=github-releases depName=einride/backstage-go
-  trivy: v0.50.2            # renovate: datasource=github-releases depName=aquasecurity/trivy
+  trivy: v0.50.4            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.1.1               # renovate: datasource=github-releases depName=FiloSottile/age
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
   gitleaks: v8.18.2         # renovate: datasource=github-releases depName=gitleaks/gitleaks
