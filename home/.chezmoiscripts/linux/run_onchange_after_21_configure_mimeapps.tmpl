@@ -1,0 +1,9 @@
+{{- if and .is_wsl (lookPath "wslview") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+xdg-mime default wslview.desktop 'x-scheme-handler/http'
+xdg-mime default wslview.desktop 'x-scheme-handler/https'
+
+{{- end }}
