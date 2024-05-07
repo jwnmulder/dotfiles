@@ -5,7 +5,7 @@ versions:
   helm: v3.14.4             # renovate: datasource=github-releases depName=helm/helm
   direnv: v2.34.0           # renovate: datasource=github-releases depName=direnv/direnv
   starship: v1.18.2         # renovate: datasource=github-releases depName=starship/starship
-  fzf: "0.51.0"             # renovate: datasource=github-releases depName=junegunn/fzf
+  fzf: "0.52.0"             # renovate: datasource=github-releases depName=junegunn/fzf
   fd: v10.0.0                # renovate: datasource=github-releases depName=sharkdp/fd
   backstage_go: v0.8.0      # renovate: datasource=github-releases depName=einride/backstage-go
   trivy: v0.51.1            # renovate: datasource=github-releases depName=aquasecurity/trivy
