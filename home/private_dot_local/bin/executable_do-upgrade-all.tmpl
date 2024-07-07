@@ -1,4 +1,4 @@
-{{- if and (.is_desktop) (eq .chezmoi.os "linux") -}}
+{{- if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 
 set -euo pipefail
@@ -34,6 +34,7 @@ if command -v flatpak &> /dev/null; then
   echo "# flatpak - Done running flatpak update --system"
 fi
 
+{{ if and (.is_desktop) -}}
 if command -v pip3 &> /dev/null; then
   echo "# pip3 - Updating python3 user installed packages"
 
@@ -44,6 +45,7 @@ if command -v pip3 &> /dev/null; then
 
   echo "# pip3 - Done updating python3 user installed packages"
 fi
+{{- end }}
 
 if command -v pipx &> /dev/null; then
   echo "# pipx - Updating python3 pipx packages"
