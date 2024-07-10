@@ -2,7 +2,7 @@ versions:
   pipx_installer: "1.6.0"   # renovate: datasource=github-releases depName=pypa/pipx
   kubectl: v1.27.3          # renovate: datasource=github-releases depName=kubernetes/kubectl
   kustomize: v5.4.2         # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
-  helm: v3.15.2             # renovate: datasource=github-releases depName=helm/helm
+  helm: v3.15.3             # renovate: datasource=github-releases depName=helm/helm
   direnv: v2.34.0           # renovate: datasource=github-releases depName=direnv/direnv
   starship: v1.19.0         # renovate: datasource=github-releases depName=starship/starship
   fzf: "0.53.0"             # renovate: datasource=github-releases depName=junegunn/fzf
