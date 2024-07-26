@@ -56,3 +56,4 @@ kubectl_krew_plugins:
   - open-svc
   - popeye
   - explore
+  - view-quotas
