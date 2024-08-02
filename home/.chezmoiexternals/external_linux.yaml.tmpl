@@ -1,7 +1,7 @@
 # {{ if eq .chezmoi.os "linux" }}
 ".local/bin/fzf":
   type: archive-file
-  url: https://github.com/junegunn/fzf/releases/download/{{ .versions.fzf }}/fzf-{{ .versions.fzf }}-linux_{{
+  url: https://github.com/junegunn/fzf/releases/download/{{ .versions.fzf }}/fzf-{{ .versions.fzf | trimPrefix "v" }}-linux_{{
       eq .chezmoi.arch "arm" | ternary (.uname.machine | trunc 5) .chezmoi.arch
     }}.tar.gz
   path: fzf
