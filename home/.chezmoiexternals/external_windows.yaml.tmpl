@@ -8,4 +8,13 @@
   type: file
   url: "https://github.com/BlackReloaded/wsl2-ssh-pageant/releases/download/{{ .versions.wsl2_ssh_pageant }}/wsl2-ssh-pageant.exe"
 
+".local/bin/uv.exe":
+  type: archive-file
+  url: "https://github.com/astral-sh/uv/releases/download/{{ .versions.uv }}/uv-x86_64-pc-{{ .chezmoi.os }}-msvc.zip"
+  path: "uv.exe"
+".local/bin/uvx.exe":
+  type: archive-file
+  url: "https://github.com/astral-sh/uv/releases/download/{{ .versions.uv }}/uv-x86_64-pc-{{ .chezmoi.os }}-msvc.zip"
+  path: "uvx.exe"
+
 # {{ end }}

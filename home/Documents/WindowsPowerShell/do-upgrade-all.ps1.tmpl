@@ -54,13 +54,13 @@ if (Get-Command kubectl-krew -ErrorAction SilentlyContinue) {
 }
 #endregion
 
-#region pipx
-if (Get-Command pipx -ErrorAction SilentlyContinue) {
-    $cmd = "pipx upgrade-all"
+#region python tools
+if (Get-Command uv.exe -ErrorAction SilentlyContinue) {
+    $cmd = "uv tool upgrade --all"
 
-    Write-Host "# pipx - Running $cmd"
+    Write-Host "# uvx - Running $cmd"
     Invoke-Expression $cmd
-    Write-Host "# pipx - Done running $cmd" -ForegroundColor Green
+    Write-Host "# uvx - Done running $cmd" -ForegroundColor Green
 }
 #endregion
 

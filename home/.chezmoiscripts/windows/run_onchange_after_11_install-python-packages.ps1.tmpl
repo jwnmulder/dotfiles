@@ -1,22 +1,22 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
-{{- if and (.is_desktop) (lookPath "py.exe") -}}
+{{ if and (.is_desktop) (lookPath "py.exe") -}}
 
 {{ $python_tools := concat
   (dig "all" list .python_tools)
   (dig .profile list .python_tools) -}}
 
-Write-Host "Installing/updating python tools: {{ .python_tools | join " " }}"
+Write-Host "Installing/updating python tools: {{ $python_tools | join " " }}"
 
-$PIPX_BIN = (Get-Command pipx.exe -ErrorAction SilentlyContinue).Source
-if (-not $PIPX_BIN) {
-    $PIPX_BIN = "$env:USERPROFILE\.local\bin\uv"
+$UV_BIN = (Get-Command uv.exe -ErrorAction SilentlyContinue).Source
+if (-not $UV_BIN) {
+    $UV_BIN = "$env:USERPROFILE\.local\bin\uv.exe"
 }
 
-{{ range $pipx_packages -}}
+{{ range $python_tools -}}
   Write-Host Installing python tool '{{ . }}'
-  Invoke-Expression "& '$PIPX_BIN' tool install {{ . }} --force"
+  Invoke-Expression "& '$UV_BIN' tool install {{ . }} --force"
 {{ end }}
 
 {{ end -}}
