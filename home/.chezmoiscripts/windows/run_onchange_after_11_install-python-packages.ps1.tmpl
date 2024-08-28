@@ -9,10 +9,8 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "Installing/updating python tools: {{ $python_tools | join " " }}"
 
-$UV_BIN = (Get-Command uv.exe -ErrorAction SilentlyContinue).Source
-if (-not $UV_BIN) {
-    $UV_BIN = "$env:USERPROFILE\.local\bin\uv.exe"
-}
+$uvInfo = (Get-Command uv.exe -ErrorAction SilentlyContinue)
+$UV_BIN = if ($uvInfo) { $uvInfo.Source } else { "$env:USERPROFILE\.local\bin\uv.exe" }
 
 {{ range $python_tools -}}
   Write-Host Installing python tool '{{ . }}'
