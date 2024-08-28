@@ -46,6 +46,17 @@
   url: https://github.com/TomWright/dasel/releases/download/{{ .versions.dasel }}/dasel_linux_amd64
   executable: true
 
+".local/bin/uv":
+  type: archive-file
+  url: "https://github.com/astral-sh/uv/releases/download/{{ .versions.uv }}/uv-{{ .uname.machine }}-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
+  stripComponents: 1
+  path: "uv"
+
+".local/bin/uvx":
+  type: archive-file
+  url: "https://github.com/astral-sh/uv/releases/download/{{ .versions.uv }}/uv-{{ .uname.machine }}-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
+  stripComponents: 1
+  path: "uvx"
 # {{ end }}
 
 # ZSH related resources
