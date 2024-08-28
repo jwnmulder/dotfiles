@@ -47,12 +47,12 @@ if command -v pip3 &> /dev/null; then
 fi
 {{- end }}
 
-if command -v pipx &> /dev/null; then
-  echo "# pipx - Updating python3 pipx packages"
+if command -v uvx &> /dev/null; then
+  echo "# uvx - Updating python tools"
 
-  pipx upgrade-all
+  uv tool upgrade --all
 
-  echo "# pipx - Done updating python3 pipx packages"
+  echo "# uvx - Done updating python tools"
 fi
 
 if command -v kubectl-krew &> /dev/null; then

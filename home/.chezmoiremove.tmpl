@@ -41,6 +41,12 @@
 # mise config updates
 .config/mise/config.toml
 
+# pipx replaced by uv
+.local/share/pipx
+.local/state/pipx
+.local/bin/pipx
+.local/bin/pipx.pyz
+
 {{ end }}
 
 {{ if eq .chezmoi.os "windows" }}

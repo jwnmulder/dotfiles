@@ -3,28 +3,20 @@ $ErrorActionPreference = "Stop"
 
 {{- if and (.is_desktop) (lookPath "py.exe") -}}
 
-{{ $pipx_packages := concat
-  (dig "all" list .pipx_packages)
-  (dig .profile list .pipx_packages) -}}
+{{ $python_tools := concat
+  (dig "all" list .python_tools)
+  (dig .profile list .python_tools) -}}
 
-# Install pipx
-{{ if not (stat (joinPath .chezmoi.homeDir ".local/bin/pipx.exe")) }}
-  Write-Host "Installing pipx"
-  $PIPX_DST = [System.IO.Path]::GetTempPath() + "pipx.pyz"
-  Invoke-WebRequest -Uri "https://github.com/pypa/pipx/releases/latest/download/pipx.pyz" -OutFile $PIPX_DST
-  py -3 $PIPX_DST install pipx
-{{ end }}
-
-Write-Host "Installing/updating pipx packages: {{ .pipx_packages | join " " }}"
+Write-Host "Installing/updating python tools: {{ .python_tools | join " " }}"
 
 $PIPX_BIN = (Get-Command pipx.exe -ErrorAction SilentlyContinue).Source
 if (-not $PIPX_BIN) {
-    $PIPX_BIN = "$env:USERPROFILE\.local\bin\pipx"
+    $PIPX_BIN = "$env:USERPROFILE\.local\bin\uv"
 }
 
 {{ range $pipx_packages -}}
-  Write-Host Installing pipx package '{{ . }}'
-  Invoke-Expression "& '$PIPX_BIN' install {{ . }} --force"
+  Write-Host Installing python tool '{{ . }}'
+  Invoke-Expression "& '$PIPX_BIN' tool install {{ . }} --force"
 {{ end }}
 
 {{ end -}}

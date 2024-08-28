@@ -1,5 +1,5 @@
 versions:
-  pipx_installer: "1.7.1"   # renovate: datasource=github-releases depName=pypa/pipx
+  uv: "0.4.0"               # renovate: datasource=github-releases depName=astral-sh/uv
   kubectl: v1.27.3          # renovate: datasource=github-releases depName=kubernetes/kubectl
   kustomize: v5.4.3         # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
   helm: v3.15.4             # renovate: datasource=github-releases depName=helm/helm
@@ -19,7 +19,7 @@ versions:
   mise: v2024.8.13           # renovate: datasource=github-releases depName=jdx/mise
   multi_gitter: v0.53.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
 
-pipx_packages:
+python_tools:
   all:
     - pre-commit
     - yq
