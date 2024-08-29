@@ -10,7 +10,7 @@ set -euo pipefail
 echo "Installing/updating python tools: {{ $python_tools | join " " }}"
 {{ range $python_tools -}}
   echo Installing python tool '{{ . }}'
-  .local/bin/uv tool install {{ . }}
+  .local/bin/uv tool install {{ . }} --force
 {{ end }}
 
 {{ end -}}
