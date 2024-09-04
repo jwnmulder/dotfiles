@@ -10,7 +10,7 @@ $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::A
 #region winget
 if (Get-Command winget -ErrorAction SilentlyContinue) {
 
-    $cmd = "winget upgrade --all --silent"
+    $cmd = "winget upgrade --all --silent --accept-package-agreements --accept-source-agreements"
 
     if (-not $isAdmin) {
         $cmd += " --scope=user"
