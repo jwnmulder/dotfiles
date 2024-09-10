@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-{{ if not (stat (joinPath .chezmoi.homeDir ".krew/bin/kubectl-krew")) }}
+{{ if not (stat (joinPath .chezmoi.homeDir ".local/share/krew/bin/kubectl-krew")) }}
 (
   cd "$(mktemp -d)" &&
   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
@@ -15,6 +15,6 @@ set -euo pipefail
 )
 {{ end -}}
 
-$HOME/.krew/bin/kubectl-krew install {{ .kubectl_krew_plugins | join " " }} 2>&1 | grep -v "Installing plugin"
+"${KREW_ROOT:-$HOME/.krew}"/bin/kubectl-krew install {{ .kubectl_krew_plugins | join " " }} 2>&1 | grep -v "Installing plugin"
 
 {{ end -}}

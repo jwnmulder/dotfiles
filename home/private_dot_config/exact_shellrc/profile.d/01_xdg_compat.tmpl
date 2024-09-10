@@ -19,9 +19,10 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 # XDG - Gradle
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 
-# XDG - npm, nvm
+# XDG - node, npm, nvm
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 export NVM_DIR="$XDG_DATA_HOME"/nvm
+export NODE_REPL_HISTORY="$XDG_STATE_HOME"/node_repl_history
 
 # XDG - less
 export LESSHISTFILE="$XDG_STATE_HOME"/less/history
@@ -42,3 +43,15 @@ export AZCOPY_JOB_PLAN_LOCATION="$XDG_DATA_HOME"/azcopy/plans
 
 # XDG - OpenSSL .rnd
 export RANDFILE="$XDG_DATA_HOME"/rnd
+
+# XDG - asdf
+export ASDF_DATA_DIR="$XDG_DATA_HOME"/asdf
+
+# XDG - dotnet
+export DOTNET_CLI_HOME="$XDG_DATA_HOME"/dotnet
+
+# XDG - krew
+export KREW_ROOT="$XDG_DATA_HOME"/krew
+
+# XDG - Python
+export PYTHON_HISTORY="$XDG_DATA_HOME"/python/history
