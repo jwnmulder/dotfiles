@@ -36,7 +36,7 @@ repos:
         args: ["--exclude-files", ".chezmoi.yaml.tmpl"]
 
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.19.2
+    rev: v8.19.3
     hooks:
       - id: gitleaks
 
