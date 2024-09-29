@@ -57,6 +57,19 @@
   url: "https://github.com/astral-sh/uv/releases/download/{{ .versions.uv }}/uv-{{ .uname.machine }}-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
   stripComponents: 1
   path: "uvx"
+
+# busybox {{ if (lookPath "busybox") }}
+".local/bin/ansi2txt":
+  type: archive-file
+  url: "http://ftp.nl.debian.org/debian/pool/main/c/colorized-logs/colorized-logs_2.6-1_amd64.deb"
+  format: tar.xz
+  filter:
+    command: busybox
+    args: ["ar", "p", "/dev/stdin", "data.tar.xz"]
+  stripComponents: 1
+  path: "usr/bin/ansi2txt"
+# busybox {{ end }}
+
 # {{ end }}
 
 # ZSH related resources
