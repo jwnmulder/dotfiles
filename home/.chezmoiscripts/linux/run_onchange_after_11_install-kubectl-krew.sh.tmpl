@@ -3,8 +3,10 @@
 
 set -euo pipefail
 
-XDG_DATA_HOME="${XDG_DATA_HOME:="$HOME/.local/share"}"
-KREW_ROOT="${KREW_ROOT:-$XDG_DATA_HOME/krew}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:="$HOME/.local/share"}"
+export KREW_ROOT="${KREW_ROOT:-$XDG_DATA_HOME/krew}"
+
+echo $KREW_ROOT
 
 {{ if not (stat (joinPath .chezmoi.homeDir ".local/share/krew/bin/kubectl-krew")) }}
 (
