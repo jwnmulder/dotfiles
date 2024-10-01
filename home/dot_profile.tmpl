@@ -52,9 +52,9 @@ if [ -d "$HOME/.config/shellrc/profile.d" ]; then
 fi
 
 {{ if .is_desktop -}}
-# Set PATH to include ~/.local/share/krew/bin or ~/.krew/bin if it exists
-if [ -d "${KREW_ROOT:-$HOME/.krew}"/bin ]; then
-  PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+# Set PATH to include ~/.local/share/krew/bin or something else if it exists
+if [ -d "${KREW_ROOT:-"$XDG_DATA_HOME"/krew}"/bin ]; then
+  PATH="${KREW_ROOT:-$XDG_DATA_HOME/krew}/bin:$PATH"
 fi
 {{- end }}
 
