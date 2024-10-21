@@ -46,7 +46,7 @@ kubectl_krew_plugins:
   - oidc-login
   - sudo
   - cert-manager
-  - ingress-nginx
+  # - ingress-nginx
   - deprecations
   - outdated
   - get-all
