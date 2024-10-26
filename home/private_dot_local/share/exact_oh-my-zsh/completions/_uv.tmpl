@@ -1,0 +1,3 @@
+{{- if (stat (joinPath .chezmoi.homeDir ".local/bin/uv")) -}}
+{{- output (joinPath .chezmoi.homeDir ".local/bin/uv") "generate-shell-completion" "zsh" -}}
+{{- end -}}
