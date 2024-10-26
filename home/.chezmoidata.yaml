@@ -34,6 +34,7 @@ winget_packages:
     - Microsoft.WindowsTerminal
     - Microsoft.VisualStudioCode
     - eza-community.eza
+    - Git.Git
   personal:
     - Bitwarden.Bitwarden
     - Kubernetes.kubectl
@@ -41,6 +42,11 @@ winget_packages:
   work1:
     - Bitwarden.Bitwarden
     - Kubernetes.kubectl
+    - SlackTechnologies.Slack
+    - Postman.Postman
+    - GIMP.GIMP
+    - MuhammedKalkan.OpenLens
+    - dbeaver.dbeaver
 
 kubectl_krew_plugins:
   - oidc-login
