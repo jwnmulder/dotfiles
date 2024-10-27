@@ -8,6 +8,11 @@
   filter:
     command: "zcat"
 
+".local/bin/gopass":
+  type: archive-file
+  url: 'https://github.com/gopasspw/gopass/releases/download/{{ .versions.gopass }}/gopass-{{ .versions.gopass | trimPrefix "v" }}-linux-{{ .chezmoi.arch }}.tar.gz'
+  path: "gopass"
+
 ".local/bin/kubectl":
   type: file
   url: "https://dl.k8s.io/release/{{ .versions.kubectl }}/bin/linux/{{ .chezmoi.arch }}/kubectl"
