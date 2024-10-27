@@ -11,7 +11,7 @@
   url: "https://github.com/junegunn/fzf/archive/refs/tags/{{ .versions.fzf }}.tar.gz"
   exact: true
   stripComponents: 2
-  include: ["fzf-{{ .versions.fzf }}/shell/**"]
+  include: ['fzf-{{ .versions.fzf | trimPrefix "v" }}/shell/**']
 
 # {{ end }}
 
