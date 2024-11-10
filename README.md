@@ -8,7 +8,7 @@
 On Linux
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
+sh -c "$(curl -fsLS get.chezmoi.io/lb)"
 
 ~/.local/bin/chezmoi init --apply jwnmulder
 ```
