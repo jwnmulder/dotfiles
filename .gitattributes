@@ -4,3 +4,5 @@
 # required for pre-commit yamllint on Windows
 *.yaml text eol=lf
 *.yml text eol=lf
+
+*.sh.tmpl linguist-language=shell
