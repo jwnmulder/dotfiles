@@ -6,3 +6,4 @@
 *.yml text eol=lf
 
 *.sh.tmpl linguist-language=shell
+home/private_dot_local/bin/* linguist-language=shell
