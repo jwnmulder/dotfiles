@@ -5,5 +5,13 @@
 *.yaml text eol=lf
 *.yml text eol=lf
 
-*.sh.tmpl linguist-language=shell
-home/private_dot_local/bin/* linguist-language=shell
+*.sh.tmpl linguist-language=Shell
+*.zsh.tmpl linguist-language=Shell
+
+dot_bashrc* linguist-language=Shell
+dot_profile* linguist-language=Shell
+dot_zshenv* linguist-language=Shell
+
+home/private_dot_local/bin/* linguist-language=Shell
+home/private_dot_config/exact_shellrc/bashrc.d/* linguist-language=Shell
+home/private_dot_config/exact_shellrc/profile.d/* linguist-language=Shell
