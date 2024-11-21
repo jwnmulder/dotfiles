@@ -28,7 +28,7 @@
         "trufflesecurity/trufflehog"
       ],
       "extends": [
-        "schedule:weekly"
+        "schedule:monthly"
       ]
     }
   ],
