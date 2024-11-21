@@ -20,6 +20,16 @@
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "automerge": true,
       "addLabels": ["automerge"]
+    },
+    {
+      "matchPackageNames": [
+        "astral-sh/uv",
+        "jdx/mise",
+        "trufflesecurity/trufflehog"
+      ],
+      "extends": [
+        "schedule:weekly"
+      ]
     }
   ],
 
