@@ -22,11 +22,6 @@
   stripComponents: 1
   path: fd
 
-".local/bin/trivy":
-  type: archive-file
-  url: https://github.com/aquasecurity/trivy/releases/download/{{ .versions.trivy }}/trivy_{{ .versions.trivy | trimPrefix "v" }}_Linux-64bit.tar.gz
-  path: trivy
-
 ".local/bin/eza":
   type: archive-file
   url: https://github.com/eza-community/eza/releases/download/{{ .versions.eza }}/eza_{{

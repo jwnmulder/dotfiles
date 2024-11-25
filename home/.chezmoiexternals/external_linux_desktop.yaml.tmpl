@@ -48,6 +48,11 @@
   url: "https://github.com/direnv/direnv/releases/download/{{ .versions.direnv }}/direnv.{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
   executable: true
 
+".local/bin/trivy":
+  type: archive-file
+  url: https://github.com/aquasecurity/trivy/releases/download/{{ .versions.trivy }}/trivy_{{ .versions.trivy | trimPrefix "v" }}_Linux-64bit.tar.gz
+  path: trivy
+
 ".local/bin/azcopy":
   type: archive-file
   url: "https://aka.ms/downloadazcopy-v10-linux"
