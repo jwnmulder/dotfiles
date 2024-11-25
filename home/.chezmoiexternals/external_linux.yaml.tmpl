@@ -6,13 +6,6 @@
     }}.tar.gz
   path: fzf
 
-".config/fzf/":
-  type: archive
-  url: "https://github.com/junegunn/fzf/archive/refs/tags/{{ .versions.fzf }}.tar.gz"
-  exact: true
-  stripComponents: 2
-  include: ['fzf-{{ .versions.fzf | trimPrefix "v" }}/shell/**']
-
 # {{ end }}
 
 # {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") }}
