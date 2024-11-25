@@ -10,15 +10,22 @@ $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::A
 #region winget
 if (Get-Command winget -ErrorAction SilentlyContinue) {
 
-    $cmd = "winget upgrade --all --silent --accept-package-agreements --accept-source-agreements"
+    $cmdUser = "winget upgrade --all --silent --accept-package-agreements --accept-source-agreements --scope=user"
+    $cmdMachine = "gsudo winget upgrade --all --silent --accept-package-agreements --accept-source-agreements"
 
     if (-not $isAdmin) {
-        $cmd += " --scope=user"
+        Write-Host "# winget[user] - Running $cmdUser"
+        Invoke-Expression $cmdUser
+        Write-Host "# winget[user] - Done running $cmdUser" -ForegroundColor Green
+    } else {
+        Write-Host "# winget[user] - Skipping $cmdUser as we are running as Administrator" -ForegroundColor Cyan
     }
 
-    Write-Host "# winget - Running $cmd"
-    Invoke-Expression $cmd
-    Write-Host "# winget - Done running $cmd" -ForegroundColor Green
+    if (Get-Command gsudo -ErrorAction SilentlyContinue) {
+        Write-Host "# winget[machine] - Running $cmdMachine"
+        Invoke-Expression $cmdMachine
+        Write-Host "# winget[machine] - Done running $cmdMachine" -ForegroundColor Green
+    }
 }
 #endregion
 
@@ -48,9 +55,15 @@ if (Get-Command kubectl-krew -ErrorAction SilentlyContinue) {
 
     $cmd = "kubectl-krew upgrade"
 
-    Write-Host "# kubectl-krew - Running $cmd"
-    Invoke-Expression $cmd
-    Write-Host "# kubectl-krew - Done running $cmd" -ForegroundColor Green
+    if ($isAdmin) {
+
+        Write-Host "# kubectl-krew - Skipping $cmd as we are running as Administrator" -ForegroundColor Cyan
+
+    } else {
+        Write-Host "# kubectl-krew - Running $cmd"
+        Invoke-Expression $cmd
+        Write-Host "# kubectl-krew - Done running $cmd" -ForegroundColor Green
+    }
 }
 #endregion
 
@@ -58,9 +71,15 @@ if (Get-Command kubectl-krew -ErrorAction SilentlyContinue) {
 if (Get-Command uv.exe -ErrorAction SilentlyContinue) {
     $cmd = "uv tool upgrade --all"
 
-    Write-Host "# uvx - Running $cmd"
-    Invoke-Expression $cmd
-    Write-Host "# uvx - Done running $cmd" -ForegroundColor Green
+    if ($isAdmin) {
+
+        Write-Host "# uvx - Skipping $cmd as we are running as Administrator" -ForegroundColor Cyan
+
+    } else {
+        Write-Host "# uvx - Running $cmd"
+        Invoke-Expression $cmd
+        Write-Host "# uvx - Done running $cmd" -ForegroundColor Green
+    }
 }
 #endregion
 
