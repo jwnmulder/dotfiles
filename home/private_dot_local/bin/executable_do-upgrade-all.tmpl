@@ -38,7 +38,6 @@ fi
 if command -v pip3 &> /dev/null; then
   echo "# pip3 - Updating python3 user installed packages"
 
-  python3 -m pip install --isolated --user --upgrade pip || true
   python3 -m pip --disable-pip-version-check list --outdated --user --isolated --format=json \
   | python3 -c "import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))" \
   | xargs -r -n1 python3 -m pip install --isolated --user --upgrade || true
