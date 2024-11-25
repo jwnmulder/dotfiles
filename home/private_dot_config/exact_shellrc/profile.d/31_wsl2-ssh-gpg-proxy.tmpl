@@ -46,7 +46,7 @@ fi
 # Relay $SSH_AUTH_SOCK using socat
 # Removing Linux SSH socket and replacing it by link to wsl2-ssh-pageant socket
 # if ! socat OPEN:/dev/null UNIX-CONNECT:$SSH_AUTH_SOCK > /dev/null 2>&1; then
-if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
+if [ ! -S "${SSH_AUTH_SOCK}" ] || ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
   ({
     pkill -f "socat.*$SSH_AUTH_SOCK"
     rm -f "$SSH_AUTH_SOCK"
@@ -61,7 +61,7 @@ fi
 # Relay $GPG_AGENT_SOCK using socat
 # Removing Linux GPG socket and replacing it by link to wsl2-ssh-pageant socket
 # if ! socat OPEN:/dev/null UNIX-CONNECT:$GPG_AGENT_SOCK > /dev/null 2>&1; then
-if ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
+if [ ! -S "${GPG_AGENT_SOCK}" ] || ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
   ({
     pkill -f "socat.*$GPG_AGENT_SOCK"
     rm -f "$GPG_AGENT_SOCK"
