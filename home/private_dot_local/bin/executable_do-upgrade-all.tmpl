@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-if command -v apt-get &> /dev/null; then
+if command -v apt-get > /dev/null 2>&1; then
   echo "# apt-get - Running apt-get update/upgrade"
 
   sudo apt-get update
@@ -12,7 +12,7 @@ if command -v apt-get &> /dev/null; then
   echo "# apt-get - Done running apt-get upgdate/upgrade"
 fi
 
-if command -v pacman &> /dev/null; then
+if command -v pacman > /dev/null 2>&1; then
   echo "# pacman - Running pacman -Syu"
 
   sudo pacman -Syu
@@ -20,7 +20,7 @@ if command -v pacman &> /dev/null; then
   echo "# pacman - Done running pacman -Syu"
 fi
 
-if command -v flatpak &> /dev/null; then
+if command -v flatpak > /dev/null 2>&1; then
   echo "# flatpak - Running flatpak update --user"
 
   flatpak update --user
@@ -35,18 +35,24 @@ if command -v flatpak &> /dev/null; then
 fi
 
 {{ if and (.is_desktop) -}}
-if command -v pip3 &> /dev/null; then
-  echo "# pip3 - Updating python3 user installed packages"
+if command -v pip3 > /dev/null 2>&1; then
 
-  python3 -m pip --disable-pip-version-check list --outdated --user --isolated --format=json \
-  | python3 -c "import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))" \
-  | xargs -r -n1 python3 -m pip install --isolated --user --upgrade || true
+  if [ -n "${VIRTUAL_ENV:-}" ]; then
+    echo "# pip3 - Skipping updating python3 user installed packages as we are in a virtual env"
+  else
 
-  echo "# pip3 - Done updating python3 user installed packages"
+    echo "# pip3 - Updating python3 user installed packages"
+
+    python3 -m pip --disable-pip-version-check list --outdated --user --isolated --format=json \
+    | python3 -c "import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))" \
+    | xargs -r -n1 python3 -m pip install --isolated --user --upgrade || true
+
+    echo "# pip3 - Done updating python3 user installed packages"
+  fi
 fi
 {{- end }}
 
-if command -v uvx &> /dev/null; then
+if command -v uvx > /dev/null 2>&1; then
   echo "# uvx - Updating python tools"
 
   uv tool upgrade --all
@@ -54,7 +60,7 @@ if command -v uvx &> /dev/null; then
   echo "# uvx - Done updating python tools"
 fi
 
-if command -v kubectl-krew &> /dev/null; then
+if command -v kubectl-krew > /dev/null 2>&1; then
   echo "# kubectl-krew - Updating kubectl krew user installed packages"
 
   kubectl-krew update
@@ -63,7 +69,7 @@ if command -v kubectl-krew &> /dev/null; then
   echo "# kubectl-krew - Done updating kubectl krew user installed packages"
 fi
 
-if command -v chezmoi &> /dev/null; then
+if command -v chezmoi > /dev/null 2>&1; then
   echo "# chezmoi - Upgrading chezmoi"
 
   chezmoi upgrade
