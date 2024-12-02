@@ -2,13 +2,15 @@
 
 set -euo pipefail
 
+export XDG_BIN_HOME="${XDG_BIN_HOME:="$HOME/.local/bin"}"
+
 {{ if .use_encrypted_data }}
 
 if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
     mkdir -p "${HOME}/.config/chezmoi"
 
     echo "WARNING: Requesting decryption of age key. Please enter password and re-run chezmoi init to complete chezmoi.yaml data setup"
-    chezmoi age decrypt --output "${HOME}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/.data/key.txt.age"
+    "$XDG_BIN_HOME"/chezmoi age decrypt --output "${HOME}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/.data/key.txt.age"
     chmod 600 "${HOME}/.config/chezmoi/key.txt"
 fi
 
