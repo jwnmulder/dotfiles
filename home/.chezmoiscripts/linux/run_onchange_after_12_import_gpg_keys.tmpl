@@ -1,0 +1,8 @@
+{{- if and .is_desktop .gpg.key_id -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+gpg --keyserver keys.openpgp.org --receive-keys {{ .gpg.key_id }}
+
+{{ end -}}

@@ -1,0 +1,12 @@
+# This is the server that --recv-keys, --send-keys, and --search-keys will
+# communicate with to receive keys from, send keys to, and search for keys on
+keyserver hkps://keys.openpgp.org/
+
+# When searching for a key with --search-keys, include keys that are marked on
+# the keyserver as revoked
+keyserver-options include-revoked
+
+{{ if .gpg.key_id -}}
+# default-key {{ .gpg.key_id }}
+# trusted-key {{ .gpg.key_id }}
+{{- end }}
