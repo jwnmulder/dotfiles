@@ -1,9 +1,11 @@
-{{ if and (.is_desktop) (lookPath "git") -}}
+{{ if .is_desktop -}}
 #!/usr/bin/env bash
 
 set -euo pipefail
 
 cd "{{ .chezmoi.workingTree }}"
+
+{{   if lookPath "git" }}
 
 # configure push via ssh
 origin_push=$(git remote get-url --push origin) || true
@@ -12,6 +14,12 @@ if [ ! -z "$origin_push" ]; then
   git remote set-url --push origin "$origin_push"
 fi
 
+{{   end -}}
+
+{{-   if or (lookPath "pre-commit") (lookPath "~/.local/bin/pre-commit") }}
+
 PRE_COMMIT_BIN=$(command -v pre-commit || echo ~/.local/bin/pre-commit)
 "$PRE_COMMIT_BIN" install
-{{- end }}
+
+{{   end -}}
+{{ end -}}

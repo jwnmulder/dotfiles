@@ -1,16 +1,21 @@
-{{- if and (lookPath "python3") (.is_desktop) -}}
+{{- if (.is_desktop) -}}
 #!/usr/bin/env bash
-
 set -euo pipefail
+
+{{-   if not (lookPath "python3") }}
+echo "No Python 3 installation found, please install with: sudo apt install python3"
+{{-   else }}
 
 {{ $python_tools := concat
   (dig "all" list .python_tools)
   (dig .profile list .python_tools) -}}
 
 echo "Installing/updating python tools: {{ $python_tools | join " " }}"
-{{ range $python_tools -}}
+{{     range $python_tools -}}
   echo Installing python tool '{{ . }}'
   .local/bin/uv tool install {{ . }} --force
-{{ end }}
+{{     end -}}
+
+{{   end -}}
 
 {{ end -}}
