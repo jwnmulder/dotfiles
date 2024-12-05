@@ -7,7 +7,7 @@ keyserver hkps://keys.openpgp.org/
 # the keyserver as revoked
 keyserver-options include-revoked
 
-{{-   if (get . "gpg") -}}
+{{   if (get . "gpg") -}}
 # default-key {{ .gpg.key_id }}
 # trusted-key {{ .gpg.key_id }}
 {{   end -}}
