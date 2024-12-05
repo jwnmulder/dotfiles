@@ -1,0 +1,13 @@
+{{- if and .is_desktop (get . "gpg") -}}
+
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+# Import personal GPG key
+gpg --keyserver keys.openpgp.org --receive-keys {{ .gpg.key_id }}
+
+# Ultimate trust personal GPG key
+Write-Host "Setting ultimate trust for GPG key: {{ .gpg.key_id }}"
+"5`ny`nquit" | gpg --command-fd 0 --no-tty --no-greeting --edit-key {{ .gpg.key_id }} trust
+
+{{ end -}}

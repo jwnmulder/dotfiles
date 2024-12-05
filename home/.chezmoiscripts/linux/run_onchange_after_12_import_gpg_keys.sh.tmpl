@@ -6,7 +6,7 @@ set -euo pipefail
 # Import personal GPG key
 gpg --keyserver keys.openpgp.org --receive-keys {{ .gpg.key_id }}
 
-# Ultimate trust private key
+# Ultimate trust personal GPG key
 echo "Setting ultimate trust for GPG key: {{ .gpg.key_id }}"
 (echo 5 && echo y && echo quit) | gpg --command-fd 0 --no-tty --no-greeting --edit-key {{ .gpg.key_id }} trust
 
