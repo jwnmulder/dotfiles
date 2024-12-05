@@ -1,3 +1,4 @@
+{{- if .is_desktop -}}
 # This is the server that --recv-keys, --send-keys, and --search-keys will
 # communicate with to receive keys from, send keys to, and search for keys on
 keyserver hkps://keys.openpgp.org/
@@ -6,7 +7,8 @@ keyserver hkps://keys.openpgp.org/
 # the keyserver as revoked
 keyserver-options include-revoked
 
-{{ if .gpg.key_id -}}
+{{-   if (get . "gpg") -}}
 # default-key {{ .gpg.key_id }}
 # trusted-key {{ .gpg.key_id }}
-{{- end }}
+{{   end -}}
+{{ end -}}
