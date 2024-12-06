@@ -16,50 +16,6 @@ versions:
   eza: v0.20.10             # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.24.0              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v2.8.1             # renovate: datasource=github-releases depName=TomWright/dasel
-  mise: v2024.11.37           # renovate: datasource=github-releases depName=jdx/mise
+  mise: v2024.11.37         # renovate: datasource=github-releases depName=jdx/mise
   multi_gitter: v0.54.1     # renovate: datasource=github-releases depName=lindell/multi-gitter
   gopass: v1.15.15          # renovate: datasource=github-releases depName=gopasspw/gopass
-
-python_tools:
-  all:
-    - pre-commit
-    - yq
-    - ruff
-
-scoop_packages:
-  all: []
-
-winget_packages:
-  all:
-    - JernejSimoncic.Wget
-    - Microsoft.WindowsTerminal
-    - Microsoft.VisualStudioCode
-    - eza-community.eza
-    - Git.Git
-  personal:
-    - Bitwarden.Bitwarden
-    - Kubernetes.kubectl
-    - jqlang.jq
-  work1:
-    - Bitwarden.Bitwarden
-    - Kubernetes.kubectl
-    - SlackTechnologies.Slack
-    - Postman.Postman
-    - GIMP.GIMP
-    - MuhammedKalkan.OpenLens
-    - dbeaver.dbeaver
-
-kubectl_krew_plugins:
-  - oidc-login
-  - sudo
-  - cert-manager
-  # - ingress-nginx
-  - deprecations
-  - outdated
-  - get-all
-  - starboard
-  - resource-capacity
-  - open-svc
-  - popeye
-  - explore
-  - view-quotas

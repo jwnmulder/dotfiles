@@ -1,0 +1,43 @@
+python_tools:
+  all:
+    - pre-commit
+    - yq
+    - ruff
+
+scoop_packages:
+  all: []
+
+winget_packages:
+  all:
+    - JernejSimoncic.Wget
+    - Microsoft.WindowsTerminal
+    - Microsoft.VisualStudioCode
+    - eza-community.eza
+    - Git.Git
+  personal:
+    - Bitwarden.Bitwarden
+    - Kubernetes.kubectl
+    - jqlang.jq
+  work1:
+    - Bitwarden.Bitwarden
+    - Kubernetes.kubectl
+    - SlackTechnologies.Slack
+    - Postman.Postman
+    - GIMP.GIMP
+    - MuhammedKalkan.OpenLens
+    - dbeaver.dbeaver
+
+kubectl_krew_plugins:
+  - oidc-login
+  - sudo
+  - cert-manager
+  # - ingress-nginx
+  - deprecations
+  - outdated
+  - get-all
+  - starboard
+  - resource-capacity
+  - open-svc
+  - popeye
+  - explore
+  - view-quotas
