@@ -1,0 +1,12 @@
+{{- if lookPath "gopass" -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "gopass config core.autopull=false"
+gopass config core.autopull false > /dev/null
+
+echo "gopass config core.autopush=false"
+gopass config core.autopush false > /dev/null
+
+{{- end }}
