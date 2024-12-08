@@ -11,14 +11,11 @@ if ! command -v socat &> /dev/null; then
   return
 fi
 
-{{- /* get username via windows process */ -}}
-{{- $win_username := output "bash" "-c" "set -o pipefail && cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
-
 {{- /*  get config_basepath by running gpgconf.exe in a windows process */ -}}
 {{- $win_gpg_config_basepath := output "bash" "-c" "set -o pipefail && gpgconf.exe --list-dirs socketdir | tr -d '\r\n'" }}
 
 # Needs to be /mnt/c/ for performance reasons, see https://github.com/BlackReloaded/wsl2-ssh-pageant/issues/24
-wsl2_ssh_pageant_bin="/mnt/c/Users/{{ $win_username }}/.local/bin/wsl2-ssh-pageant.exe"
+wsl2_ssh_pageant_bin="/mnt/c/Users/{{ .wsl.win_username }}/.local/bin/wsl2-ssh-pageant.exe"
 
 # escape characters so that C:\Users\${USER}\AppData\Roaming\gnupg becomes C\:/Users/${USER}/AppData/Roaming/gnupg
 win_gpg_config_basepath="{{ $win_gpg_config_basepath | replace "\\" "/" | replace ":" "\\:" }}"
