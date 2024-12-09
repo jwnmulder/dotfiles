@@ -88,6 +88,10 @@ data:
   uname:
     machine: '{{ output "uname" "-m" | trim }}'
 {{- end }}
+{{- if $is_wsl }}
+  wsl:
+    win_username: {{ output "bash" "-c" "set -o pipefail && cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
+{{- end }}
   profile: {{ $profile }}
   personal_device: {{ $personal_device }}
   work_device: {{ $work_device }}
@@ -103,7 +107,7 @@ data:
 {{- $gpg := coalesce $enc_data.gpg .gpg -}}
 {{- if $gpg }}
   gpg:
-    key_id: {{ $gpg.key_id }}
+{{ $gpg | toYaml | indent 4 }}
 {{- end }}
 
 {{- $password_store := coalesce $enc_data.password_store .password_store -}}

@@ -1,0 +1,43 @@
+{{- if and .is_desktop (hasKey . "password_store") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Only run this script when a yubikey is present.
+# One way to detect this is via ssh-add -L as in my case there is an SSH key present on the Yubikey
+{{ $yubikey_present := (output "sh" "-c" "ssh-add -L 2> /dev/null || true") | contains "cardno:15_287_262" }}
+
+{{   if not $yubikey_present }}
+echo "No yubikey present, skipping setup of GPG and SSH keys"
+{{   else }}
+
+echo "Yubikey present, setting up GPG and SSH keys"
+
+# Import GPG keys
+{{     range .gpg.import_keys }}
+if ! gpg -k | grep -q "{{ .key_id }}"; then
+  echo "Importing gpg key with id: {{ .key_id }}"
+  pass show {{ .passwordstore_key }} | gpg --import -
+fi
+{{     end }}
+
+# Copy ssh key files to $HOME/.ssh/
+{{ $ssh_key_files := (get .profiles .profile).ssh_key_files }}
+{{     range $ssh_key_files }}
+echo "Writing $HOME/.ssh/{{ . }}"
+pass show private_keys/ssh/{{ . }} > $HOME/.ssh/{{ . }}
+chmod 600 $HOME/.ssh/{{ . }}*
+{{     end }}
+
+{{     if .is_wsl }}
+# # Prepare .ssh keys on Windows desktop
+{{ $win_username := .wsl.win_username }}
+{{       range $ssh_key_files }}
+echo "Writing /mnt/c/Users/{{ $win_username }}/.ssh/{{ . }}"
+pass show private_keys/ssh/{{ . }} > /mnt/c/Users/{{ $win_username }}/.ssh/{{ . }}
+{{       end }}
+{{     end }}
+
+{{   end }}
+
+{{- end }}
