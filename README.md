@@ -30,10 +30,7 @@ chsh -s $(which zsh)
 ## Updating dotfiles
 
 ```bash
-# pull only
-chezmoi update --apply=false
-
-chezmoi apply
+chezmoi update
 ```
 
 ## Editing encrypted files
