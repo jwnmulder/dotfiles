@@ -5,7 +5,7 @@ Most of the time, gpg socket forwarding from WSL to Windows works perfectly fine
 Some Linux commands to help debugging
 
 ```bash
-ssh-add -L
+ssh-add -l
 gpg -K
 
 # With a Yubikey present, these should work

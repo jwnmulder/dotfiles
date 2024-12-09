@@ -24,17 +24,25 @@ fi
 # Copy ssh key files to $HOME/.ssh/
 {{ $ssh_key_files := (get .profiles .profile).ssh_key_files }}
 {{     range $ssh_key_files }}
-echo "Writing $HOME/.ssh/{{ . }}"
-pass show private_keys/ssh/{{ . }} > $HOME/.ssh/{{ . }}
-chmod 600 $HOME/.ssh/{{ . }}*
+{{       if eq .action "store_in_dot_ssh" }}
+echo "Writing $HOME/.ssh/{{ .file }}"
+pass show private_keys/ssh/{{ .file }} > $HOME/.ssh/{{ .file }}
+chmod 600 $HOME/.ssh/{{ .file }}*
+{{       end }}
+{{       if eq .action "ssh-add" }}
+echo "Importing ssh key with ssh-add: {{ .file }}"
+pass show private_keys/ssh/{{ .file }} | ssh-add -
+{{       end }}
 {{     end }}
 
 {{     if .is_wsl }}
 # # Prepare .ssh keys on Windows desktop
 {{ $win_username := .wsl.win_username }}
 {{       range $ssh_key_files }}
+{{         if eq .action "store_in_dot_ssh_winhost" }}
 echo "Writing /mnt/c/Users/{{ $win_username }}/.ssh/{{ . }}"
 pass show private_keys/ssh/{{ . }} > /mnt/c/Users/{{ $win_username }}/.ssh/{{ . }}
+{{         end }}
 {{       end }}
 {{     end }}
 
