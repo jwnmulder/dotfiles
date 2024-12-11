@@ -3,49 +3,65 @@
 
 set -euo pipefail
 
+SSH_TMP_DIR="$HOME/.ssh/.chezmoi-tmp"
+KNOWN_KEY_DATA=$(ssh-add -l 2>&1 || true && gpg --list-keys 2>&1 || true)
+
 # Only run this script when a yubikey is present.
 # One way to detect this is via ssh-add -L as in my case there is an SSH key present on the Yubikey
-{{ $yubikey_present := (output "sh" "-c" "ssh-add -L 2> /dev/null || true") | contains "cardno:15_287_262" }}
+{{ $yubikey_present := (output "sh" "-c" "ssh-add -L /dev/null 2>&1 || true") | contains "cardno:15_287_262" }}
+{{ $win_username := .wsl.win_username }}
 
-{{   if not $yubikey_present }}
-echo "No yubikey present, skipping setup of GPG and SSH keys"
-{{   else }}
-
-echo "Yubikey present, setting up GPG and SSH keys"
+LOGGED_WORK_TODO_ONCE="0"
+log_work_todo_once () {
+  if [ "$LOGGED_WORK_TODO_ONCE" = "0" ]; then
+{{ if not $yubikey_present }}
+    echo "No yubikey present, skipping setup of GPG and SSH keys"
+{{ else }}
+    echo "Yubikey present, setting up GPG and SSH keys"
+{{ end }}
+    LOGGED_WORK_TODO_ONCE="1"
+  fi
+}
 
 # Import GPG keys
-{{     range .gpg.import_keys }}
-if ! gpg -k | grep -q "{{ .key_id }}"; then
+{{ range .gpg.import_keys }}
+if [[ $KNOWN_KEY_DATA != *"{{ .key_id }}"* ]]; then
+  log_work_todo_once
+{{   if $yubikey_present }}
   echo "Importing gpg key with id: {{ .key_id }}"
   pass show {{ .passwordstore_key }} | gpg --import -
+{{   end }}
 fi
-{{     end }}
+{{ end }}
 
-# Copy ssh key files to $HOME/.ssh/
 {{ $ssh_key_files := (get .profiles .profile).ssh_key_files }}
-{{     range $ssh_key_files }}
-{{       if eq .action "store_in_dot_ssh" }}
-echo "Writing $HOME/.ssh/{{ .file }}"
-pass show private_keys/ssh/{{ .file }} > $HOME/.ssh/{{ .file }}
-chmod 600 $HOME/.ssh/{{ .file }}*
-{{       end }}
-{{       if eq .action "ssh-add" }}
-echo "Importing ssh key with ssh-add: {{ .file }}"
-pass show private_keys/ssh/{{ .file }} | ssh-add -
-{{       end }}
-{{     end }}
+{{ range $ssh_key_files }}
 
-{{     if .is_wsl }}
-# # Prepare .ssh keys on Windows desktop
-{{ $win_username := .wsl.win_username }}
-{{       range $ssh_key_files }}
-{{         if eq .action "store_in_dot_ssh_winhost" }}
-echo "Writing /mnt/c/Users/{{ $win_username }}/.ssh/{{ . }}"
-pass show private_keys/ssh/{{ . }} > /mnt/c/Users/{{ $win_username }}/.ssh/{{ . }}
-{{         end }}
-{{       end }}
-{{     end }}
+{{   if has "ssh-add" .actions }}
 
+mkdir -p "$SSH_TMP_DIR" && cd "$SSH_TMP_DIR"
+echo "{{ .encrypted_pub_key_file | include | decrypt }}" > {{ .file }}.pub
+
+KEY_FINGERPRINT=$(ssh-keygen -E sha256 -l -f {{ .file }}.pub | awk '{print $2}' || echo "doesnotexistorsomethingwentwrong")
+
+if [[ $KNOWN_KEY_DATA != *"$KEY_FINGERPRINT"* ]]; then
+  log_work_todo_once
+{{     if $yubikey_present }}
+  echo "Importing ssh key with ssh-add: {{ .file }}"
+  pass show private_keys/ssh/{{ .file }} > {{ .file }}
+  chmod 600 {{ .file }}
+  ssh-add {{ .file }}
+  rm {{ .file }}
+{{     end }}
+fi
 {{   end }}
 
+{{   if and $win_username (has "store_in_dot_ssh_winhost" .actions) }}
+echo "Writing /mnt/c/Users/{{ $win_username }}/.ssh/{{ . }}"
+pass show private_keys/ssh/{{ . }} > /mnt/c/Users/{{ $win_username }}/.ssh/{{ . }}
+{{   end }}
+
+{{ end }}
+
+rm -rf "$SSH_TMP_DIR"
 {{- end }}
