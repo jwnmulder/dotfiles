@@ -1,0 +1,3 @@
+{{- if .is_desktop -}}
+{{- printf "%s%s%s" "private_dot_ssh/.id_rsa_" .profile ".pub.age" | include | decrypt -}}
+{{- end -}}
