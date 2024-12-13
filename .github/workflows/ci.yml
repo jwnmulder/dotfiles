@@ -41,10 +41,10 @@ jobs:
 
       - name: Decrypt age key
         env:
-          AGE_DECRYPT_PASS: ${{ secrets.AGE_DECRYPT_PASS }}
+          CHEZMOI_KEY: ${{ secrets.CHEZMOI_KEY }}
         run: |
           mkdir -p ${HOME}/.config/chezmoi
-          echo "${{ secrets.CHEZMOI_KEY }}" | base64 -d > ${HOME}/.config/chezmoi/key.txt
+          echo "$CHEZMOI_KEY" | base64 --decode > ${HOME}/.config/chezmoi/key.txt
 
       - name: Chezmoi init & apply
         env:
@@ -178,6 +178,14 @@ jobs:
           scoop install winget
           scoop install chezmoi
 
+      - name: Decrypt age key
+        env:
+          CHEZMOI_KEY: ${{ secrets.CHEZMOI_KEY }}
+        shell: bash
+        run: |
+          mkdir -p ${HOME}/.config/chezmoi
+          echo "$CHEZMOI_KEY" | base64 --decode > ${HOME}/.config/chezmoi/key.txt
+
       - name: Chezmoi init & apply - powershell
         if: matrix.shell == 'powershell'
         env:
@@ -207,3 +215,9 @@ jobs:
         run: |
           echo "Running chezmoi init --apply"
           chezmoi init --apply --source $Env:GITHUB_WORKSPACE
+
+      - name: Remove age key
+        if: always()
+        shell: bash
+        run: |
+          rm ${HOME}/.config/chezmoi/key.txt
