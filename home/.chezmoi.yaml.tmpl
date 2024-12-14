@@ -66,6 +66,8 @@ config_info: |
 
   {{ "" }}
   Generated for user={{ $username }}, hostname={{ .chezmoi.hostname }}
+  .data/chezmodata.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.data/chezmoidata.yaml.age") | sha256sum }}
+
 
 encryption: age
 age:
@@ -78,6 +80,10 @@ interpreters:
     # https://github.com/PowerShell/PowerShell/issues/8635#issuecomment-454028787
     command: '{{ if env "CHEZMOI_PS1_COMMAND" }}{{ env "CHEZMOI_PS1_COMMAND" }}{{ else if lookPath "pwsh.exe" }}pwsh.exe{{ else }}powershell.exe{{ end }}'
     args: ["-NoLogo", "-NoProfile"]
+
+status:
+  exclude:
+    - always
 
 data:
   use_encrypted_data: {{ $use_encrypted_data }}
