@@ -5,7 +5,10 @@ set -euo pipefail
 if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
     mkdir -p "${HOME}/.config/chezmoi"
 
-    echo "WARNING: Requesting decryption of age key. Please enter password and re-run chezmoi init to complete chezmoi.yaml data setup"
+    ls -ls "${HOME}"/.local/share/chezmoi/
+    ls -la /__w/dotfiles/dotfiles/home/
+
+    echo "Requesting decryption of age key. Please enter password"
     "$CHEZMOI_EXECUTABLE" age decrypt --output "${HOME}/.config/chezmoi/key.txt" --passphrase "${HOME}/.local/share/chezmoi/home/.data/key.txt.age"
     chmod 600 "${HOME}/.config/chezmoi/key.txt"
 fi
