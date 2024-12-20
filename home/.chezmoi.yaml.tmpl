@@ -15,18 +15,16 @@ status:
   exclude:
     - always
 
-# {{ if eq .chezmoi.os "linux" }}
 hooks:
   read-source-state:
     pre:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ (eq .chezmoi.os "windows") | ternary  "ps1" "sh"}}'
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ (eq .chezmoi.os "windows") | ternary  "cmd" "sh"}}'
   init:
     pre:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ (eq .chezmoi.os "windows") | ternary  "ps1" "sh"}}'
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ (eq .chezmoi.os "windows") | ternary  "cmd" "sh"}}'
   update:
     post:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ (eq .chezmoi.os "windows") | ternary  "ps1" "sh"}}'
-# {{ end }}
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ (eq .chezmoi.os "windows") | ternary  "cmd" "sh"}}'
 
 config_info: |
   {{- $interactive := stdinIsATTY -}}
