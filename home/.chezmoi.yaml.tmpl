@@ -1,4 +1,33 @@
 # chezmoi:template:missing-key=invalid
+encryption: age
+age:
+  identity: "~/.config/chezmoi/key.txt"
+  recipient: "age1cckqh88dv9m75dcd9ftkjqxuc6y8zsvp40yavdkp37l5cvajraxs0lxnlj"
+
+interpreters:
+  ps1:
+    # Prefer PowerShell Core over PowerShell Desktop
+    # https://github.com/PowerShell/PowerShell/issues/8635#issuecomment-454028787
+    command: '{{ if env "CHEZMOI_PS1_COMMAND" }}{{ env "CHEZMOI_PS1_COMMAND" }}{{ else if lookPath "pwsh.exe" }}pwsh.exe{{ else }}powershell.exe{{ end }}'
+    args: ["-NoLogo", "-NoProfile"]
+
+status:
+  exclude:
+    - always
+
+# {{ if eq .chezmoi.os "linux" }}
+hooks:
+  read-source-state:
+    pre:
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ (eq .chezmoi.os "windows") | ternary  "ps1" "sh"}}'
+  init:
+    pre:
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ (eq .chezmoi.os "windows") | ternary  "ps1" "sh"}}'
+  update:
+    post:
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ (eq .chezmoi.os "windows") | ternary  "ps1" "sh"}}'
+# {{ end }}
+
 config_info: |
   {{- $interactive := stdinIsATTY -}}
   {{- $ephemeral := false -}}
@@ -51,14 +80,18 @@ config_info: |
   {{- $personal_device := eq $profile "personal" -}}
   {{- $work_device := ne $profile "personal" -}}
 
-  {{- $enc_data := dict -}}
+  {{- $enc_private := dict -}}
+  {{- $enc_profiles := dict -}}
   {{- if and
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))
         (stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml")) -}}
-  {{-   $enc_data = include (joinPath .chezmoi.workingTree "home/.data/chezmoidata.yaml.age") | decrypt | fromYaml -}}
+  {{-   $enc_private = include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private.yaml.age") | decrypt | fromYaml -}}
+  {{-   $enc_profiles = include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | decrypt | fromYaml -}}
+
+  {{-   $name = $enc_private.name -}}
   {{- end -}}
 
-  {{- $profiles := coalesce $enc_data.profiles .profiles -}}
+  {{- $profiles := coalesce $enc_profiles.profiles .profiles -}}
   {{- if $profiles -}}
   {{-   $profile_data := get $profiles $profile -}}
   {{-   $email = $profile_data.email -}}
@@ -66,24 +99,8 @@ config_info: |
 
   {{ "" }}
   Generated for user={{ $username }}, hostname={{ .chezmoi.hostname }}
-  .data/chezmodata.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.data/chezmoidata.yaml.age") | sha256sum }}
-
-
-encryption: age
-age:
-  identity: "~/.config/chezmoi/key.txt"
-  recipient: "age1cckqh88dv9m75dcd9ftkjqxuc6y8zsvp40yavdkp37l5cvajraxs0lxnlj"
-
-interpreters:
-  ps1:
-    # Prefer PowerShell Core over PowerShell Desktop
-    # https://github.com/PowerShell/PowerShell/issues/8635#issuecomment-454028787
-    command: '{{ if env "CHEZMOI_PS1_COMMAND" }}{{ env "CHEZMOI_PS1_COMMAND" }}{{ else if lookPath "pwsh.exe" }}pwsh.exe{{ else }}powershell.exe{{ end }}'
-    args: ["-NoLogo", "-NoProfile"]
-
-status:
-  exclude:
-    - always
+  .private.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private.yaml.age") | sha256sum }}
+  .private_proviles.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | sha256sum }}
 
 data:
   use_encrypted_data: {{ $use_encrypted_data }}
@@ -104,19 +121,19 @@ data:
   email: {{ $email }}
   name: {{ $name }}
 
-{{- $git := coalesce $enc_data.git .git -}}
+{{- $git := coalesce $enc_private.git .git -}}
 {{- if $git }}
   git:
     signingkey: {{ $git.signingkey }}
 {{- end }}
 
-{{- $gpg := coalesce $enc_data.gpg .gpg -}}
+{{- $gpg := coalesce $enc_private.gpg .gpg -}}
 {{- if $gpg }}
   gpg:
 {{ $gpg | toYaml | indent 4 }}
 {{- end }}
 
-{{- $password_store := coalesce $enc_data.password_store .password_store -}}
+{{- $password_store := coalesce $enc_private.password_store .password_store -}}
 {{- if $password_store }}
   password_store:
     repo: {{ $password_store.repo }}

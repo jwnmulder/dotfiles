@@ -7,8 +7,8 @@ echo "No Python 3 installation found, please install with: sudo apt install pyth
 {{-   else }}
 
 {{ $python_tools := concat
-  (dig "all" list .python_tools)
-  (dig .profile list .python_tools) -}}
+  (dig "all" list .packages.python_tools)
+  (dig .profile list .packages.python_tools) -}}
 
 echo "Installing/updating python tools: {{ $python_tools | join " " }}"
 {{     range $python_tools -}}

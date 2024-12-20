@@ -19,6 +19,6 @@ export KREW_ROOT="${KREW_ROOT:-$XDG_DATA_HOME/krew}"
 {{ end -}}
 
 
-"$KREW_ROOT"/bin/kubectl-krew install {{ .kubectl_krew_plugins | join " " }} 2>&1 | grep -v "Installing plugin"
+"$KREW_ROOT"/bin/kubectl-krew install {{ .packages.kubectl_krew_plugins | join " " }} 2>&1 | grep -v "Installing plugin"
 
 {{ end -}}

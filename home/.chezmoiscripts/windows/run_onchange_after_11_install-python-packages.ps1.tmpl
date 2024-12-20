@@ -4,8 +4,8 @@ $ErrorActionPreference = "Stop"
 {{ if and (.is_desktop) (lookPath "py.exe") -}}
 
 {{ $python_tools := concat
-  (dig "all" list .python_tools)
-  (dig .profile list .python_tools) -}}
+  (dig "all" list .packages.python_tools)
+  (dig .profile list .packages.python_tools) -}}
 
 Write-Host "Installing/updating python tools: {{ $python_tools | join " " }}"
 
