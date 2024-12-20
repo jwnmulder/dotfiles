@@ -5,7 +5,8 @@ set -euo pipefail
 if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
     mkdir -p "${HOME}/.config/chezmoi"
 
-    ls -ls "${HOME}"/.local/share/chezmoi/
+    env
+
     ls -la /__w/dotfiles/dotfiles/home/
 
     echo "Requesting decryption of age key. Please enter password"
