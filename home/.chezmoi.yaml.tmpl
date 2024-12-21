@@ -15,16 +15,17 @@ status:
   exclude:
     - always
 
+{{ $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
 hooks:
   read-source-state:
     pre:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ (eq .chezmoi.os "windows") | ternary  "cmd" "sh"}}'
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}'
   init:
     pre:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ (eq .chezmoi.os "windows") | ternary  "cmd" "sh"}}'
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}'
   update:
     post:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ (eq .chezmoi.os "windows") | ternary  "cmd" "sh"}}'
+      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}'
 
 config_info: |
   {{- $interactive := stdinIsATTY -}}
@@ -51,15 +52,6 @@ config_info: |
   {{- end -}}
 
   {{- $is_server := not $is_desktop -}}
-  {{- $workingTree := .chezmoi.workingTree -}}
-  {{- $username := .chezmoi.username -}}
-
-  {{- $script_ext := "sh" -}}
-  {{- if eq .chezmoi.os "windows" -}}
-  {{-   $script_ext = "bat" -}}
-  {{-   $workingTree = printf "%s%s" .chezmoi.homeDir "/AppData/Local/chezmoi" -}}
-  {{-   $username = env "USERNAME" -}}
-  {{- end -}}
 
   {{- $use_encrypted_data := and $interactive (not $ephemeral) (not $is_server) -}}
 
@@ -96,7 +88,7 @@ config_info: |
   {{- end -}}
 
   {{ "" }}
-  Generated for user={{ $username }}, hostname={{ .chezmoi.hostname }}
+  Generated for user={{ .chezmoi.username }}, hostname={{ .chezmoi.hostname }}
   .private.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private.yaml.age") | sha256sum }}
   .private_proviles.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | sha256sum }}
 
