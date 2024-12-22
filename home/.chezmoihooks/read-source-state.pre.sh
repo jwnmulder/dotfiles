@@ -18,5 +18,9 @@ done
 
 echo "hook: action=$action, decrypt_key=$decrypt_key"
 
-# "$HOOKS_BASE_DIR"/linux/ensure-pre-requisites.sh
-"$HOOKS_BASE_DIR"/linux/decrypt-age-key.sh
+# check pre-requisites but do not exit on failure
+"$HOOKS_BASE_DIR"/linux/ensure-pre-requisites.sh || true
+
+if [ "$decrypt_key" == "true" ]; then
+    "$HOOKS_BASE_DIR"/linux/decrypt-age-key.sh
+fi
