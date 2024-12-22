@@ -18,7 +18,7 @@ status:
 config_info: |
   {{- $interactive := stdinIsATTY -}}
   {{- $ephemeral := false -}}
-  {{- $profile_key := coalesce (env "DATA_profile") (get . "profile") -}}
+  {{- $profile_key := coalesce (env "DATA_profile") (get . "profile") "" -}}
   {{- $name := .name -}}
   {{- $email := .email -}}
 
