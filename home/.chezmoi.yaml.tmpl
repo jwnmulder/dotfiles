@@ -15,40 +15,23 @@ status:
   exclude:
     - always
 
-{{ $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
-hooks:
-  read-source-state:
-    pre:
-      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}"
-      args: [ "read-source-state" ]
-  init:
-    pre:
-      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}"
-      args: [ "init" ]
-  update:
-    post:
-      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}"
-      args: [ "update" ]
-
 config_info: |
   {{- $interactive := stdinIsATTY -}}
   {{- $ephemeral := false -}}
-  {{- $profile := coalesce (env "DATA_profile") (get . "profile") "<no value>" -}}
+  {{- $profile_key := coalesce (env "DATA_profile") (get . "profile") -}}
   {{- $name := .name -}}
   {{- $email := .email -}}
 
   {{- $is_wsl := false -}}
-  {{- if .chezmoi.kernel -}}
-  {{-   if hasKey .chezmoi.kernel "osrelease" -}}
-  {{-     $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
-  {{-   end -}}
+  {{- if and .chezmoi.kernel (hasKey .chezmoi.kernel "osrelease") -}}
+  {{-   $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
   {{- end -}}
 
   {{- $is_desktop := or ($is_wsl) (eq .chezmoi.os "windows") (eq (env "IS_DESKTOP") "true") -}}
 
   {{- if or (env "CODESPACES") (env "GITPOD_WORKSPACE_ID") -}}
   {{-   $ephemeral = true -}}
-  {{-   $profile = "personal" -}}
+  {{-   $profile_key = "personal" -}}
   {{-   $is_desktop = true -}}
   {{-   $name = coalesce (env "GITPOD_GIT_USER_NAME") .name -}}
   {{-   $email = coalesce (env "GITPOD_GIT_USER_EMAIL") .email -}}
@@ -57,10 +40,10 @@ config_info: |
   {{- $is_server := not $is_desktop -}}
 
   {{- range $i := until 5 -}}
-  {{-   if regexMatch "^((personal)|(work\\d))$" $profile -}}
+  {{-   if regexMatch "^((personal)|(work1)|(work2))$" $profile_key -}}
   {{-     break -}}
   {{-   else -}}
-  {{-     $profile = promptString "Which profile should be used for this machine? (personal/work1/work2)" -}}
+  {{-     $profile_key = promptString "Which profile should be used for this machine? (personal/work1/work2)" -}}
   {{-   end -}}
   {{-   if eq $i 4 -}}
   {{-     writeToStdout "❌ ERROR: Invalid profile selected\n" -}}
@@ -68,8 +51,8 @@ config_info: |
   {{-   end -}}
   {{- end -}}
 
-  {{- $personal_device := eq $profile "personal" -}}
-  {{- $work_device := ne $profile "personal" -}}
+  {{- $personal_device := eq $profile_key "personal" -}}
+  {{- $work_device := ne $profile_key "personal" -}}
 
   {{- $enc_private := dict -}}
   {{- $enc_profiles := dict -}}
@@ -84,10 +67,11 @@ config_info: |
 
   {{- $profiles := coalesce $enc_profiles.profiles .profiles -}}
   {{- if $profiles -}}
-  {{-   $profile_data := get $profiles $profile -}}
-  {{-   $email = $profile_data.email -}}
+  {{-   $profile := get $profiles $profile_key -}}
+  {{-   $email = $profile.email -}}
   {{- end -}}
 
+  {{- $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
   {{- $use_encrypted_data := and $interactive (not $ephemeral) (not $is_server) -}}
 
   {{ "" }}
@@ -95,22 +79,21 @@ config_info: |
   .private.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private.yaml.age") | sha256sum }}
   .private_proviles.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | sha256sum }}
 
-# hooks:
-#   read-source-state:
-#     pre:
-#       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}"
-#       args: [ "read-source-state", "decrypt_key={{ $use_encrypted_data }}" ]
-#   init:
-#     pre:
-#       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}"
-#       args: [ "init", "decrypt_key={{ $use_encrypted_data }}" ]
-#   update:
-#     post:
-#       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}"
-#       args: [ "update", "decrypt_key={{ $use_encrypted_data }}" ]
+hooks:
+  read-source-state:
+    pre:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}"
+      args: [ "read-source-state", "--decrypt_key", "{{ $use_encrypted_data }}" ]
+  init:
+    pre:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}"
+      args: [ "init", "--decrypt_key", "{{ $use_encrypted_data }}" ]
+  update:
+    post:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}"
+      args: [ "update", "--decrypt_key", "{{ $use_encrypted_data }}" ]
 
 data:
-  use_encrypted_data: {{ $use_encrypted_data }}
   is_wsl: {{ $is_wsl }}
   is_server: {{ $is_server }}
   is_desktop: {{ $is_desktop  }}
@@ -122,7 +105,7 @@ data:
   wsl:
     win_username: {{ output "bash" "-c" "set -o pipefail && cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
 {{- end }}
-  profile: {{ $profile }}
+  profile: {{ $profile_key }}
   personal_device: {{ $personal_device }}
   work_device: {{ $work_device }}
   email: {{ $email }}
