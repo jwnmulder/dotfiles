@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-echo "args: $*"
+echo "hook: $*"
 
 # HOOKS_BASE_DIR="$CHEZMOI_SOURCE_DIR/.chezmoihooks"
 

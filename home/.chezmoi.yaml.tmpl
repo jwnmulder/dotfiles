@@ -15,6 +15,20 @@ status:
   exclude:
     - always
 
+hooks:
+  read-source-state:
+    pre:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}"
+      args: [ "read-source-state" ]
+  init:
+    pre:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}"
+      args: [ "init" ]
+  update:
+    post:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}"
+      args: [ "update" ]
+
 config_info: |
   {{- $interactive := stdinIsATTY -}}
   {{- $ephemeral := false -}}
@@ -81,19 +95,19 @@ config_info: |
   .private.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private.yaml.age") | sha256sum }}
   .private_proviles.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | sha256sum }}
 
-hooks:
-  read-source-state:
-    pre:
-      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}"
-      args: [ "hook=read-source-state", "decrypt_key={{ $use_encrypted_data }}" ]
-  init:
-    pre:
-      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}"
-      args: [ "hook=init", "decrypt_key={{ $use_encrypted_data }}" ]
-  update:
-    post:
-      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}"
-      args: [ "hook=update", "decrypt_key={{ $use_encrypted_data }}" ]
+# hooks:
+#   read-source-state:
+#     pre:
+#       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}"
+#       args: [ "read-source-state", "decrypt_key={{ $use_encrypted_data }}" ]
+#   init:
+#     pre:
+#       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}"
+#       args: [ "init", "decrypt_key={{ $use_encrypted_data }}" ]
+#   update:
+#     post:
+#       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}"
+#       args: [ "update", "decrypt_key={{ $use_encrypted_data }}" ]
 
 data:
   use_encrypted_data: {{ $use_encrypted_data }}
