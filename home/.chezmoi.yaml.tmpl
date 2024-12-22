@@ -19,8 +19,8 @@ config_info: |
   {{- $interactive := stdinIsATTY -}}
   {{- $ephemeral := false -}}
   {{- $profile_key := coalesce (env "DATA_profile") (get . "profile") | default "" -}}
-  {{- $name := .name -}}
-  {{- $email := .email -}}
+  {{- $name := "Jan-Willem Mulder" -}}
+  {{- $email := "jwnmulder@gmail.com" -}}
 
   {{- $is_wsl := false -}}
   {{- if and .chezmoi.kernel (hasKey .chezmoi.kernel "osrelease") -}}
@@ -33,8 +33,8 @@ config_info: |
   {{-   $ephemeral = true -}}
   {{-   $profile_key = "personal" -}}
   {{-   $is_desktop = true -}}
-  {{-   $name = coalesce (env "GITPOD_GIT_USER_NAME") .name -}}
-  {{-   $email = coalesce (env "GITPOD_GIT_USER_EMAIL") .email -}}
+  {{-   $name = coalesce (env "GITPOD_GIT_USER_NAME") $name -}}
+  {{-   $email = coalesce (env "GITPOD_GIT_USER_EMAIL") $email -}}
   {{- end -}}
 
   {{- $is_server := not $is_desktop -}}
@@ -52,23 +52,6 @@ config_info: |
 
   {{- $personal_device := eq $profile_key "personal" -}}
   {{- $work_device := ne $profile_key "personal" -}}
-
-  {{- $enc_private := dict -}}
-  {{- $enc_profiles := dict -}}
-  {{- if and
-        (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt"))
-        (stat (joinPath .chezmoi.homeDir ".config/chezmoi/chezmoi.yaml")) -}}
-  {{-   $enc_private = include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private.yaml.age") | decrypt | fromYaml -}}
-  {{-   $enc_profiles = include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | decrypt | fromYaml -}}
-
-  {{-   $name = $enc_private.name -}}
-  {{- end -}}
-
-  {{- $profiles := coalesce $enc_profiles.profiles .profiles -}}
-  {{- if $profiles -}}
-  {{-   $profile := get $profiles $profile_key -}}
-  {{-   $email = $profile.email -}}
-  {{- end -}}
 
   {{- $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
   {{- $use_encrypted_data := and $interactive (not $ephemeral) (not $is_server) -}}
@@ -107,28 +90,5 @@ data:
   profile: {{ $profile_key }}
   personal_device: {{ $personal_device }}
   work_device: {{ $work_device }}
-  email: {{ $email }}
   name: {{ $name }}
-
-{{- $git := coalesce $enc_private.git .git -}}
-{{- if $git }}
-  git:
-    signingkey: {{ $git.signingkey }}
-{{- end }}
-
-{{- $gpg := coalesce $enc_private.gpg .gpg -}}
-{{- if $gpg }}
-  gpg:
-{{ $gpg | toYaml | indent 4 }}
-{{- end }}
-
-{{- $password_store := coalesce $enc_private.password_store .password_store -}}
-{{- if $password_store }}
-  password_store:
-    repo: {{ $password_store.repo }}
-{{- end }}
-
-{{- if $profiles }}
-  profiles:
-{{ $profiles | toYaml | indent 4 }}
-{{- end }}
+  email: {{ $email }}

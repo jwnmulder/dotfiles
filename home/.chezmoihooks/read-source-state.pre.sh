@@ -23,4 +23,5 @@ echo "hook: action=$action, decrypt_key=$decrypt_key"
 
 if [ "$decrypt_key" == "true" ]; then
     "$HOOKS_BASE_DIR"/linux/decrypt-age-key.sh
+    "$HOOKS_BASE_DIR"/linux/decrypt-private-data.sh
 fi
