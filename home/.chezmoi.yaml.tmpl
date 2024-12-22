@@ -15,7 +15,7 @@ status:
   exclude:
     - always
 
-{{- $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
+{{ $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
 hooks:
   read-source-state:
     pre:
