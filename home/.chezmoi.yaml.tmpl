@@ -18,7 +18,7 @@ status:
 config_info: |
   {{- $interactive := stdinIsATTY -}}
   {{- $ephemeral := false -}}
-  {{- $profile_key := coalesce (env "DATA_profile") (get . "profile") "" -}}
+  {{- $profile_key := coalesce (env "DATA_profile") (get . "profile") | default "" -}}
   {{- $name := .name -}}
   {{- $email := .email -}}
 
@@ -38,7 +38,6 @@ config_info: |
   {{- end -}}
 
   {{- $is_server := not $is_desktop -}}
-
   {{- range $i := until 5 -}}
   {{-   if regexMatch "^((personal)|(work1)|(work2))$" $profile_key -}}
   {{-     break -}}
