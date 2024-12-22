@@ -9,4 +9,9 @@ IF NOT EXIST "%USERPROFILE%\.config\chezmoi\key.txt" (
     IF %ERRORLEVEL% NEQ 0 (
         exit /b %ERRORLEVEL%
     )
+
+    IF NOT EXIST "%USERPROFILE%\.config\chezmoi\key.txt" (
+        echo ERROR: Failed to decrypt age key
+        exit /b 1
+    )
 )
