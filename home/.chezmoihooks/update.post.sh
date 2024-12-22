@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+echo "args: $*"
+
 # HOOKS_BASE_DIR="$CHEZMOI_SOURCE_DIR/.chezmoihooks"
 
 # "$HOOKS_BASE_DIR"/linux/ensure-pre-requisites.sh

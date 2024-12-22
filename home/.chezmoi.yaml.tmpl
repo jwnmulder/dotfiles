@@ -15,18 +15,6 @@ status:
   exclude:
     - always
 
-{{ $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
-hooks:
-  read-source-state:
-    pre:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}'
-  init:
-    pre:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}'
-  update:
-    post:
-      command: '{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}'
-
 config_info: |
   {{- $interactive := stdinIsATTY -}}
   {{- $ephemeral := false -}}
@@ -52,8 +40,6 @@ config_info: |
   {{- end -}}
 
   {{- $is_server := not $is_desktop -}}
-
-  {{- $use_encrypted_data := and $interactive (not $ephemeral) (not $is_server) -}}
 
   {{- range $i := until 5 -}}
   {{-   if regexMatch "^((personal)|(work\\d))$" $profile -}}
@@ -87,10 +73,27 @@ config_info: |
   {{-   $email = $profile_data.email -}}
   {{- end -}}
 
+  {{- $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
+  {{- $use_encrypted_data := and $interactive (not $ephemeral) (not $is_server) -}}
+
   {{ "" }}
   Generated for user={{ .chezmoi.username }}, hostname={{ .chezmoi.hostname }}
   .private.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private.yaml.age") | sha256sum }}
   .private_proviles.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | sha256sum }}
+
+hooks:
+  read-source-state:
+    pre:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}"
+      args: [ "hook=read-source-state", "decrypt_key={{ $use_encrypted_data }}" ]
+  init:
+    pre:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}"
+      args: [ "hook=init", "decrypt_key={{ $use_encrypted_data }}" ]
+  update:
+    post:
+      command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}"
+      args: [ "hook=update", "decrypt_key={{ $use_encrypted_data }}" ]
 
 data:
   use_encrypted_data: {{ $use_encrypted_data }}
