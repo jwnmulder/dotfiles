@@ -3,10 +3,10 @@ setlocal enabledelayedexpansion
 
 rem Cleanup stale files
 for /r "%CHEZMOI_WORKING_TREE%\home\.chezmoidata" %%f in (tmp*) do (
-    echo del "%%f"
+    del "%%f"
 )
 
-if exist "%USERPROFILE%"\.config\chezmoi\key.txt" (
+if exist "%USERPROFILE%"\.config\chezmoi\key.txt (
 
     for /r "%CHEZMOI_WORKING_TREE%\home\.chezmoidata" %%f in (.*.yaml.age) do (
 
@@ -17,7 +17,7 @@ if exist "%USERPROFILE%"\.config\chezmoi\key.txt" (
 
             set "output_file=%CHEZMOI_WORKING_TREE%\home\.chezmoidata\!output_filename!"
 
-            echo %CHEZMOI_EXECUTABLE% decrypt "%%f" > "!output_file!"
+            %CHEZMOI_EXECUTABLE% decrypt "%%f" > "!output_file!"
         )
     )
 )
