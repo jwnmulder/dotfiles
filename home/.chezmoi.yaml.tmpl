@@ -65,15 +65,15 @@ hooks:
   read-source-state:
     pre:
       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/run_hook.{{ $hook_extension }}"
-      args: [ "read-source-state.pre", "--decrypt_key", "{{ $use_encrypted_data }}" ]
+      args: [ "read-source-state.pre", "--decrypt-key", "{{ $use_encrypted_data }}" ]
   init:
     pre:
       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/run_hook.{{ $hook_extension }}"
-      args: [ "init.pre", "--decrypt_key", "{{ $use_encrypted_data }}" ]
+      args: [ "init.pre", "--decrypt-key", "{{ $use_encrypted_data }}" ]
   update:
     post:
       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/run_hook.{{ $hook_extension }}"
-      args: [ "update.post", "--decrypt_key", "{{ $use_encrypted_data }}" ]
+      args: [ "update.post", "--decrypt-key", "{{ $use_encrypted_data }}" ]
 
 data:
   profile: {{ $profile_key }}

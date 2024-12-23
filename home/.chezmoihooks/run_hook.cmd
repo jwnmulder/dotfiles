@@ -9,7 +9,7 @@ set "decrypt_key=false"
 
 :parse_args
 if "%~1"=="" goto :end_parse_args
-if "%~1"=="--decrypt_key" set "decrypt_key=%~2" & shift & shift & goto :parse_args
+if "%~1"=="--decrypt-key" set "decrypt_key=%~2" & shift & shift & goto :parse_args
 
 echo Unknown parameter passed: %~1
 exit /b 1
