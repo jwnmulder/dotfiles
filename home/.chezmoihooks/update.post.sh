@@ -9,7 +9,7 @@ decrypt_key="false"
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        read-source-state|init|update) action="$1" ;;
+        read-source-state.*|init.*|update.*) action="$1" ;;
         --decrypt_key) decrypt_key="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac

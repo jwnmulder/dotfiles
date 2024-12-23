@@ -65,17 +65,22 @@ hooks:
   read-source-state:
     pre:
       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/read-source-state.pre.{{ $hook_extension }}"
-      args: [ "read-source-state", "--decrypt_key", "{{ $use_encrypted_data }}" ]
+      args: [ "read-source-state.pre", "--decrypt_key", "{{ $use_encrypted_data }}" ]
   init:
     pre:
       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/init.pre.{{ $hook_extension }}"
-      args: [ "init", "--decrypt_key", "{{ $use_encrypted_data }}" ]
+      args: [ "init.pre", "--decrypt_key", "{{ $use_encrypted_data }}" ]
   update:
     post:
       command: "{{ .chezmoi.sourceDir }}/.chezmoihooks/update.post.{{ $hook_extension }}"
-      args: [ "update", "--decrypt_key", "{{ $use_encrypted_data }}" ]
+      args: [ "update.post", "--decrypt_key", "{{ $use_encrypted_data }}" ]
 
 data:
+  profile: {{ $profile_key }}
+  personal_device: {{ $personal_device }}
+  work_device: {{ $work_device }}
+  name: {{ $name }}
+  email: {{ $email }}
   is_wsl: {{ $is_wsl }}
   is_server: {{ $is_server }}
   is_desktop: {{ $is_desktop  }}
@@ -87,8 +92,3 @@ data:
   wsl:
     win_username: {{ output "bash" "-c" "set -o pipefail && cmd.exe /C echo %USERNAME% 2>/dev/null | tr -d '\r\n'" }}
 {{- end }}
-  profile: {{ $profile_key }}
-  personal_device: {{ $personal_device }}
-  work_device: {{ $work_device }}
-  name: {{ $name }}
-  email: {{ $email }}
