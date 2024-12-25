@@ -15,7 +15,10 @@ echo Unknown parameter passed: %~1
 exit /b 1
 
 :end_parse_args
-echo hook: action=%action%, decrypt_key=%decrypt_key%
+
+if "%CHEZMOI_VERBOSE%"=="1" (
+    echo hook: action=%action%, decrypt_key=%decrypt_key%
+)
 
 if "%action%"=="read-source-state.pre" (
     @REM echo Running read-source-state.pre hooks...
