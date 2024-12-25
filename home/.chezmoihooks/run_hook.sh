@@ -16,7 +16,10 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-echo "hook: action=$action, decrypt-key=$decrypt_key"
+
+if [ "${CHEZMOI_VERBOSE:-}" == 1 ]; then
+    echo "hook: action=$action, decrypt-key=$decrypt_key"
+fi
 
 if [ "$action" == "read-source-state.pre" ]; then
 
