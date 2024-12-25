@@ -16,7 +16,6 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-
 if [ "${CHEZMOI_VERBOSE:-}" == 1 ]; then
     echo "hook: action=$action, decrypt-key=$decrypt_key"
 fi
