@@ -3,6 +3,7 @@
 
 set -euo pipefail
 
+# apt-get
 if command -v apt-get > /dev/null 2>&1; then
   echo "# apt-get - Running apt-get update/upgrade"
 
@@ -12,6 +13,7 @@ if command -v apt-get > /dev/null 2>&1; then
   echo "# apt-get - Done running apt-get upgdate/upgrade"
 fi
 
+# pacman
 if command -v pacman > /dev/null 2>&1; then
   echo "# pacman - Running pacman -Syu"
 
@@ -20,6 +22,7 @@ if command -v pacman > /dev/null 2>&1; then
   echo "# pacman - Done running pacman -Syu"
 fi
 
+# flatpak
 if command -v flatpak > /dev/null 2>&1; then
   echo "# flatpak - Running flatpak update --user"
 
@@ -34,6 +37,7 @@ if command -v flatpak > /dev/null 2>&1; then
   echo "# flatpak - Done running flatpak update --system"
 fi
 
+# pip user packages
 {{ if and (.is_desktop) -}}
 if command -v pip3 > /dev/null 2>&1; then
 
@@ -52,6 +56,7 @@ if command -v pip3 > /dev/null 2>&1; then
 fi
 {{- end }}
 
+# uv python tools
 if command -v uvx > /dev/null 2>&1; then
   echo "# uvx - Updating python tools"
 
@@ -60,6 +65,7 @@ if command -v uvx > /dev/null 2>&1; then
   echo "# uvx - Done updating python tools"
 fi
 
+# kubectl krew
 if command -v kubectl-krew > /dev/null 2>&1; then
   echo "# kubectl-krew - Updating kubectl krew user installed packages"
 
@@ -69,6 +75,7 @@ if command -v kubectl-krew > /dev/null 2>&1; then
   echo "# kubectl-krew - Done updating kubectl krew user installed packages"
 fi
 
+# chezmoi itself
 if command -v chezmoi > /dev/null 2>&1; then
   echo "# chezmoi - Upgrading chezmoi"
 
