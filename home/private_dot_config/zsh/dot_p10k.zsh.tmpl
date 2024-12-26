@@ -43,6 +43,7 @@
   # automatically hidden when the input line reaches it. Right prompt above the
   # last prompt line gets hidden if it would overlap with left prompt.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+    # =========================[ Line #1 ]=========================
     status                  # exit code of the last command
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
@@ -55,7 +56,7 @@
     # nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
     # nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
     # nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
-    node_version          # node.js version
+    node_version            # node.js version
     # go_version            # go version (https://golang.org)
     # rust_version          # rustc version (https://www.rust-lang.org)
     # dotnet_version        # .NET version (https://dotnet.microsoft.com)
@@ -85,6 +86,7 @@
     context                 # user@hostname
     nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
     ranger                  # ranger shell (https://github.com/ranger/ranger)
+    yazi                    # yazi shell (https://github.com/sxyazi/yazi)
     nnn                     # nnn shell (https://github.com/jarun/nnn)
     lf                      # lf shell (https://github.com/gokcehan/lf)
     xplr                    # xplr shell (https://github.com/sayanarijit/xplr)
@@ -103,6 +105,8 @@
     per_directory_history   # Oh My Zsh per-directory-history local/global indicator
     # cpu_arch              # CPU architecture
     # time                  # current time
+    # =========================[ Line #2 ]=========================
+    # newline
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
@@ -235,7 +239,8 @@
     .java-version
     .perl-version
     .php-version
-    .tool-version
+    .tool-versions
+    .mise.toml
     .shorten_folder_marker
     .svn
     .terraform
@@ -722,6 +727,12 @@
   # Custom icon.
   # typeset -g POWERLEVEL9K_RANGER_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
+  ####################[ yazi: yazi shell (https://github.com/sxyazi/yazi) ]#####################
+  # Yazi shell color.
+  typeset -g POWERLEVEL9K_YAZI_FOREGROUND=178
+  # Custom icon.
+  # typeset -g POWERLEVEL9K_YAZI_VISUAL_IDENTIFIER_EXPANSION='⭐'
+
   ######################[ nnn: nnn shell (https://github.com/jarun/nnn) ]#######################
   # Nnn shell color.
   typeset -g POWERLEVEL9K_NNN_FOREGROUND=72
@@ -755,6 +766,9 @@
   #[ nix_shell: nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html) ]##
   # Nix shell color.
   typeset -g POWERLEVEL9K_NIX_SHELL_FOREGROUND=74
+
+  # Display the icon of nix_shell if PATH contains a subdirectory of /nix/store.
+  # typeset -g POWERLEVEL9K_NIX_SHELL_INFER_FROM_PATH=false
 
   # Tip: If you want to see just the icon without "pure" and "impure", uncomment the next line.
   # typeset -g POWERLEVEL9K_NIX_SHELL_CONTENT_EXPANSION=
@@ -1644,7 +1658,7 @@
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
   # is to generate the prompt segment for display in instant prompt. See
-  # https://github.com/romkatv/powerlevel10k/blob/master/README.md#instant-prompt.
+  # https://github.com/romkatv/powerlevel10k#instant-prompt.
   #
   # Powerlevel10k will call instant_prompt_* at the same time as the regular prompt_* function
   # and will record all `p10k segment` calls it makes. When displaying instant prompt, Powerlevel10k
@@ -1680,7 +1694,7 @@
   #              it incompatible with your zsh configuration files.
   #   - quiet:   Enable instant prompt and don't print warnings when detecting console output
   #              during zsh initialization. Choose this if you've read and understood
-  #              https://github.com/romkatv/powerlevel10k/blob/master/README.md#instant-prompt.
+  #              https://github.com/romkatv/powerlevel10k#instant-prompt.
   #   - verbose: Enable instant prompt and print a warning when detecting console output during
   #              zsh initialization. Choose this if you've never tried instant prompt, haven't
   #              seen the warning, or if you are unsure what this all means.
