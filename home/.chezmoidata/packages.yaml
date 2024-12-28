@@ -4,6 +4,7 @@ packages:
       - pre-commit
       - yq
       - ruff
+      - git-filter-repo
 
   scoop_packages:
     all: []
