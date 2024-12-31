@@ -27,12 +27,14 @@ if command -v flatpak > /dev/null 2>&1; then
   echo "# flatpak - Running flatpak update --user"
 
   flatpak update --user
+  flatpak remove --user --unused
 
   echo "# flatpak - Done running flatpak update --user"
 
   echo "# flatpak - Running flatpak update --system"
 
   sudo flatpak update --system
+  sudo flatpak remove --system --unused
 
   echo "# flatpak - Done running flatpak update --system"
 fi
