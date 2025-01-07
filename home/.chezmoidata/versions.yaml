@@ -14,7 +14,7 @@ versions:
   gitleaks: v8.22.1         # renovate: datasource=github-releases depName=gitleaks/gitleaks
   trufflehog: v3.84.0       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
   eza: v0.20.15             # renovate: datasource=github-releases depName=eza-community/eza
-  bat: v0.24.0              # renovate: datasource=github-releases depName=sharkdp/bat
+  bat: v0.25.0              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v2.8.1             # renovate: datasource=github-releases depName=TomWright/dasel
   mise: v2024.12.24         # renovate: datasource=github-releases depName=jdx/mise
   multi_gitter: v0.55.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
