@@ -146,6 +146,10 @@ jobs:
             cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
             chmod -R a+r results
 
+            ls ~
+            echo ${HOME}
+            ls ${HOME}
+
       - name: Assert
         run: |
           if ! grep -q "is_server: true" results/chezmoi.yaml; then
