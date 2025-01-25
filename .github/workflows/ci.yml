@@ -122,11 +122,30 @@ jobs:
       - name: Setup PATH
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
-      - name: Cache Chezmoi external
+      - name: Cache arm image
         uses: actions/cache@v4
+        id: cache
         with:
-          path: "~/.cache/chezmoi/external"
-          key: ${{ runner.os }}-${{ matrix.profile }}-chezmoi-external
+          path: ${{ runner.temp }}/armv7-image.img
+          key: ${{ runner.os }}-${{ hashFiles('**/workflows/ci.yml') }}
+
+      - uses: ./ # pguyot/arm-runner-action@HEAD
+        id: install_deps
+        if: steps.cache.outputs.cache-hit != 'true'
+        with:
+          base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv7-Bookworm.img.xz
+          cpu: cortex-a7
+          # cpu: pxa250
+          image_additional_mb: 1024
+          # we don't want to optimize as it's two-stage
+          optimize_image: no
+          commands: |
+            apt update
+  
+      - name: Move and rename image with dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mv ${{ steps.install_deps.outputs.image }} ${{ runner.temp }}/armv7-image.img
 
       - name: Chezmoi init & apply
         uses: pguyot/arm-runner-action@v2
@@ -134,11 +153,12 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         with:
           # base_image: dietpi:rpi_armv7_bullseye
-          base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv7-Bookworm.img.xz
+          # base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv7-Bookworm.img.xz
+          base_image: file://${{ runner.temp }}/armv7-image.img
           cpu: cortex-a7
           copy_artifact_path: results
           # cpu: pxa250
-          image_additional_mb: 1024
+          # image_additional_mb: 1024
           commands: |
             ./install.sh
 
