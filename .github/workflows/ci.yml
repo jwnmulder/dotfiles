@@ -140,6 +140,7 @@ jobs:
           copy_artifact_path: results
           # cpu: pxa250
           commands: |
+            df -h
             ./install.sh
 
             mkdir -p results
