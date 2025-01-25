@@ -158,19 +158,12 @@ jobs:
           base_image: file://${{ runner.temp }}/armv7-image.img
           cpu: cortex-a7
           copy_artifact_path: results
-          # cpu: pxa250
-          # image_additional_mb: 1024
           commands: |
             ./install.sh
 
             mkdir -p results
             cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
             chmod -R a+r results
-
-            ls ~
-            echo ${HOME}
-            ls ${HOME}
-
       - name: Assert
         run: |
           if ! grep -q "is_server: true" results/chezmoi.yaml; then
