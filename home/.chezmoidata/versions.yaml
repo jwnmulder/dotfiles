@@ -11,7 +11,7 @@ versions:
   trivy: v0.58.1            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.2.1               # renovate: datasource=github-releases depName=FiloSottile/age
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
-  gitleaks: v8.22.1         # renovate: datasource=github-releases depName=gitleaks/gitleaks
+  gitleaks: v8.23.2         # renovate: datasource=github-releases depName=gitleaks/gitleaks
   trufflehog: v3.84.0       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
   eza: v0.20.16             # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.25.0              # renovate: datasource=github-releases depName=sharkdp/bat
