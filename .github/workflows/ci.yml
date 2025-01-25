@@ -129,7 +129,8 @@ jobs:
           path: ${{ runner.temp }}/armv7-image.img
           key: ${{ runner.os }}-${{ hashFiles('**/workflows/ci.yml') }}
 
-      - uses: ./ # pguyot/arm-runner-action@HEAD
+      - name: Build armv7 image
+        uses: pguyot/arm-runner-action@v2
         id: install_deps
         if: steps.cache.outputs.cache-hit != 'true'
         with:
