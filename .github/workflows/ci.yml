@@ -140,7 +140,6 @@ jobs:
           # cpu: pxa250
           image_additional_mb: 1024
           commands: |
-            df -h
             ./install.sh
 
             mkdir -p results
