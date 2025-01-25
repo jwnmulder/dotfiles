@@ -139,10 +139,10 @@ jobs:
           # cpu: pxa250
           image_additional_mb: 1024
           # we don't want to optimize as it's two-stage
-          optimize_image: no
+          optimize_image: "no"
           commands: |
             apt update
-  
+
       - name: Move and rename image with dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
