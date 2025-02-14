@@ -10,6 +10,7 @@ wanted_packages=(
   curl # used in some chezmoi scripts
   gpg  # used for setting up gpg
   python3  # used for setting up python based tools
+  pass  # used for setting up pass from which ssh keys can be installed
 )
 
 missing_packages=()
