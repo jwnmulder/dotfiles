@@ -1,5 +1,26 @@
 # Gpg4win
 
+Setup Gpg4win on Windows
+
+```powershell
+winget install GnuPG.Gpg4win
+```
+
+## Prepare WSL for gpg-agent forwarding
+
+Disable gpg-agent on systemd by running the following command within WSL. A restart of WSL is required
+
+```bash
+sudo systemctl --global mask --now \
+  gpg-agent.service \
+  gpg-agent.socket \
+  gpg-agent-ssh.socket \
+  gpg-agent-extra.socket \
+  gpg-agent-browser.socket
+```
+
+## Debugging Gpg4win on WSL
+
 Most of the time, gpg socket forwarding from WSL to Windows works perfectly fine. Sometimes however, it doesn't.
 
 Some Linux commands to help debugging
