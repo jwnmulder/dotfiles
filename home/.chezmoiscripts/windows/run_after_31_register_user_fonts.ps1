@@ -35,6 +35,10 @@ If (-not (Test-Path $userFontsRegistryPath)) {
   New-Item -Path $userFontsRegistryPath
 }
 
+If (-not (Test-Path $fontsPath)) {
+  New-Item -ItemType "directory" -Path $fontsPath
+}
+
 # Copy or update existing fonts in the users local font dir
 Get-ChildItem $downloadedFontsPath -Filter *.ttf -Recurse | foreach-object {
 
@@ -60,7 +64,7 @@ Get-ChildItem $downloadedFontsPath -Filter *.ttf -Recurse | foreach-object {
       Remove-Item $dstFile.FullName -Force
     }
 
-    Copy-Item -Path $srcFile.FullName -Destination $fontsPath
+    Copy-Item -Path $srcFile.FullName -Destination (Join-Path $fontsPath $srcFile.Name)
   }
 }
 
