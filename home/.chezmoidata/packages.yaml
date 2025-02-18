@@ -18,7 +18,6 @@ packages:
       - Git.Git
     personal:
       - Bitwarden.Bitwarden
-      - Kubernetes.kubectl
       - jqlang.jq
     work1:
       - Bitwarden.Bitwarden
