@@ -10,8 +10,12 @@ wanted_packages=(
   curl # used in some chezmoi scripts
   gpg  # used for setting up gpg
   python3  # used for setting up python based tools
-  pass  # used for setting up pass from which ssh keys can be installed
 )
+
+# As this is running as a chezmoi hook, the full config state is not available
+# Ideally we would be able to define required packages per machine
+# List of packages that are not required on all machines:
+  # pass  # used for setting up pass from which ssh keys can be installed
 
 missing_packages=()
 
