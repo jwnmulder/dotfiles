@@ -2,7 +2,7 @@ versions:
   uv: "0.6.3"               # renovate: datasource=github-releases depName=astral-sh/uv
   kubectl: v1.27.3          # renovate: datasource=github-releases depName=kubernetes/kubectl
   kustomize: v5.6.0         # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
-  helm: v3.17.1             # renovate: datasource=github-releases depName=helm/helm
+  helm: v3.17.2             # renovate: datasource=github-releases depName=helm/helm
   direnv: v2.35.0           # renovate: datasource=github-releases depName=direnv/direnv
   starship: v1.22.1         # renovate: datasource=github-releases depName=starship/starship
   fzf: v0.60.3              # renovate: datasource=github-releases depName=junegunn/fzf
