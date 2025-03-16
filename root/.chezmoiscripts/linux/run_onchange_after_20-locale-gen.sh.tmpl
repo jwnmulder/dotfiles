@@ -1,0 +1,11 @@
+{{- if .is_wsl -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "locale configuration for en_US.UTF-8"
+
+sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+echo 'LANG=en_US.UTF-8' > /etc/default/locale
+locale-gen
+
+{{ end -}}

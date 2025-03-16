@@ -1,0 +1,27 @@
+config_info: |
+  {{- $chezmoiData := deepCopy . -}}
+  {{- $chezmoiData = unset $chezmoiData "chezmoi" -}}
+  {{- $sourceDir := joinPath .chezmoi.config.workingTree "root" -}}
+  {{ "" }}
+  Generated for user={{ .chezmoi.username }}, hostname={{ .chezmoi.hostname }}
+
+sourceDir: "{{ $sourceDir }}"
+destDir: "/"
+
+diff:
+  exclude:
+    - always
+
+status:
+  exclude:
+    - always
+
+data:
+  non_root_user: "{{ .chezmoi.username }}"
+  profile: {{ $chezmoiData.profile }}
+  personal_device: {{ $chezmoiData.personal_device }}
+  work_device: {{ $chezmoiData.work_device }}
+  is_wsl: {{ $chezmoiData.is_wsl }}
+  is_server: {{ $chezmoiData.is_server }}
+  is_desktop: {{ $chezmoiData.is_desktop }}
+  test: {{ $chezmoiData.test }}

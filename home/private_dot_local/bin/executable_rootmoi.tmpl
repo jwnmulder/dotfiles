@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# {{ $configDir := joinPath .chezmoi.homeDir ".config/rootmoi" }}
+# {{ $configFile := joinPath $configDir "chezmoi.yaml" }}
+# {{ $persistentStateFile := joinPath $configDir "chezmoistate.boltdb" }}
+# {{ $cacheDir := joinPath .chezmoi.homeDir ".cache/rootmoi" }}
+# {{ $sourceDir := joinPath .chezmoi.config.workingTree "root" }}
+
+# Handle non-default chezmoi locations
+if [[ -f '{{ .chezmoi.executable }}' ]]; then
+  executable='{{ .chezmoi.executable }}'
+else
+  executable=$(command -v chezmoi)
+fi
+
+# Ensure the folders are created, because otherwise they will be created as
+# root, including the ~/.cache and ~/.config, which can cause other programs
+# to stop working.
+mkdir -p '{{ $configDir }}' '{{ $cacheDir }}'
+
+sudo exec \
+  "${executable}" \
+  --destination=/ \
+  --config='{{ $configFile }}' \
+  --persistent-state='{{ $persistentStateFile }}' \
+  --cache='{{ $cacheDir }}' \
+  --source='{{ $sourceDir }}' \
+  "$@"

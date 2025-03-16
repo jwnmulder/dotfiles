@@ -1,0 +1,17 @@
+{{- if .is_wsl -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly wanted_packages=(
+  # {{ if .is_wsl }}
+  python3-venv
+  wslu
+  pass
+  # {{ end }}
+)
+
+echo "Installing apt packages: ${wanted_packages[@]}"
+
+echo apt install --no-install-recommends -V "${wanted_packages[@]}"
+
+{{ end -}}

@@ -1,0 +1,17 @@
+{{- if and .is_wsl (eq .chezmoi.osRelease.name "Ubuntu") -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "wsl systemd-timesync setup"
+
+# apt install -y --no-install-recommends -V systemd-timesyncd
+
+#
+# /etc/systemd/system/systemd-timesyncd.service.d/override.conf
+# [Unit]
+# ConditionVirtualization=
+
+# systemctl daemon-reload
+# systemctl restart systemd-timesyncd
+
+{{ end -}}
