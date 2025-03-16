@@ -16,6 +16,7 @@ packages:
       - Microsoft.VisualStudioCode
       - eza-community.eza
       - Git.Git
+      - Microsoft.DSC
     personal:
       - Bitwarden.Bitwarden
       - jqlang.jq

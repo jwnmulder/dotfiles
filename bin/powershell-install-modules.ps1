@@ -6,43 +6,66 @@ Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
-function Install-Module-If-Missing {
-    param(
-        [Parameter(Mandatory,Position=0)]
-        [string]$Name,
+# Needed for GitHubs 'windows-latest' image. Somehow version 1.4.7 is selected which is not working
+# Install-Module-If-Missing -Name "PackageManagement" -MinimumVersion 1.4.8 -Force -AllowClobber
+# Import-Module PackageManagement -MinimumVersion 1.4.8
 
-        [Parameter(Mandatory,Position=1)]
-        [string]$MinimumVersion,
+# https://learn.microsoft.com/en-US/powershell/gallery/powershellget/install-powershellget?view=powershellget-3.x
+if (-not (Get-Module -ListAvailable @{ModuleName="Microsoft.PowerShell.PSResourceGet";ModuleVersion="1.0"})) {
+    Write-Host "Microsoft.PowerShell.PSResourceGet not installed, will install now"
 
-        [string]$Scope = "CurrentUser",
-        [switch]$Force,
-        [switch]$AllowClobber
-    )
+    Install-Module -Name "PowerShellGet" -Scope CurrentUser -Force -AllowClobber
 
-    if (-not (Get-Module -ListAvailable -FullyQualifiedName @{ModuleName=$Name;ModuleVersion=$MinimumVersion})) {
-        Install-Module -Name $Name -Scope $Scope -MinimumVersion $MinimumVersion -Force:$Force -AllowClobber:$AllowClobber -ErrorAction 'Stop'
-    }
+    Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery
 }
 
-# Needed for GitHubs 'windows-latest' image. Somehow version 1.4.7 is selected which is not working
-Install-Module-If-Missing -Name "PackageManagement" -MinimumVersion 1.4.8 -Force -AllowClobber
-Import-Module PackageManagement -MinimumVersion 1.4.8
+# # '-ForceBootstrap' will Install the NuGet package provider if not already done
+# Get-PackageProvider -Name "NuGet" -ForceBootstrap
 
-Install-Module-If-Missing -Name "PowerShellGet" -MinimumVersion 2.0 -Force -AllowClobber
-
-# '-ForceBootstrap' will Install the NuGet package provider if not already done
-Get-PackageProvider -Name "NuGet" -ForceBootstrap
-
+# Trust PSGallery for PowerShellGet
 if (-not ((Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue).InstallationPolicy -eq "Trusted")) {
+    Write-Host "Trust PSGallery for PowerShellGet"
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 }
 
-# PSScriptAnalyzer
-Install-Module-If-Missing -Name PSScriptAnalyzer -MinimumVersion 1.0
+# Trust PSGallery for PSResourceGet
+if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Trusted)) {
+    Write-Host "Trust PSGallery for PSResourceGet"
+    Set-PSResourceRepository -Name "PSGallery" -Trusted
+}
 
-# 2.1.0 has support for Predictive IntelliSense (F2 switches between InlineView and ListView)
-# https://learn.microsoft.com/en-us/powershell/scripting/learn/shell/using-predictors?view=powershell-7.3$
-Install-Module-If-Missing -Name PSReadLine -MinimumVersion 2.2.6 -Force -AllowClobber
+$requiredResources = @{
+    "PSScriptAnalyzer" = @{
+        Version = '[1.0,)'
+        Repository = 'PSGallery'
+    }
+    "PSReadLine" = @{
+        Version = '[2.2.6,)'
+        Repository = 'PSGallery'
+    }
+    "WslInterop" = @{
+        Version = '[0.4.0,)'
+        Repository = 'PSGallery'
+    }
+    "Microsoft.Windows.Developer" = @{
+        Version = '[0.2,)'
+        Repository = 'PSGallery'
+        Prerelease = $true
+    }
+}
 
-# WslInterop
-Install-Module-If-Missing -Name WslInterop -MinimumVersion 0.4.0
+foreach ($item in $requiredResources.GetEnumerator()) {
+    $name = $item.Key
+    $version = $item.Value.Version
+    $params = $item.Value
+
+    # Check if the package is already installed with the required version
+    $r = Get-InstalledPSResource -Name $name -Version $version -Scope CurrentUser -ErrorAction SilentlyContinue
+    $currentVersion = $r.Version
+    if (-not $r) {
+        Write-Host "Installing $name version $version..."
+        Install-PSResource -Name $name -Scope CurrentUser @params -Reinstall
+    } else {
+        Write-Host "$name version=$version currentVersion=$currentVersion - is already installed. Skipping..."
+    }
+}

@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.vscode.json
+$schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.json
+metadata:
+  name:  Windows Desktop Configuration
+  Microsoft.DSC:
+    securityContext: restricted
+
+resources:
+  # - name: SearchboxTaskbarMode Hide
+  #   type: Microsoft.Windows/Registry
+  #   properties:
+  #     keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Search
+  #     valueName: SearchboxTaskbarMode
+  #     valueData: { DWord: 2 }
+
+  # - name: MicrosoftWindowsDeveloper Enable Developer Mode 
+  #   type: Microsoft.DSC/PowerShell
+  #   properties:
+  #     resources:
+  - name: MicrosoftWindowsDeveloper settings
+    type: Microsoft.DSC/PowerShell
+    properties:
+      resources:
+        - name: Enable Developer Mode
+          type: Microsoft.Windows.Developer/DeveloperMode
+          properties:
+            Ensure: Present
+            # Ensure: Absent
+        - name: Taskbar settings
+          type: Microsoft.Windows.Developer/Taskbar
+          properties:
+            Alignment: Left
+            HideLabelsMode: Always
+            SearchBoxMode: Hide
+            TaskViewButton: Hide
+            # WidgetsButton: Hide # [KeepCurrentValue, Show]
+
