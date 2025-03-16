@@ -11,7 +11,8 @@ key.txt.age
 {{ end }}
 
 {{ if eq .chezmoi.os "windows" }}
-.config
+.config/*
+!.config/dsc
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
@@ -32,7 +33,7 @@ key.txt.age
 Documents
 AppData
 
-.config/winget
+.config/dsc
 
 .gitconfig
 .npmrc
