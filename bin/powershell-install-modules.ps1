@@ -1,7 +1,7 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
-$PSVersion = $PSVersionTable.PSVersion.ToString()
+$PSVersion = $PSVersionTable.PSVersion
 Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
@@ -11,10 +11,13 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 # Import-Module PackageManagement -MinimumVersion 1.4.8
 
 # https://learn.microsoft.com/en-US/powershell/gallery/powershellget/install-powershellget?view=powershellget-3.x
-if (-not (Get-Module -ListAvailable @{ModuleName="Microsoft.PowerShell.PSResourceGet";ModuleVersion="1.0"})) {
-    Write-Host "Microsoft.PowerShell.PSResourceGet not installed, will install now"
+if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.PowerShell.PSResourceGet";ModuleVersion="1.0"})) {
+    Write-Output "Microsoft.PowerShell.PSResourceGet not installed, will install now"
 
-    Install-Module -Name "PowerShellGet" -Scope CurrentUser -Force -AllowClobber
+    # Update PowerShellGet on Powershell v5 as it is too old to install Microsoft.PowerShell.PSResourceGet
+    if ($PSVersion.Major -eq 5) {
+        Install-Module -Name "PowerShellGet" -Scope CurrentUser -Force -AllowClobber
+    }
 
     Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery
 }
@@ -24,19 +27,20 @@ if (-not (Get-Module -ListAvailable @{ModuleName="Microsoft.PowerShell.PSResourc
 
 # Trust PSGallery for PowerShellGet
 if (-not ((Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue).InstallationPolicy -eq "Trusted")) {
-    Write-Host "Trust PSGallery for PowerShellGet"
+    Write-Output "Trust PSGallery for PowerShellGet"
     Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 }
 
 # Trust PSGallery for PSResourceGet
 if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Trusted)) {
-    Write-Host "Trust PSGallery for PSResourceGet"
+    Write-Output "Trust PSGallery for PSResourceGet"
     Set-PSResourceRepository -Name "PSGallery" -Trusted
 }
 
+# https://github.com/PowerShell/PSResourceGet/issues/1776
 $requiredResources = @{
     "PSScriptAnalyzer" = @{
-        Version = '[1.0,)'
+        Version = '[1.23,)'
         Repository = 'PSGallery'
     }
     "PSReadLine" = @{
@@ -61,11 +65,11 @@ foreach ($item in $requiredResources.GetEnumerator()) {
 
     # Check if the package is already installed with the required version
     $r = Get-InstalledPSResource -Name $name -Version $version -Scope CurrentUser -ErrorAction SilentlyContinue
-    $currentVersion = $r.Version
     if (-not $r) {
-        Write-Host "Installing $name version $version..."
+        Write-Output "Installing $name version $version..."
         Install-PSResource -Name $name -Scope CurrentUser @params -Reinstall
     } else {
-        Write-Host "$name version=$version currentVersion=$currentVersion - is already installed. Skipping..."
+        $currentVersion = $r.Version
+        Write-Output "$name version=$version currentVersion=$currentVersion - is already installed. Skipping..."
     }
 }

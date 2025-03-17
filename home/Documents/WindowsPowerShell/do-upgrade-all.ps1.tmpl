@@ -94,15 +94,38 @@ if (-not $isAdmin) {
 Write-Host "# pwsh - Running $pwsh_cmd"
 Invoke-Expression $pwsh_cmd
 
-Write-Host "# pwsh - Cleanup of old powershell module versions"
-$InstalledModules = Get-InstalledModule
-foreach ($mod in $InstalledModules) {
-    $Latest = Get-InstalledModule $mod.Name;
-    Get-InstalledModule $mod.Name -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Module
+Write-Host "# pwsh - Cleanup of old powershell module & script versions"
+
+# # PowershellGet
+# $InstalledModules = Get-InstalledModule -Scope CurrentUser
+# foreach ($mod in $InstalledModules) {
+#     $Latest = Get-InstalledModule -Scope CurrentUser $mod.Name;
+#     Get-InstalledModule $mod.Name -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Module -Scope CurrentUser
+# }
+
+# # PowershellGet
+# $InstalledScripts = Get-InstalledScript -Scope CurrentUser
+# foreach ($script in $InstalledScripts) {
+#     $Latest = Get-InstalledScript -Scope CurrentUser $script.Name;
+#     Get-InstalledScript $script.Name -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Script -Scope CurrentUser
+# }
+
+# Powershell PSResourceGet (replaces PowerShellGet v2)
+$installedPSResourcesGrouped = Get-InstalledPSResource -Scope CurrentUser | Group-Object Name
+foreach ($group in $installedPSResourcesGrouped) {
+    $sortedVersions = $group.Group | Sort-Object Version -Descending
+
+    # Skip the first (latest) version, uninstall the rest
+    $sortedVersions[1..$sortedVersions.Count] | ForEach-Object {
+        Write-Host "Uninstalling $($_.Name) version $($_.Version)..."
+        Uninstall-PSResource -Scope CurrentUser -Name $_.Name -Version $_.Version -Confirm:$false
+    }
 }
 
 Remove-Variable -Name "pwsh_cmd"
-Remove-Variable -Name "InstalledModules"
+# Remove-Variable -Name "InstalledModules"
+# Remove-Variable -Name "InstalledScripts"
+Remove-Variable -Name "installedPSResources"
 
 Write-Host "# pwsh - Done updating powershell modules" -ForegroundColor Green
 #endregion
