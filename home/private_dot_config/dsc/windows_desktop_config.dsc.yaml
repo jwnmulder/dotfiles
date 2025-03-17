@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.vscode.json
+$schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.json
+metadata:
+  name: Windows Desktop Configuration
+  Microsoft.DSC:
+    securityContext: restricted
+
+resources:
+  - name: Assert os is Windows
+    type: Microsoft.DSC/Assertion
+    properties:
+      $schema: https://aka.ms/dsc/schemas/v3/bundled/config/document.json
+      resources:
+        - name: os
+          type: Microsoft/OSInfo
+          properties:
+            family: Windows
+
+  # https://learn.microsoft.com/en-us/windows/apps/develop/settings/settings-windows-11
+  # https://learn.microsoft.com/en-us/windows/apps/develop/settings/settings-common
+
+  # Explorer: Show hidden files by default: Show Files: 1, Hide Files: 2
+  - name: Explorer Show hidden files
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+      valueName: Hidden
+      valueData: {DWord: 1}
+
+  # Explorer: Show file extensions by default: Show Extensions: 0, Hide Extensions: 1
+  - name: Explorer Show file extensions
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+      valueName: HideFileExt
+      valueData: {DWord: 0}
+
+  # Search: Bing search disabled
+  - name: Search Bing search disabled
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Search
+      valueName: BingSearchEnabled
+      valueData: {DWord: 0}
+
+  # Outlook: Allow copying meetings
+  - name: Outlook Allow copying meetings
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKCU\Software\Microsoft\Office\16.0\Outlook\Options\Calendar
+      valueName: EnableMeetingCopy
+      valueData: {DWord: 1}
+
+  - name: MicrosoftWindowsDeveloper settings
+    type: Microsoft.DSC/PowerShell
+    properties:
+      resources:
+        - name: Taskbar settings
+          type: Microsoft.Windows.Developer/Taskbar
+          properties:
+            Alignment: Left
+            HideLabelsMode: Always
+            SearchBoxMode: Hide
+            TaskViewButton: Hide
+            # WidgetsButton: Hide
+
+            # - name: SearchboxTaskbarMode Hide
+            #   type: Microsoft.Windows/Registry
+            #   properties:
+            #     keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Search
+            #     valueName: SearchboxTaskbarMode
+            #     valueData: { DWord: 2 }

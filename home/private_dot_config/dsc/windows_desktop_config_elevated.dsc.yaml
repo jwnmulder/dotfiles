@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.vscode.json
+$schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.json
+metadata:
+  name: Windows Desktop Configuration (administrator access required)
+  Microsoft.DSC:
+    securityContext: elevated
+
+resources:
+  - name: Assert os is Windows
+    type: Microsoft.DSC/Assertion
+    properties:
+      $schema: https://aka.ms/dsc/schemas/v3/bundled/config/document.json
+      resources:
+        - name: os
+          type: Microsoft/OSInfo
+          properties:
+            family: Windows
+
+  - name: Enable Developer Mode
+    type: Microsoft.DSC/PowerShell
+    properties:
+      resources:
+        - name: Enable Developer Mode
+          type: Microsoft.Windows.Developer/DeveloperMode
+          properties:
+            Ensure: Present
