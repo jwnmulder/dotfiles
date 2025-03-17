@@ -16,10 +16,10 @@ if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Mic
 
     # Update PowerShellGet on Powershell v5 as it is too old to install Microsoft.PowerShell.PSResourceGet
     if ($PSVersion.Major -eq 5) {
-        Install-Module -Name "PowerShellGet" -Scope CurrentUser -Force -AllowClobber
+        Install-Module -Name "PowerShellGet" -Scope CurrentUser -Force -AllowClobber -Confirm
     }
 
-    Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery
+    Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Confirm
 }
 
 # # '-ForceBootstrap' will Install the NuGet package provider if not already done
