@@ -26,15 +26,19 @@ if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Mic
 # Get-PackageProvider -Name "NuGet" -ForceBootstrap
 
 # Trust PSGallery for PowerShellGet
-if (-not ((Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue).InstallationPolicy -eq "Trusted")) {
-    Write-Output "Trust PSGallery for PowerShellGet"
-    Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+if (Get-Command Get-PSRepository -ErrorAction SilentlyContinue) {
+    if (-not ((Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue).InstallationPolicy -eq "Trusted")) {
+        Write-Output "Trust PSGallery for PowerShellGet"
+        Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+    }
 }
 
 # Trust PSGallery for PSResourceGet
-if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Trusted)) {
-    Write-Output "Trust PSGallery for PSResourceGet"
-    Set-PSResourceRepository -Name "PSGallery" -Trusted
+if (Get-Command Get-PSResourceRepository -ErrorAction SilentlyContinue) {
+    if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Trusted)) {
+        Write-Output "Trust PSGallery for PSResourceGet"
+        Set-PSResourceRepository -Name "PSGallery" -Trusted
+    }
 }
 
 # https://github.com/PowerShell/PSResourceGet/issues/1776
