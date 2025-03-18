@@ -23,12 +23,12 @@ packages:
     work1:
       - Bitwarden.Bitwarden
       - Kubernetes.kubectl
+      - Kubernetes.krew
       - SlackTechnologies.Slack
       - Postman.Postman
       - GIMP.GIMP
       - MuhammedKalkan.OpenLens
       - dbeaver.dbeaver
-      - Kubernetes.krew
 
   kubectl_krew_plugins:
     - oidc-login
