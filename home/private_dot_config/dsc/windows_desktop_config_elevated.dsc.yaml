@@ -5,6 +5,11 @@ metadata:
   Microsoft.DSC:
     securityContext: elevated
 
+# TODO:
+# * print command after chezmoi apply if this file needs to be applied
+# * packages to install in elevated mode
+#     - Microsoft.PowerShell
+
 resources:
   - name: Assert os is Windows
     type: Microsoft.DSC/Assertion

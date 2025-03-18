@@ -41,3 +41,4 @@ function Add-EnvPath {
 }
 
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\bin"
+Add-EnvPath -Container User -Path "$env:USERPROFILE\.krew\bin"
