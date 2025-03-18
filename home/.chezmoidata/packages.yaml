@@ -28,6 +28,7 @@ packages:
       - GIMP.GIMP
       - MuhammedKalkan.OpenLens
       - dbeaver.dbeaver
+      - Kubernetes.krew
 
   kubectl_krew_plugins:
     - oidc-login
