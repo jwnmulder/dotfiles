@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.vscode.json
 $schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.json
 metadata:
-  name: Windows Desktop Configuration (administrator access required)
-  Microsoft.DSC:
-    securityContext: elevated
+  name: Windows Desktop Configuration (admin)
+  # Microsoft.DSC:
+  #   securityContext: elevated
 
 resources:
   - name: Assert os is Windows
@@ -24,3 +24,14 @@ resources:
           type: Microsoft.Windows.Developer/DeveloperMode
           properties:
             Ensure: Present
+
+  - name: Write dsc file marker
+    type: Microsoft.DSC.Transitional/RunCommandOnSet
+    properties:
+      executable: pwsh
+      arguments:
+        - -Command
+        - |
+          $dsc_file = "$env:DSC_CONFIG_ROOT/windows_desktop_config_elevated.dsc.yaml"
+          $dsc_file_hash = Get-FileHash -Path $dsc_file -Algorithm SHA256
+          Set-Content -Path "$($dsc_file).sha256" -Value $dsc_file_hash.Hash

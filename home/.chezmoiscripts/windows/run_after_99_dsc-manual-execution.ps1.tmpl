@@ -1,0 +1,31 @@
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+# {{ $sourceDscConfigDir := joinPath .chezmoi.sourceDir "private_dot_config/dsc" }}
+# {{ $homeDscConfigDir := joinPath .chezmoi.homeDir ".config/dsc" }}
+
+# {{ range (glob (joinPath .chezmoi.homeDir ".config/dsc/*.dsc.yaml")) }}
+
+# {{ $dsc_filename := . | base }}
+# {{ $dsc_source_file := joinPath $sourceDscConfigDir $dsc_filename }}
+
+# {{ $dsc_file := joinPath $homeDscConfigDir $dsc_filename }}
+# {{ $dsc_file_hash := include $dsc_file | sha256sum | lower }}
+
+# {{ $dsc_file_run_marker := (printf "%s.sha256" $dsc_file) }}
+# {{ $dsc_file_run_marker_hash := "" }}
+
+# {{ if stat $dsc_file_run_marker }}
+# {{   $dsc_file_run_marker_hash = include $dsc_file_run_marker | trim | lower }}
+# {{ end }}
+
+# Elevated scripts are need to be run manually.
+# There might be more files in /config/dsc. So if the dsc.yaml exists in both homeDir and sourceDir,
+# we instruct the user to manual run the command to apply the changes.
+
+# {{ if and (stat $dsc_source_file) (not (eq $dsc_file_hash $dsc_file_run_marker_hash)) }}
+Write-Output "dsc configuration changed, please run the following command to apply the changes:"
+Write-Output "> dsc config set --file {{ $dsc_file }}"
+# {{ end }}
+
+# {{ end -}}

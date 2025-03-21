@@ -1,12 +1,12 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
-{{ range (glob (joinPath .chezmoi.workingTree "home/private_dot_config/dsc/*")) -}}
+# {{ range (glob (joinPath .chezmoi.workingTree "home/private_dot_config/dsc/*")) -}}
 # {{ include .| sha256sum }}
-{{ end -}}
+# {{ end -}}
 
 Write-Output "Running dsc config set --file windows_desktop_config.dsc.yaml"
-$res = dsc config test --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json
+$res = dsc config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }

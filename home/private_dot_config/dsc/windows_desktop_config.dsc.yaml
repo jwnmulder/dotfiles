@@ -70,3 +70,15 @@ resources:
             #     keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Search
             #     valueName: SearchboxTaskbarMode
             #     valueData: { DWord: 2 }
+
+
+  - name: Write dsc file marker
+    type: Microsoft.DSC.Transitional/RunCommandOnSet
+    properties:
+      executable: pwsh
+      arguments:
+        - -Command
+        - |
+          $dsc_file = "$env:DSC_CONFIG_ROOT/windows_desktop_config.dsc.yaml"
+          $dsc_file_hash = Get-FileHash -Path $dsc_file -Algorithm SHA256
+          Set-Content -Path "$dsc_file.sha256" -Value $dsc_file_hash.Hash
