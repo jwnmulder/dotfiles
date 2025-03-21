@@ -23,6 +23,7 @@ packages:
     work1:
       - Bitwarden.Bitwarden
       - Kubernetes.kubectl
+      - Kubernetes.krew
       - SlackTechnologies.Slack
       - Postman.Postman
       - GIMP.GIMP

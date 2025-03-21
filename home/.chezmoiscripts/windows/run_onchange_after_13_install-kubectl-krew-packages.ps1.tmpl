@@ -1,0 +1,11 @@
+{{- if and (.is_desktop) (eq .chezmoi.os "windows") (eq .profile "work1") -}}
+
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+$krewInfo = (Get-Command kubectl-krew.exe -ErrorAction SilentlyContinue)
+$KREW_BIN = if ($krewInfo) { $krewInfo.Source } else { "$env:USERPROFILE\.krew\bin\kubectl-krew.exe" }
+
+Invoke-Expression "& '$KREW_BIN' install {{ .packages.kubectl_krew_plugins | join " " }}"
+
+{{ end -}}
