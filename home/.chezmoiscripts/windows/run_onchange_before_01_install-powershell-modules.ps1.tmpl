@@ -4,10 +4,6 @@ $ErrorActionPreference = "Stop"
 # {{ include (joinPath .chezmoi.workingTree "bin/powershell-install-resources.ps1") | sha256sum }}
 
 # Setup modules for PowerShell Desktop version 5.1
-powershell.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-psresourceget.ps1"
-if ($LASTEXITCODE -ne 0) {
-    exit $LASTEXITCODE
-}
 powershell.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-resources.ps1"
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
@@ -15,10 +11,6 @@ if ($LASTEXITCODE -ne 0) {
 
 # Setup modules for PowerShell Core
 # {{- if lookPath "pwsh.exe" }}
-pwsh.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-psresourceget.ps1"
-if ($LASTEXITCODE -ne 0) {
-    exit $LASTEXITCODE
-}
 pwsh.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-resources.ps1"
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
