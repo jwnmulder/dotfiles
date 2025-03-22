@@ -15,6 +15,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 # current shell is restarted
 # if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.dPowerShell.PSResourceGet";ModuleVersion="1.1.0"} -ErrorAction SilentlyContinue)) {
 
+Get-Module -ListAvailable "Microsoft.PowerShell.PSResourceGet"
 
 if (-not (Get-Module -ListAvailable "Microsoft.PowerShell.PSResourceGet" | Where-Object { $_.Version -ge [version]"1.1.0" })) {
     Write-Output "Microsoft.PowerShell.PSResourceGet not installed, will install now"
