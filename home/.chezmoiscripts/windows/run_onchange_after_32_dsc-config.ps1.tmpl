@@ -1,16 +1,20 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+Import-Module -Name "Microsoft.PowerShell.PSResourceGet"
+Import-Module -Name "Microsoft.Windows.Developer"
+
 # {{ range (glob (joinPath .chezmoi.workingTree "home/private_dot_config/dsc/*")) -}}
 # {{ include .| sha256sum }}
 # {{ end }}
 
 Write-Output "Running dsc config set --file windows_desktop_config.dsc.yaml"
 $res = dsc -l trace config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json
+Write-Output "resA: $res"
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
-Write-Output "res: $res"
+Write-Output "resB: $res"
 $resJson = $res | ConvertFrom-Json
 
 if ($resJson.hadErrors) {
