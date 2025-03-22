@@ -8,6 +8,9 @@ $ErrorActionPreference = "Stop"
 [Security.Principal.WindowsIdentity]::GetCurrent()
 whoami /groups
 
+write-output "check if running elevated"
+([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
 # $dscInfo = (Get-Command dsc.exe -ErrorAction SilentlyContinue)
 # $DSC_BIN = if ($dscInfo) { $dscInfo.Source } else { "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\dsc.exe" }
 
