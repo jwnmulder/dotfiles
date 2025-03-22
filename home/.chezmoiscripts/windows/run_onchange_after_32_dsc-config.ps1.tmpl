@@ -3,18 +3,21 @@ $ErrorActionPreference = "Stop"
 
 # {{ range (glob (joinPath .chezmoi.workingTree "home/private_dot_config/dsc/*")) -}}
 # {{ include .| sha256sum }}
-# {{ end -}}
+# {{ end }}
+
+$dscInfo = (Get-Command dsc.exe -ErrorAction SilentlyContinue)
+$DSC_BIN = if ($dscInfo) { $dscInfo.Source } else { "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\dsc.exe" }
 
 Write-Output "Running dsc config set --file windows_desktop_config.dsc.yaml"
-$res = dsc config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json
+$res = Invoke-Expression "& '$DSC_BIN' config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json"
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 $resJson = $res | ConvertFrom-Json
 
 if ($resJson.hadErrors) {
+    $hadErrors = $resJson.hadErrors
+    $messages = $resJson.messages
     Write-Output "dsc result: hadErrors=$hadErrors, messages=$messages"
     exit 1
 }
-
-# dsc -l info config test --file $env:USERPROFILE/.config/dsc/windows_desktop_config_elevated.dsc.yaml
