@@ -5,8 +5,8 @@ $ErrorActionPreference = "Stop"
 # {{ include .| sha256sum }}
 # {{ end }}
 
-# debug statement to find the dsc.exe executable
-Get-ChildItem -Force -Recurse | Select-Object fullname | Select-String dsc.exe
+[Security.Principal.WindowsIdentity]::GetCurrent()
+whoami /groups
 
 # $dscInfo = (Get-Command dsc.exe -ErrorAction SilentlyContinue)
 # $DSC_BIN = if ($dscInfo) { $dscInfo.Source } else { "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\dsc.exe" }
