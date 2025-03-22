@@ -6,7 +6,7 @@ Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
-Import-Module -Name "Microsoft.PowerShell.PSResourceGet"
+# Import-Module -Name "Microsoft.PowerShell.PSResourceGet"
 
 Get-Module -ListAvailable
 
