@@ -10,7 +10,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
 
 # https://learn.microsoft.com/en-US/powershell/gallery/powershellget/install-powershellget?view=powershellget-3.x
-if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.PowerShell.PSResourceGet";ModuleVersion="1.1.0"} -ErrorAction SilentlyContinue)) {
+# if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.PowerShell.PSResourceGet";ModuleVersion="1.1.0"} -ErrorAction SilentlyContinue)) {
     Write-Output "Microsoft.PowerShell.PSResourceGet not installed, will install now"
 
     # Update PowerShellGet on Powershell v5 as it is too old to install Microsoft.PowerShell.PSResourceGet
@@ -21,10 +21,10 @@ if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Mic
 
     Write-Output "Install/update Microsoft.PowerShell.PSResourceGet"
     Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Force
-}
+# }
 
-# # '-ForceBootstrap' will Install the NuGet package provider if not already done
-# Get-PackageProvider -Name "NuGet" -ForceBootstrap
+# Get-Module -ListAvailable
+# Get-InstalledPSResource
 
 # Trust PSGallery for PowerShellGet
 if (Get-Command Get-PSRepository -ErrorAction SilentlyContinue) {
@@ -35,10 +35,10 @@ if (Get-Command Get-PSRepository -ErrorAction SilentlyContinue) {
 }
 
 # Trust PSGallery for PSResourceGet
-# if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Trusted)) {
+if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Trusted)) {
     Write-Output "Trust PSGallery for PSResourceGet"
     Set-PSResourceRepository -Name "PSGallery" -Trusted
-# }
+}
 
 # version ranges do not work yet, so we have to specify 1.23 for PSScriptAnalyzer
 # https://github.com/PowerShell/PSResourceGet/issues/1776
