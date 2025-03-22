@@ -32,6 +32,8 @@ if (-not (Get-Module -ListAvailable "Microsoft.PowerShell.PSResourceGet" | Where
     Import-Module "Microsoft.PowerShell.PSResourceGet" -Force
 }
 
+(Get-Module -ListAvailable "Microsoft.PowerShell.PSResourceGet").Path
+
 # Trust PSGallery for PowerShellGet
 if (Get-Command Get-PSRepository -ErrorAction SilentlyContinue) {
     if (-not ((Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue).InstallationPolicy -eq "Trusted")) {
