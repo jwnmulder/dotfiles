@@ -10,7 +10,13 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
 
 # https://learn.microsoft.com/en-US/powershell/gallery/powershellget/install-powershellget?view=powershellget-3.x
-if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.dPowerShell.PSResourceGet";ModuleVersion="1.1.0"} -ErrorAction SilentlyContinue)) {
+
+# using Get-Command loads the module after which it cannot be updated unless the
+# current shell is restarted
+# if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.dPowerShell.PSResourceGet";ModuleVersion="1.1.0"} -ErrorAction SilentlyContinue)) {
+
+
+if (-not (Get-Module -ListAvailable "Microsoft.PowerShell.PSResourceGet" | Where-Object { $_.Version -ge [version]"1.1.0" })) {
     Write-Output "Microsoft.PowerShell.PSResourceGet not installed, will install now"
 
     # Update PowerShellGet on Powershell v5 as it is too old to install Microsoft.PowerShell.PSResourceGet
