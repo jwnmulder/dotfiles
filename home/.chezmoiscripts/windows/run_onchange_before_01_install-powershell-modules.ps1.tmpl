@@ -1,18 +1,18 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
-# {{ include (joinPath .chezmoi.workingTree "bin/powershell-install-modules.ps1") | sha256sum }}
+# {{ include (joinPath .chezmoi.workingTree "bin/powershell-install-resources.ps1") | sha256sum }}
 
-# Setup modules for PowerShell Desktop version < 5.1
-powershell.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-modules.ps1"
+# Setup modules for PowerShell Desktop version 5.1
+powershell.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-resources.ps1"
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
-# Setup modules for PowerShell Core version > 6
+# Setup modules for PowerShell Core
 # {{- if lookPath "pwsh.exe" }}
-# pwsh.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-modules.ps1"
-# if ($LASTEXITCODE -ne 0) {
-#     exit $LASTEXITCODE
-# }
+pwsh.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-resources.ps1"
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
 # {{- end}}

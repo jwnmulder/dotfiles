@@ -2,7 +2,7 @@
 
 The DSC v3 configurations in this repository require powershell resources to be setup correctly.
 
-These pre-requisites are managed via `bin/powershell-install-modules.ps1` which will configure the powershell session as configured in the chezmoi.yaml configuration file. This chezmoi.yaml configuration prefers PowerShell Core over PowerShell Desktop unless specified otherwise via the `CHEZMOI_PS1_COMMAND` environment variable.
+These pre-requisites are managed via `bin/powershell-install-resources.ps1` which will configure the powershell session as configured in the chezmoi.yaml configuration file. This chezmoi.yaml configuration prefers PowerShell Core over PowerShell Desktop unless specified otherwise via the `CHEZMOI_PS1_COMMAND` environment variable.
 
 To test that the pre-requisites are setup correctly. The following commands help
 
