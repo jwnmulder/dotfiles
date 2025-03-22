@@ -8,11 +8,13 @@ $ErrorActionPreference = "Stop"
 # debug statement to find the dsc.exe executable
 Get-ChildItem -Force -Recurse | Select-Object fullname | Select-String dsc.exe
 
-$dscInfo = (Get-Command dsc.exe -ErrorAction SilentlyContinue)
-$DSC_BIN = if ($dscInfo) { $dscInfo.Source } else { "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\dsc.exe" }
+# $dscInfo = (Get-Command dsc.exe -ErrorAction SilentlyContinue)
+# $DSC_BIN = if ($dscInfo) { $dscInfo.Source } else { "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\dsc.exe" }
 
 Write-Output "Running dsc config set --file windows_desktop_config.dsc.yaml"
-$res = Invoke-Expression "& '$DSC_BIN' config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json"
+# $res = Invoke-Expression "& '$DSC_BIN' config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json"
+$res = dsc config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json
+
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }

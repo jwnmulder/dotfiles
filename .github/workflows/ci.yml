@@ -186,6 +186,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup PATH
+        shell: pwsh
+        run: |
+          echo "$env:USERPROFILE\.local\bin" | Out-File -Append -FilePath $env:GITHUB_PATH
+          echo "$env:USERPROFILE\AppData\Local\Microsoft\WinGet\Links" | Out-File -Append -FilePath $env:GITHUB_PATH
+
       - name: Install prerequisites
         shell: pwsh
         run: |
