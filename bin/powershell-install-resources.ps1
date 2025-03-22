@@ -10,18 +10,20 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
 
 # https://learn.microsoft.com/en-US/powershell/gallery/powershellget/install-powershellget?view=powershellget-3.x
-# if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.PowerShell.PSResourceGet";ModuleVersion="1.1.0"} -ErrorAction SilentlyContinue)) {
-#     Write-Output "Microsoft.PowerShell.PSResourceGet not installed, will install now"
+if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.dPowerShell.PSResourceGet";ModuleVersion="1.1.0"} -ErrorAction SilentlyContinue)) {
+    Write-Output "Microsoft.PowerShell.PSResourceGet not installed, will install now"
 
-#     # Update PowerShellGet on Powershell v5 as it is too old to install Microsoft.PowerShell.PSResourceGet
-#     if ($PSVersion.Major -eq 5) {
-#         Write-Output "Install/update PowerShellGet"
-#         Install-Module -Name "PowerShellGet" -Scope CurrentUser -Force -AllowClobber
-#     }
+    # Update PowerShellGet on Powershell v5 as it is too old to install Microsoft.PowerShell.PSResourceGet
+    if ($PSVersion.Major -eq 5) {
+        Write-Output "Install/update PowerShellGet"
+        Install-Module -Name "PowerShellGet" -Scope CurrentUser -Force -AllowClobber
+    }
 
-#     Write-Output "Install/update Microsoft.PowerShell.PSResourceGet"
-#     Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Force
-# }
+    Write-Output "Install/update Microsoft.PowerShell.PSResourceGet"
+    Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Force
+
+    Import-Module "Microsoft.PowerShell.PSResourceGet" -Force
+}
 
 # Trust PSGallery for PowerShellGet
 if (Get-Command Get-PSRepository -ErrorAction SilentlyContinue) {
