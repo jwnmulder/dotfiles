@@ -2,8 +2,8 @@
 $schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3/bundled/config/document.json
 metadata:
   name: Windows Desktop Configuration
-  Microsoft.DSC:
-    securityContext: restricted
+  # Microsoft.DSC:
+  #   securityContext: restricted
 
 resources:
   - name: Assert os is Windows

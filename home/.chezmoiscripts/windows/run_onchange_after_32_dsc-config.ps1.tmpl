@@ -5,17 +5,7 @@ $ErrorActionPreference = "Stop"
 # {{ include .| sha256sum }}
 # {{ end }}
 
-[Security.Principal.WindowsIdentity]::GetCurrent()
-whoami /groups
-
-write-output "check if running elevated"
-([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-
-# $dscInfo = (Get-Command dsc.exe -ErrorAction SilentlyContinue)
-# $DSC_BIN = if ($dscInfo) { $dscInfo.Source } else { "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\dsc.exe" }
-
 Write-Output "Running dsc config set --file windows_desktop_config.dsc.yaml"
-# $res = Invoke-Expression "& '$DSC_BIN' config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json"
 $res = dsc config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json
 
 if ($LASTEXITCODE -ne 0) {
