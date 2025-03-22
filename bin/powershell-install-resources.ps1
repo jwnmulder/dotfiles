@@ -6,8 +6,10 @@ Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
-Get-Module
-Get-InstalledPSResource
+Import-Module -Name "Microsoft.PowerShell.PSResourceGet"
+
+Get-Module -ListAvailable
+
 
 # https://learn.microsoft.com/en-US/powershell/gallery/powershellget/install-powershellget?view=powershellget-3.x
 # if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.PowerShell.PSResourceGet";ModuleVersion="1.0"} -ErrorAction SilentlyContinue)) {
@@ -23,7 +25,7 @@ Get-InstalledPSResource
     Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Force
 # }
 
-Get-Module
+Get-Module -ListAvailable
 Get-InstalledPSResource
 
 # # '-ForceBootstrap' will Install the NuGet package provider if not already done
