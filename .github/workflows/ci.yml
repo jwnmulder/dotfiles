@@ -218,6 +218,7 @@ jobs:
           CHEZMOI_PS1_COMMAND: powershell.exe
         shell: powershell
         run: |
+          whoami /groups
           echo "Running chezmoi init --apply"
           chezmoi init --apply --source $Env:GITHUB_WORKSPACE
 
@@ -228,6 +229,7 @@ jobs:
           CHEZMOI_PS1_COMMAND: pwsh.exe
         shell: pwsh
         run: |
+          whoami /groups
           echo "Running chezmoi init --apply"
           chezmoi init --apply --source $Env:GITHUB_WORKSPACE
 
@@ -238,6 +240,7 @@ jobs:
           CHEZMOI_PS1_COMMAND: pwsh.exe
         shell: powershell
         run: |
+          whoami /groups
           echo "Running chezmoi init --apply"
           chezmoi init --apply --source $Env:GITHUB_WORKSPACE
 
