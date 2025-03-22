@@ -6,8 +6,7 @@ $ErrorActionPreference = "Stop"
 # {{ end }}
 
 Write-Output "Running dsc config set --file windows_desktop_config.dsc.yaml"
-$res = dsc config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json
-
+$res = dsc -l info config set --file $env:USERPROFILE/.config/dsc/windows_desktop_config.dsc.yaml -o json
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
