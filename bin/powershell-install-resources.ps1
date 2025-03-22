@@ -23,11 +23,6 @@ if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Mic
     Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Force
 }
 
-Get-Module -ListAvailable
-Import-Module -Name "Microsoft.PowerShell.PSResourceGet"
-Get-InstalledPSResource
-
-
 # # '-ForceBootstrap' will Install the NuGet package provider if not already done
 # Get-PackageProvider -Name "NuGet" -ForceBootstrap
 
@@ -40,10 +35,10 @@ if (Get-Command Get-PSRepository -ErrorAction SilentlyContinue) {
 }
 
 # Trust PSGallery for PSResourceGet
-if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Trusted)) {
+# if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyContinue).Trusted)) {
     Write-Output "Trust PSGallery for PSResourceGet"
     Set-PSResourceRepository -Name "PSGallery" -Trusted
-}
+# }
 
 # version ranges do not work yet, so we have to specify 1.23 for PSScriptAnalyzer
 # https://github.com/PowerShell/PSResourceGet/issues/1776
