@@ -23,9 +23,9 @@ if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Mic
     Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Force
 }
 
-# Get-Module -ListAvailable
-# Get-InstalledPSResource
-# Import-Module -Name "Microsoft.PowerShell.PSResourceGet"
+Get-Module -ListAvailable
+Import-Module -Name "Microsoft.PowerShell.PSResourceGet"
+Get-InstalledPSResource
 
 
 # # '-ForceBootstrap' will Install the NuGet package provider if not already done
