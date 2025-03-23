@@ -7,8 +7,10 @@ Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
 # https://learn.microsoft.com/en-US/powershell/gallery/powershellget/install-powershellget?view=powershellget-3.x
+# Not sure what is going on here, when using 'Get-Command Install-PSResource', PSResourceGet will be installed
+# but afterwards Get-PSResourceRepository will fail when running a github workflow on the windows-2022 runner using pwsh
 # if (-not (Get-Command Install-PSResource -FullyQualifiedModule @{ModuleName="Microsoft.PowerShell.PSResourceGet";ModuleVersion="1.1.0"} -ErrorAction SilentlyContinue)) {
-    Write-Output "Microsoft.PowerShell.PSResourceGet not installed, will install now"
+    # Write-Output "Microsoft.PowerShell.PSResourceGet not installed, will install now"
 
     # Update PowerShellGet on Powershell v5 as it is too old to install Microsoft.PowerShell.PSResourceGet
     if ($PSVersion.Major -eq 5) {

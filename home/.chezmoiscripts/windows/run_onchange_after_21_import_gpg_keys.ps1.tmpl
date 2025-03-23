@@ -3,6 +3,9 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+# Popluate env:Path (required during initial bootstrap)
+{{ template "script-env-powershell.ps1.tmpl" }}
+
 # Import personal GPG key
 gpg --keyserver keys.openpgp.org --receive-keys {{ .gpg.key_id }}
 

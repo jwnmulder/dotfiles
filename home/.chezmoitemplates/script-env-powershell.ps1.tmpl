@@ -1,0 +1,19 @@
+# WinGet symlinks for portable applications
+if ($env:Path -notlike "*\Microsoft\WinGet\Links*") {
+    $env:Path += ";$env:LOCALAPPDATA\Microsoft\WinGet\Links"
+}
+
+# Windows execution aliases (should be on path already but lets include it nonetheless)
+if ($env:Path -notlike "*\Microsoft\WindowsApps*") {
+    $env:Path += ";$env:LOCALAPPDATA\Microsoft\WindowsApps"
+}
+
+# chezmoi managed externals
+if ($env:Path -notlike "*\.local\bin*") {
+    $env:Path += ";$env:USERPROFILE\.local\bin"
+}
+
+# kubectl-krew managed plugins, not really needed but having it on Path results in less warnings
+if ($env:Path -notlike "*\.local\bin*") {
+    $env:Path += ";$env:USERPROFILE\.local\bin"
+}

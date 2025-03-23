@@ -1,13 +1,12 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+# Popluate env:Path (required during initial bootstrap)
+{{ template "script-env-powershell.ps1.tmpl" }}
+
 {{ $winget_packages := concat
   (dig "all" list .packages.winget_packages)
   (dig .profile list .packages.winget_packages) -}}
-
-{{ $scoop_packages := concat
-  (dig "all" list .packages.scoop_packages)
-  (dig .profile list .packages.scoop_packages) -}}
 
 #region Winget packages
 {{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list && type %TEMP%\\winget_list") -}}
@@ -21,11 +20,5 @@ $ErrorActionPreference = "Stop"
           --silent `
           --disable-interactivity
 {{   end -}}
-{{ end }}
-#endregion
-
-#region Scoop packages
-{{ if gt (len $scoop_packages) 0 -}}
-  scoop install {{ $scoop_packages | join " " }}
 {{ end }}
 #endregion

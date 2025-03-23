@@ -1,6 +1,9 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+# Popluate env:Path (required during initial bootstrap)
+{{ template "script-env-powershell.ps1.tmpl" }}
+
 {{ if not (lookPath "scoop") -}}
 Write-Host "Installing scoop"
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser

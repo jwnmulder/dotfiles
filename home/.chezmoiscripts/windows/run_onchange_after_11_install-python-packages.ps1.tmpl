@@ -3,18 +3,18 @@ $ErrorActionPreference = "Stop"
 
 {{ if and (.is_desktop) (lookPath "py.exe") -}}
 
+# Popluate env:Path (required during initial bootstrap)
+{{ template "script-env-powershell.ps1.tmpl" }}
+
 {{ $python_tools := concat
   (dig "all" list .packages.python_tools)
   (dig .profile list .packages.python_tools) -}}
 
 Write-Host "Installing/updating python tools: {{ $python_tools | join " " }}"
 
-$uvInfo = (Get-Command uv.exe -ErrorAction SilentlyContinue)
-$UV_BIN = if ($uvInfo) { $uvInfo.Source } else { "$env:USERPROFILE\.local\bin\uv.exe" }
-
 {{ range $python_tools -}}
   Write-Host Installing python tool '{{ . }}'
-  Invoke-Expression "& '$UV_BIN' tool install {{ . }} --force"
+  uv tool install {{ . }} --force
 {{ end }}
 
 {{ end -}}
