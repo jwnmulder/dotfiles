@@ -18,4 +18,4 @@ versions:
   dasel: v2.8.1             # renovate: datasource=github-releases depName=TomWright/dasel
   mise: v2025.3.11         # renovate: datasource=github-releases depName=jdx/mise
   multi_gitter: v0.57.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
-  gopass: v1.15.15          # renovate: datasource=github-releases depName=gopasspw/gopass
+  gopass: v1.15.16          # renovate: datasource=github-releases depName=gopasspw/gopass
