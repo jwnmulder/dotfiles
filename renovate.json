@@ -1,13 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>jwnmulder/renovate-config"
-  ],
-
-  "assignees": [ "jwnmulder" ],
-
+  "extends": ["github>jwnmulder/renovate-config"],
+  "assignees": ["jwnmulder"],
   "rebaseWhen": "conflicted",
-
   "packageRules": [
     {
       "matchFileNames": [".pre-commit-config.yaml"],
@@ -27,17 +22,14 @@
         "jdx/mise",
         "trufflesecurity/trufflehog"
       ],
-      "extends": [
-        "schedule:monthly"
-      ]
+      "extends": ["schedule:monthly"]
     }
   ],
-
   "customManagers": [
     {
       "description": "yaml regex matcher: ': \"<currentValue>\" }}   # renovate: datasource=<datasource> depName=<depname>'",
       "customType": "regex",
-      "fileMatch": ["\\.yaml$"],
+      "managerFilePatterns": ["/\\.yaml$/"],
       "matchStrings": [
         ": \\s*\"*(?<currentValue>.*?)\"*\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s"
       ],
