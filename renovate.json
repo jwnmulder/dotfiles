@@ -3,23 +3,37 @@
   "extends": [
     "github>jwnmulder/renovate-config"
   ],
-
-  "assignees": [ "jwnmulder" ],
-
+  "assignees": [
+    "jwnmulder"
+  ],
   "rebaseWhen": "conflicted",
-
   "packageRules": [
     {
-      "matchFileNames": [".pre-commit-config.yaml"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchFileNames": [
+        ".pre-commit-config.yaml"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "automerge": true,
-      "addLabels": ["automerge"]
+      "addLabels": [
+        "automerge"
+      ]
     },
     {
-      "matchDatasources": ["github-releases"],
-      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchDatasources": [
+        "github-releases"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
       "automerge": true,
-      "addLabels": ["automerge"]
+      "addLabels": [
+        "automerge"
+      ]
     },
     {
       "matchPackageNames": [
@@ -32,12 +46,13 @@
       ]
     }
   ],
-
   "customManagers": [
     {
       "description": "yaml regex matcher: ': \"<currentValue>\" }}   # renovate: datasource=<datasource> depName=<depname>'",
       "customType": "regex",
-      "fileMatch": ["\\.yaml$"],
+      "managerFilePatterns": [
+        "/\\.yaml$/"
+      ],
       "matchStrings": [
         ": \\s*\"*(?<currentValue>.*?)\"*\\s* #\\s*renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s"
       ],
