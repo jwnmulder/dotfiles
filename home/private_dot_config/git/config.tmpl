@@ -12,7 +12,10 @@
 
 [includeIf "gitdir/i:~/.local/share/chezmoi/"]
     path = config-personal
-
+{{- if .is_wsl }}
+[includeIf "gitdir/i:/mnt/c/Users/{{ .wsl.win_username }}/.local/share/chezmoi/"]
+    path = ./config-personal
+{{- end }}
 {{- if get . "profiles" }}
 [includeIf "gitdir/i:~/data/personal/"]
     path = config-personal

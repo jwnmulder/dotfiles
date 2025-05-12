@@ -56,6 +56,10 @@ $requiredResources = @{
         Repository = 'PSGallery'
         Prerelease = $true
     }
+    "Microsoft.WinGet.Client" = @{
+        Version = '[1.10.340,)'
+        Repository = 'PSGallery'
+    }
 }
 
 foreach ($item in $requiredResources.GetEnumerator()) {
