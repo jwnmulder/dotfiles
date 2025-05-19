@@ -5,6 +5,7 @@ packages:
       - yq
       - ruff
       - git-filter-repo
+      - awscli
 
   scoop_packages:
     all: []
