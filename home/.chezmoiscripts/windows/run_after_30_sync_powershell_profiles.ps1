@@ -6,4 +6,5 @@ $mydocuments = [environment]::getfolderpath("mydocuments")
 
 if (-Not $mydocuments.ToLower().StartsWith($userprofile_documents.ToLower())) {
     Copy-Item "$userprofile_documents\WindowsPowerShell\profile.ps1" -Destination "$mydocuments\WindowsPowerShell\" -Recurse
+    Copy-Item "$userprofile_documents\WindowsPowerShell\profile.ps1" -Destination "$mydocuments\PowerShell\" -Recurse
 }

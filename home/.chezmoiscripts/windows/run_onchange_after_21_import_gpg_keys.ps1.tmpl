@@ -7,7 +7,11 @@ $ErrorActionPreference = "Stop"
 {{ template "script-env-powershell.ps1.tmpl" }}
 
 # Import personal GPG key
-gpg --keyserver keys.openpgp.org --receive-keys {{ .gpg.key_id }}
+Write-Host "Importing GPG key: {{ .gpg.key_id }}"
+gpg --keyserver hkps://keys.openpgp.org --receive-keys {{ .gpg.key_id }}
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
 
 # Ultimate trust personal GPG key
 Write-Host "Setting ultimate trust for GPG key: {{ .gpg.key_id }}"
