@@ -5,6 +5,7 @@ packages:
       - yq
       - ruff
       - git-filter-repo
+      - colout
 
   scoop_packages:
     all: []
