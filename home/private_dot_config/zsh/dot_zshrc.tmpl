@@ -78,9 +78,9 @@ zstyle ':omz:plugins:nvm' lazy yes
 
 # active plugins
 {{- if (.is_desktop) }}
-plugins=(z git zsh-autosuggestions kubectl aliases fzf nvm)
+plugins=(z git zsh-autosuggestions kubectl aliases fzf aws nvm)
 {{- else }}
-plugins=(z git zsh-autosuggestions kubectl aliases fzf)
+plugins=(z git zsh-autosuggestions kubectl aliases fzf aws)
 {{- end }}
 
 source $ZSH/oh-my-zsh.sh
