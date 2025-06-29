@@ -134,7 +134,7 @@ jobs:
         id: install_deps
         if: steps.cache.outputs.cache-hit != 'true'
         with:
-          base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv7-Bookworm.img.xz
+          base_image: https://dietpi.com/downloads/images/DietPi_RPi2-ARMv7-Bookworm.img.xz
           cpu: cortex-a7
           # cpu: pxa250
           image_additional_mb: 1024
