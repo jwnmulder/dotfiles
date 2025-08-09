@@ -189,6 +189,7 @@ jobs:
       - name: Install prerequisites
         run: |
           winget install chezmoi --disable-interactivity --accept-source-agreements
+          echo "$Env:LOCALAPPDATA\Microsoft\WinGet\Links" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Decrypt age key
         env:
