@@ -187,7 +187,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install prerequisites
-        shell: pwsh
         run: |
           winget install chezmoi --disable-interactivity --accept-source-agreements
 
