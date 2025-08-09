@@ -189,7 +189,7 @@ jobs:
       - name: Install prerequisites
         shell: pwsh
         run: |
-          winget install chezmoi
+          winget install chezmoi --disable-interactivity --accept-source-agreements
 
       - name: Decrypt age key
         env:
