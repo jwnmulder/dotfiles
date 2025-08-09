@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
   (dig .profile list .packages.winget_packages) -}}
 
 #region Winget packages
-{{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list --accept-source-agreements --accept-package-agreements && type %TEMP%\\winget_list") -}}
+{{ $winget_list := (output "cmd" "/C" "winget export -s winget -o %TEMP%\\winget_list --verbose && type %TEMP%\\winget_list") -}}
 {{ range $winget_packages -}}
 {{   if not (contains . $winget_list) -}}
         Write-Host Installing winget package '{{ .}}'
