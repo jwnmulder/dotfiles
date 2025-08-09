@@ -8,13 +8,27 @@ $ErrorActionPreference = "Stop"
   (dig "all" list .packages.winget_packages)
   (dig .profile list .packages.winget_packages) -}}
 
-#region Winget packages
-Write-Host Installing winget packages '{{ $winget_packages | join " " }}'
-winget install `
-  --scope user --exact --source winget `
-  --accept-source-agreements `
-  --accept-package-agreements `
-  --silent `
-  --disable-interactivity `
-  {{ $winget_packages | join " " }}
-#endregion
+$failedPackages = @()
+$lastFailedExitCode = 0
+
+{{ range $winget_packages -}}
+    Write-Host Installing winget package '{{ .}}'
+    winget install `
+      --scope user --exact --source winget --id {{ . }} `
+      --accept-source-agreements `
+      --accept-package-agreements `
+      --silent `
+      --disable-interactivity `
+      --no-upgrade
+    if ($LASTEXITCODE -ne 0 -and $LASTEXITCODE -ne 0x8a150061) {
+      Write-Warning "Failed to install package '{{ . }}' (exit code: $LASTEXITCODE)"
+      $failedPackages += "{{ . }}"
+      $lastFailedExitCode = $LASTEXITCODE
+    }
+{{ end }}
+
+if ($failedPackages.Length -gt 0) {
+  $failedPackagesStr = $failedPackages -join ', '
+  Write-Host "Failed to install the following packages: $failedPackagesStr"
+  exit $lastFailedExitCode
+}
