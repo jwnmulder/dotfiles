@@ -27,9 +27,9 @@ packages:
       - Kubernetes.krew
       - SlackTechnologies.Slack
       - Postman.Postman
-      - GIMP.GIMP
+      - GIMP.GIMP.3
       - MuhammedKalkan.OpenLens
-      - dbeaver.dbeaver
+      - DBeaver.DBeaver.Community
     work2:
       - Microsoft.PowerShell
 
