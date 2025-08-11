@@ -16,7 +16,7 @@ packages:
       - Microsoft.WindowsTerminal
       - Microsoft.VisualStudioCode
       - eza-community.eza
-      - Git.Git
+      - Git.MinGit
       - Microsoft.DSC
     personal:
       - Bitwarden.Bitwarden
