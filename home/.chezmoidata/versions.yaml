@@ -6,7 +6,7 @@ versions:
   direnv: v2.37.1           # renovate: datasource=github-releases depName=direnv/direnv
   starship: v1.23.0         # renovate: datasource=github-releases depName=starship/starship
   fzf: v0.65.1              # renovate: datasource=github-releases depName=junegunn/fzf
-  fd: v10.2.0               # renovate: datasource=github-releases depName=sharkdp/fd
+  fd: v10.3.0               # renovate: datasource=github-releases depName=sharkdp/fd
   backstage_go: v0.9.0      # renovate: datasource=github-releases depName=einride/backstage-go
   trivy: v0.65.0            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.2.1               # renovate: datasource=github-releases depName=FiloSottile/age
