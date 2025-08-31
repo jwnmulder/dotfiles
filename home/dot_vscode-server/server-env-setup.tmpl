@@ -1,0 +1,20 @@
+{{ if .is_wsl -}}
+# https://code.visualstudio.com/docs/remote/wsl#_advanced-environment-setup-script
+# When VS Code Remote is started in WSL, no shell startup scripts are run.
+
+# XDG dirs
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:="$HOME/.cache"}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:="$HOME/.config"}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:="$HOME/.local/share"}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:="$HOME/.local/state"}"
+
+# source files from ~/.config/shellrc/profile.d
+
+if [ -f "$HOME/.config/shellrc/profile.d/01_xdg_compat" ]; then
+  . "$HOME/.config/shellrc/profile.d/01_xdg_compat"
+fi
+if [ -f "$HOME/.config/shellrc/profile.d/31_wsl2-ssh-gpg-proxy" ]; then
+  . "$HOME/.config/shellrc/profile.d/31_wsl2-ssh-gpg-proxy"
+fi
+
+{{- end }}
