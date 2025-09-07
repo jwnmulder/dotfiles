@@ -202,7 +202,7 @@ jobs:
       - name: Cache Chezmoi external
         uses: actions/cache@v4
         with:
-          path: "${HOME}/.cache/chezmoi/external"
+          path: "~/.cache/chezmoi/external"
           key: ${{ runner.os }}-${{ matrix.profile }}-chezmoi-external
 
       - name: Chezmoi init & apply - powershell
