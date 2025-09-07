@@ -203,7 +203,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "~/.cache/chezmoi/external"
-          key: ${{ runner.os }}-${{ matrix.profile }}-chezmoi-external
+          key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.shell }}-chezmoi-external
 
       - name: Chezmoi init & apply - powershell
         if: matrix.shell == 'powershell'
