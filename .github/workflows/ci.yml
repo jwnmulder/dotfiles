@@ -199,6 +199,12 @@ jobs:
           mkdir -p ${HOME}/.config/chezmoi
           echo "$CHEZMOI_KEY" | base64 --decode > ${HOME}/.config/chezmoi/key.txt
 
+      - name: Cache Chezmoi external
+        uses: actions/cache@v4
+        with:
+          path: "${HOME}/.cache/chezmoi/external"
+          key: ${{ runner.os }}-${{ matrix.profile }}-chezmoi-external
+
       - name: Chezmoi init & apply - powershell
         if: matrix.shell == 'powershell'
         env:
