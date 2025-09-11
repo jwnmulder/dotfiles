@@ -8,8 +8,14 @@ interpreters:
   ps1:
     # Prefer PowerShell Core over PowerShell Desktop
     # https://github.com/PowerShell/PowerShell/issues/8635#issuecomment-454028787
-    command: '{{ if env "CHEZMOI_PS1_COMMAND" }}{{ env "CHEZMOI_PS1_COMMAND" }}{{ else if lookPath "pwsh.exe" }}pwsh.exe{{ else }}powershell.exe{{ end }}'
-    args: ["-NoLogo", "-NoProfile"]
+    # Also, PSModulePath needs to be unset to have a reproducable scripting environment. This is done by wrapping it in 'cmd /c'
+    command: 'cmd.exe'
+    args:
+      - /c
+      - '{{ if env "CHEZMOI_PS1_COMMAND" }}{{ env "CHEZMOI_PS1_COMMAND" }}{{ else if lookPath "pwsh.exe" }}pwsh.exe{{ else }}powershell.exe{{ end }}'
+      - "-NoLogo"
+      - "-NoProfile"
+
 
 diff:
   exclude:
