@@ -30,6 +30,8 @@ packages:
       - GIMP.GIMP.3
       - MuhammedKalkan.OpenLens
       - DBeaver.DBeaver.Community
+      - AgileBits.1Password
+      - AgileBits.1Password.CLI
     work2:
       - Microsoft.PowerShell
 
