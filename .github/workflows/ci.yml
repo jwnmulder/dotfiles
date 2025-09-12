@@ -220,7 +220,7 @@ jobs:
         env:
           DATA_profile: ${{ matrix.profile }}
           CHEZMOI_PS1_COMMAND: pwsh.exe
-          PSModulePath: '%ProgramFiles%\WindowsPowerShell\Modules;%SystemRoot%\system32\WindowsPowerShell\v1.0\Modules'
+          # PSModulePath: '%ProgramFiles%\WindowsPowerShell\Modules;%SystemRoot%\system32\WindowsPowerShell\v1.0\Modules'
         shell: pwsh
         run: |
           echo "Running chezmoi init --apply"
@@ -231,7 +231,7 @@ jobs:
         env:
           DATA_profile: ${{ matrix.profile }}
           CHEZMOI_PS1_COMMAND: pwsh.exe
-          PSModulePath: '%ProgramFiles%\WindowsPowerShell\Modules;%SystemRoot%\system32\WindowsPowerShell\v1.0\Modules'
+          # PSModulePath: '%ProgramFiles%\WindowsPowerShell\Modules;%SystemRoot%\system32\WindowsPowerShell\v1.0\Modules'
         shell: powershell
         run: |
           echo "Running chezmoi init --apply"

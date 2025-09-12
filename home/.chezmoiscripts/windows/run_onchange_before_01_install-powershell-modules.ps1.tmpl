@@ -5,7 +5,7 @@ $ErrorActionPreference = "Stop"
 
 # Unset PSModulePath so that each shell below will initialize with the correct defaults
 # Needed to avoid mixed version module paths
-Remove-Item Env:PSModulePath
+# Remove-Item Env:PSModulePath
 
 # Setup modules for PowerShell Desktop version 5.1
 powershell.exe "{{ .chezmoi.workingTree }}/bin/powershell-install-resources.ps1"
