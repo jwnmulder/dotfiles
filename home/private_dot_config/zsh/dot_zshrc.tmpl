@@ -78,7 +78,7 @@ zstyle ':omz:plugins:nvm' lazy yes
 
 # active plugins
 {{- if (.is_desktop) }}
-plugins=(z git zsh-autosuggestions kubectl aliases fzf aws nvm)
+plugins=(z git zsh-autosuggestions kubectl aliases fzf aws nvm mise)
 {{- else }}
 plugins=(z git zsh-autosuggestions kubectl aliases fzf aws)
 {{- end }}
@@ -106,8 +106,3 @@ source $ZSH/oh-my-zsh.sh
 
 # direnv hook
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
-
-# mise hook
-# This requires typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet as --status
-# will write to console when an mise supported tool file is found
-(( ${+commands[mise]} )) && emulate zsh -c "$(mise activate --status zsh)"
