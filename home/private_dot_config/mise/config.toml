@@ -1,3 +1,9 @@
 [settings]
-# asdf_compat = true
+
+experimental = true
+
 idiomatic_version_file_enable_tools = []
+
+status.missing_tools = 'always'
+status.show_env = true
+status.show_tools = false
