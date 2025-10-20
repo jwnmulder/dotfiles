@@ -77,6 +77,15 @@ if command -v kubectl-krew > /dev/null 2>&1; then
   echo "# kubectl-krew - Done updating kubectl krew user installed packages"
 fi
 
+# mise
+if command -v mise > /dev/null 2>&1; then
+  echo "# mise - Upgrading mise tools"
+
+  mise upgrade
+
+  echo "# mise - Done updating mise tools"
+fi
+
 # chezmoi itself
 if command -v chezmoi > /dev/null 2>&1; then
   echo "# chezmoi - Upgrading chezmoi"

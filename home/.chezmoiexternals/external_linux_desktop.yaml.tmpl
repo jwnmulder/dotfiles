@@ -79,6 +79,12 @@
   path: "mise/bin/mise"
   executable: true
 
+".local/bin/usage":
+  type: archive-file
+  url: 'https://github.com/jdx/usage/releases/download/{{ .versions.usage }}/usage-{{ .uname.machine }}-unknown-{{ .chezmoi.os }}-gnu.tar.gz'
+  path: "usage"
+  executable: true
+
 ".local/bin/multi-gitter":
   type: archive-file
   url: 'https://github.com/lindell/multi-gitter/releases/download/{{ .versions.multi_gitter }}/multi-gitter_{{ .versions.multi_gitter | trimPrefix "v" }}_Linux_{{ .uname.machine }}.tar.gz'
