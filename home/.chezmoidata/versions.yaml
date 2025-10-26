@@ -4,7 +4,7 @@ versions:
   kustomize: v5.7.1         # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
   helm: v3.19.0             # renovate: datasource=github-releases depName=helm/helm
   direnv: v2.37.1           # renovate: datasource=github-releases depName=direnv/direnv
-  starship: v1.23.0         # renovate: datasource=github-releases depName=starship/starship
+  starship: v1.24.0         # renovate: datasource=github-releases depName=starship/starship
   fzf: v0.66.1              # renovate: datasource=github-releases depName=junegunn/fzf
   fd: v10.3.0               # renovate: datasource=github-releases depName=sharkdp/fd
   backstage_go: v0.9.0      # renovate: datasource=github-releases depName=einride/backstage-go
