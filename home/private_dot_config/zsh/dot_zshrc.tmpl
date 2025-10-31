@@ -65,20 +65,12 @@ DISABLE_AUTO_UPDATE="true"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# zsh-nvm plgin config
-export NVM_LAZY_LOAD=true
-export NVM_COMPLETION=true
-
 # FZF
 export FZF_BASE="$HOME/.config/fzf"
 
-# [nvm plugin] Variable-style settings are deprecated. Instead of NVM_LAZY, use:
-# export NVM_LAZY=1
-zstyle ':omz:plugins:nvm' lazy yes
-
 # active plugins
 {{- if (.is_desktop) }}
-plugins=(z git zsh-autosuggestions kubectl aliases fzf aws nvm mise)
+plugins=(z git zsh-autosuggestions kubectl aliases fzf aws mise)
 {{- else }}
 plugins=(z git zsh-autosuggestions kubectl aliases fzf aws)
 {{- end }}
