@@ -26,6 +26,16 @@ if [ -n "$BASH_VERSION" ]; then
   fi
 fi
 
+{{ if eq .chezmoi.arch "arm" -}}
+# set PATH so it includes Synology arm opkg binaries
+PATH="/opt/bin:/opt/sbin:$PATH"
+{{- end }}
+
+# set path so it includes user's mise shims
+if [ -d "$HOME/.local/share/mise/shims" ]; then
+  PATH="$HOME/.local/share/mise/shims:$PATH"
+fi
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ]; then
   PATH="$HOME/bin:$PATH"
@@ -35,11 +45,6 @@ fi
 if [ -d "$HOME/.local/bin" ]; then
   PATH="$HOME/.local/bin:$PATH"
 fi
-
-{{ if eq .chezmoi.arch "arm" -}}
-# set PATH so it includes Synology arm opkg binaries
-PATH="/opt/bin:/opt/sbin:$PATH"
-{{- end }}
 
 # source files from ~/.config/shellrc/profile.d
 if [ -d "$HOME/.config/shellrc/profile.d" ]; then
