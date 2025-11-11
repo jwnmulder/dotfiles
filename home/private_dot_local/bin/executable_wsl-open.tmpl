@@ -1,0 +1,23 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Check for required argument
+if [[ $# -eq 0 ]]; then
+    echo "Usage: wsl-open <url-or-path>"
+    exit 1
+fi
+
+target="$1"
+cmd_exe="/mnt/c/Windows/System32/cmd.exe"
+
+# Convert WSL path to Windows path if it’s a file
+if [[ "$target" =~ ^https?:// ]]; then
+    "$cmd_exe" /C start "$target" >/dev/null 2>&1
+else
+    winpath=$(wslpath -w "$target" 2>/dev/null || echo "$target")
+    "$cmd_exe" /C start "$winpath" >/dev/null 2>&1
+fi
+
+{{ end }}
