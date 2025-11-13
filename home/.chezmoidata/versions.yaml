@@ -19,4 +19,4 @@ versions:
   mise: v2025.11.2         # renovate: datasource=github-releases depName=jdx/mise
   usage: v2.8.0             # renovate: datasource=github-releases depName=jdx/usage
   multi_gitter: v0.59.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
-  gopass: v1.15.18          # renovate: datasource=github-releases depName=gopasspw/gopass
+  gopass: v1.16.0          # renovate: datasource=github-releases depName=gopasspw/gopass
