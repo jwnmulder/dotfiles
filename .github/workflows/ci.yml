@@ -177,12 +177,19 @@ jobs:
       matrix:
         profile:
           - personal
+        shell_test:
+          - powershell
+          - pwsh
+          - pwsh-in-powershell
         include:
-          - runner_shell: pwsh  # pwsh
+          - shell_test_: pwsh
+            runner_shell: pwsh
             ps1_command: pwsh.exe
-          - runner_shell: powershell  # pwsh-in-powershell
+          - shell_test: pwsh-in-powershell
+            runner_shell: powershell 
             ps1_command: pwsh.exe
-          - runner_shell: powershell  # powershell
+          - shell_test: powershell
+            runner_shell: powershell 
             ps1_command: powershell.exe
 
     runs-on: windows-2025
