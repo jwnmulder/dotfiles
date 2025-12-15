@@ -34,7 +34,7 @@ jobs:
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
       - name: Cache Chezmoi external
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: "~/.cache/chezmoi/external"
           key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.container }}-chezmoi-external
@@ -90,7 +90,7 @@ jobs:
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
       - name: Cache Chezmoi external
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: "~/.cache/chezmoi/external"
           key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.container }}-chezmoi-external
@@ -123,7 +123,7 @@ jobs:
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
       - name: Cache arm image
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: cache
         with:
           path: ${{ runner.temp }}/armv7-image.img
@@ -213,7 +213,7 @@ jobs:
           echo "$CHEZMOI_KEY" | base64 --decode > ${HOME}/.config/chezmoi/key.txt
 
       - name: Cache Chezmoi external
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: "~/.cache/chezmoi/external"
           key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.runner_shell }}-chezmoi-external
