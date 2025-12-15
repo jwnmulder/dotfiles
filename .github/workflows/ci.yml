@@ -177,12 +177,18 @@ jobs:
       matrix:
         profile:
           - personal
-        shell:
-          - pwsh
-          - pwsh-in-powershell
-          - powershell
+        include:
+          - runner_shell: pwsh  # pwsh
+            ps1_command: pwsh.exe
+          - runner_shell: powershell  # pwsh-in-powershell
+            ps1_command: pwsh.exe
+          - runner_shell: powershell  # powershell
+            ps1_command: powershell.exe
 
     runs-on: windows-2025
+    defaults:
+      run:
+        shell: ${{ matrix.runner_shell }}
     steps:
       - uses: actions/checkout@v6
 
@@ -203,40 +209,28 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "~/.cache/chezmoi/external"
-          key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.shell }}-chezmoi-external
+          key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.runner_shell }}-chezmoi-external
 
-      - name: Chezmoi init & apply - powershell
-        if: matrix.shell == 'powershell'
+      - name: Chezmoi init & apply
+        uses: nick-fields/retry@v3
         env:
           DATA_profile: ${{ matrix.profile }}
-          CHEZMOI_PS1_COMMAND: powershell.exe
-        shell: powershell
-        run: |
-          echo "Running chezmoi init --apply"
-          chezmoi init --apply --source $Env:GITHUB_WORKSPACE
+          CHEZMOI_PS1_COMMAND: ${{ matrix.ps1_command }}
+        with:
+          max_attempts: 3
+          shell: ${{ matrix.runner_shell }}
+          command: |
+            echo "Running chezmoi init --apply"
+            chezmoi init --apply --source $Env:GITHUB_WORKSPACE          
 
-      - name: Chezmoi init & apply - pwsh
-        if: matrix.shell == 'pwsh'
-        env:
-          DATA_profile: ${{ matrix.profile }}
-          CHEZMOI_PS1_COMMAND: pwsh.exe
-          # PSModulePath: '%ProgramFiles%\WindowsPowerShell\Modules;%SystemRoot%\system32\WindowsPowerShell\v1.0\Modules'
-        shell: pwsh
-        run: |
-          echo "Running chezmoi init --apply"
-          chezmoi init --apply --source $Env:GITHUB_WORKSPACE
-
-      - name: Chezmoi init & apply - pwsh-in-powershell
-        if: matrix.shell == 'pwsh-in-powershell'
-        env:
-          DATA_profile: ${{ matrix.profile }}
-          CHEZMOI_PS1_COMMAND: pwsh.exe
-          # PSModulePath: '%ProgramFiles%\WindowsPowerShell\Modules;%SystemRoot%\system32\WindowsPowerShell\v1.0\Modules'
-        shell: powershell
-        run: |
-          echo "Running chezmoi init --apply"
-          chezmoi init --apply --source $Env:GITHUB_WORKSPACE
-
+      # - name: Chezmoi init & apply
+      #   env:
+      #     DATA_profile: ${{ matrix.profile }}
+      #     CHEZMOI_PS1_COMMAND: ${{ matrix.ps1_command }}
+      #   run: |
+      #     echo "Running chezmoi init --apply"
+      #     chezmoi init --apply --source $Env:GITHUB_WORKSPACE
+          
       - name: Remove age key
         if: always()
         shell: bash
