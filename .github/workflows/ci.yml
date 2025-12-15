@@ -229,7 +229,7 @@ jobs:
           shell: ${{ matrix.runner_shell }}
           command: |
             echo "Running chezmoi init --apply"
-            chezmoi init --apply --source $Env:GITHUB_WORKSPACE          
+            chezmoi init --apply --source $Env:GITHUB_WORKSPACE
 
       - name: Remove age key
         if: always()
