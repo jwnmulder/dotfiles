@@ -217,6 +217,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
           CHEZMOI_PS1_COMMAND: ${{ matrix.ps1_command }}
         with:
+          timeout_minutes: 15
           max_attempts: 3
           shell: ${{ matrix.runner_shell }}
           command: |
