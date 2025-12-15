@@ -231,14 +231,6 @@ jobs:
             echo "Running chezmoi init --apply"
             chezmoi init --apply --source $Env:GITHUB_WORKSPACE          
 
-      # - name: Chezmoi init & apply
-      #   env:
-      #     DATA_profile: ${{ matrix.profile }}
-      #     CHEZMOI_PS1_COMMAND: ${{ matrix.ps1_command }}
-      #   run: |
-      #     echo "Running chezmoi init --apply"
-      #     chezmoi init --apply --source $Env:GITHUB_WORKSPACE
-          
       - name: Remove age key
         if: always()
         shell: bash
