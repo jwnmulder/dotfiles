@@ -63,6 +63,9 @@ if [ -d "${KREW_ROOT:-"$XDG_DATA_HOME"/krew}"/bin ]; then
 fi
 {{- end }}
 
+# X11
+export XAUTHORITY=$HOME/.Xauthority
+
 # Python / pip
 export PIP_REQUIRE_VIRTUALENV=true
 

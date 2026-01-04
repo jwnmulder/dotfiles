@@ -1,0 +1,10 @@
+{{ if and .is_desktop .is_wsl (env "XAUTHORITY") (env "DISPLAY") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! xauth list | grep -E "(/unix$DISPLAY)"; then
+  xauth add "$DISPLAY" . $(mcookie)
+fi
+
+{{- end }}
