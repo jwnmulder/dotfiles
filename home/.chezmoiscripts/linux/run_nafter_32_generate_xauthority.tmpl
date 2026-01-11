@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-if ! xauth list | grep -E "(/unix$DISPLAY)"; then
+if ! xauth list | grep -qE "(/unix$DISPLAY)"; then
   xauth add "$DISPLAY" . $(mcookie)
 fi
 
