@@ -16,10 +16,10 @@ fi
 
 {{   end -}}
 
-{{-   if or (lookPath "pre-commit") (lookPath "~/.local/bin/pre-commit") }}
+{{-   if or (lookPath "prek") (lookPath "~/.local/bin/prek") }}
 
-PRE_COMMIT_BIN=$(command -v pre-commit || echo ~/.local/bin/pre-commit)
-"$PRE_COMMIT_BIN" install
+PREK_BIN=$(command -v prek || echo ~/.local/bin/prek)
+"$PREK_BIN" install
 
 {{   end -}}
 {{ end -}}

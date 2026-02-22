@@ -1,7 +1,7 @@
 packages:
   python_tools:
     all:
-      - pre-commit
+      - prek  # better pre-commit
       - yq
       - ruff
       - git-filter-repo

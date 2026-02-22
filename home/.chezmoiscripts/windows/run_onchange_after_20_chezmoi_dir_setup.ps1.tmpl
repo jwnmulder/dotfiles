@@ -5,9 +5,9 @@ $ErrorActionPreference = "Stop"
 
 cd "{{ .chezmoi.workingTree }}"
 
-#setup pre-commit
-{{ if (lookPath "pre-commit.exe") -}}
-pre-commit.exe install
+#setup prek, aka better pre-commit
+{{ if (lookPath "prek.exe") -}}
+prek.exe install
 {{- end }}
 
 {{- end }}
