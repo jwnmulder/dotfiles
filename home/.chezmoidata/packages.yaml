@@ -10,6 +10,8 @@ packages:
   scoop_packages:
     all: []
 
+  # Bitwarden.Bitwarden sometimes failes on GitHub CI with error code: 0x80131506 or 0xC0000005
+  # Installing it first before all other packages seems to have helped
   winget_packages:
     all:
       - JernejSimoncic.Wget
