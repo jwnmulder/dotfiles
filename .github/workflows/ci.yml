@@ -219,7 +219,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.runner_shell }}-chezmoi-external
 
       - name: Chezmoi init & apply
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         env:
           DATA_profile: ${{ matrix.profile }}
           CHEZMOI_PS1_COMMAND: ${{ matrix.ps1_command }}
