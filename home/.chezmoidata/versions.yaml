@@ -17,6 +17,6 @@ versions:
   bat: v0.26.1              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v3.4.0             # renovate: datasource=github-releases depName=TomWright/dasel
   mise: v2026.3.0         # renovate: datasource=github-releases depName=jdx/mise
-  usage: v3.0.0             # renovate: datasource=github-releases depName=jdx/usage
+  usage: v3.1.0             # renovate: datasource=github-releases depName=jdx/usage
   multi_gitter: v0.62.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
   gopass: v1.16.1          # renovate: datasource=github-releases depName=gopasspw/gopass
