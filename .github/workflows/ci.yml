@@ -129,7 +129,7 @@ jobs:
           echo "USER: $USER"
           env
           docker run --rm \
-            -v "$PWD:$PWD" -v "$HOME:$HOME" -w "$PWD" -e HOME="$HOME" \
+            -v "$PWD:$PWD" -v "$HOME:$HOME" -w "$PWD" -e HOME="$HOME" -u $(id -u):$(id -g) \
             arm32v5/debian \
             bash -c '
               set -euo pipefail
