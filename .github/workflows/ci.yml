@@ -123,6 +123,7 @@ jobs:
         run: |
           docker run --rm \
             -v "$PWD:$PWD" \
+            -v "$HOME:$HOME" \
             -w $PWD \
             arm32v5/debian \
             bash -c '
