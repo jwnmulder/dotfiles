@@ -116,6 +116,7 @@ jobs:
       - name: Run chezmoi test in armv5
         run: |
           docker run --rm \
+            --platform linux/arm/v5 \
             -v "$PWD:/work" \
             -w /work \
             arm32v5/debian \
