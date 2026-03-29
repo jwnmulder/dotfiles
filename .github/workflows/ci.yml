@@ -119,9 +119,9 @@ jobs:
             -w /work \
             arm32v5/debian \
             bash -c '
-              set -e
+              set -euo pipefail
 
-              apt-get update -q && apt-get install -y -q git python3 curl
+              apt-get update -q && apt-get install -y -q git gpg python3 curl
 
               export PATH="$HOME/bin:$PATH"
               export DATA_profile=personal
