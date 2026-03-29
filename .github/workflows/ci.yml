@@ -84,7 +84,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Install prerequisites
-        run: apt-get update -q && apt-get install -y -q python3 python3-pip curl
+        run: apt-get update -q && apt-get install -y -q python3 curl
 
       - name: Setup PATH
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
@@ -121,7 +121,7 @@ jobs:
             bash -c '
               set -e
 
-              apt-get update -q && apt-get install -y -q python3 python3-pip curl
+              apt-get update -q && apt-get install -y -q git python3 curl
 
               export PATH="$HOME/bin:$PATH"
               export DATA_profile=personal
