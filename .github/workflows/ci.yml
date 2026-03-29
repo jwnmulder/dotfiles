@@ -130,6 +130,7 @@ jobs:
             bash -c '
               set -euo pipefail
 
+              uname -a
               apt-get update -q && apt-get install -y -q git gpg python3 curl
 
               export PATH="${HOME}/.local/bin:$PATH"
