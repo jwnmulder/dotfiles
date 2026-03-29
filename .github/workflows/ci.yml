@@ -108,38 +108,35 @@ jobs:
             exit 1
           fi
 
-  linux-server-armv7:
-    strategy:
-      fail-fast: false
-      matrix:
-        profile:
-          - personal
-
-    runs-on: ubuntu-24.04-arm
-    container: arm32v5/debian
+  linux-server-armv5:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
 
-      - name: Setup PATH
-        run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
-
-      - name: Cache Chezmoi external
-        uses: actions/cache@v5
-        with:
-          path: "~/.cache/chezmoi/external"
-          key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.container }}-chezmoi-external
-
-      - name: Chezmoi init & apply
-        env:
-          DATA_profile: ${{ matrix.profile }}
-          IS_DESKTOP: "true"
+      - name: Run chezmoi test in armv5
         run: |
-          git config --global --add safe.directory $(pwd)
-          ./install.sh
+          docker run --rm \
+            -v "$PWD:/work" \
+            -w /work \
+            arm32v5/debian \
+            bash -c '
+              set -e
 
-      - name: Assert
-        run: |
-          if ! grep -q "is_server: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
-            echo "::error file=chezmoi.yaml::is_server: true not found"
-            exit 1
-          fi
+              apt-get update
+              apt-get install -y git curl ca-certificates
+
+              # install chezmoi
+              sh -c "$(curl -fsLS get.chezmoi.io)"
+
+              export PATH="$HOME/bin:$PATH"
+              export DATA_profile=personal
+
+              git config --global --add safe.directory /work
+
+              ./install.sh
+
+              if ! grep -q "is_server: true" "$HOME/.config/chezmoi/chezmoi.yaml"; then
+                echo "is_server: true not found"
+                exit 1
+              fi
+            '
