@@ -139,8 +139,8 @@ jobs:
               git config --global --add safe.directory /work
               ./install.sh
 
-              chezmoi doctor --source=/home/runner/work/dotfiles/dotfiles
-              tree /root/.local/share/chezmoi || true
+              # chezmoi doctor --source=/home/runner/work/dotfiles/dotfiles
+              # tree /root/.local/share/chezmoi || true
 
               chezmoi managed --source=/home/runner/work/dotfiles/dotfiles
 
