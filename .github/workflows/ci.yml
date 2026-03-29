@@ -126,7 +126,7 @@ jobs:
         run: |
           docker run --rm \
             -v "$PWD:$PWD" -v "$HOME:$HOME" -w "$PWD" -e HOME="$HOME" \
-            arm32v5/debian \
+            dockcross/linux-armv5-musl \
             bash -c '
               set -euo pipefail
 
