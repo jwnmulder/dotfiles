@@ -136,6 +136,10 @@ jobs:
 
               git config --global --add safe.directory /work
               ./install.sh
+
+              chezmoi doctor
+              tree /root/.local/share/chezmoi
+
               chezmoi managed
 
               if ! grep -q "is_server: true" "$HOME/.config/chezmoi/chezmoi.yaml"; then
