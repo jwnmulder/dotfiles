@@ -99,6 +99,9 @@ jobs:
         env:
           DATA_profile: ${{ matrix.profile }}
         run: |
+          echo "PWD: $PWD"
+          echo "HOME: $HOME"
+          echo "USER: $USER"
           ./install.sh
 
       - name: Assert
@@ -123,6 +126,8 @@ jobs:
         run: |
           echo "PWD: $PWD"
           echo "HOME: $HOME"
+          echo "USER: $USER"
+          env
           docker run --rm \
             -v "$PWD:$PWD" -v "$HOME:$HOME" -w $PWD \
             arm32v5/debian \
