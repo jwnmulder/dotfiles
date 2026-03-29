@@ -116,7 +116,7 @@ jobs:
     container: arm32v5/debian
     steps:
       - name: Install prerequisites
-        run: apt-get update -q && apt-get install -y -q python3 curl git gpg node
+        run: apt-get update -q && apt-get install -y -q python3 curl git gpg node24
 
       - uses: actions/checkout@v6
 
