@@ -131,7 +131,7 @@ jobs:
 
               apt-get update -q && apt-get install -y -q git gpg python3 curl
 
-              export PATH="$HOME/bin:$PATH"
+              export PATH="${HOME}/.local/bin:$PATH"
               export DATA_profile=personal
 
               git config --global --add safe.directory /work
