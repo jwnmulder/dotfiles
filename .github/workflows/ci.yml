@@ -112,11 +112,18 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v6
+
+      - name: Cache Chezmoi external
+        uses: actions/cache@v5
+        with:
+          path: "~/.cache/chezmoi/external"
+          key: ${{ runner.os }}-armv5-chezmoi-external
+
       - name: Run chezmoi test in armv5
         run: |
           docker run --rm \
-            -v "$PWD:/work" \
-            -w /work \
+            -v "$PWD:$PWD" \
+            -w $PWD \
             arm32v5/debian \
             bash -c '
               set -euo pipefail
@@ -128,9 +135,17 @@ jobs:
 
               git config --global --add safe.directory /work
               ./install.sh
+              chezmoi managed
 
               if ! grep -q "is_server: true" "$HOME/.config/chezmoi/chezmoi.yaml"; then
                 echo "is_server: true not found"
                 exit 1
               fi
             '
+
+      - name: Assert
+        run: |
+          if ! grep -q "is_server: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
+            echo "::error file=chezmoi.yaml::is_server: true not found"
+            exit 1
+          fi
