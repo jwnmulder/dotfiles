@@ -13,7 +13,7 @@ echo "No Python 3 installation found, please install with: sudo apt install pyth
 echo "Installing/updating python tools: {{ $python_tools | join " " }}"
 {{     range $python_tools -}}
   echo Installing python tool '{{ . }}'
-  .local/bin/uv tool install {{ . }} --force
+  .local/bin/uv tool install {{ . }} --force --managed-python
 {{     end -}}
 
 {{   end -}}

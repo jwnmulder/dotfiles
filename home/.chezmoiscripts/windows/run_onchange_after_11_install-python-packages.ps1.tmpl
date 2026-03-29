@@ -14,7 +14,7 @@ Write-Host "Installing/updating python tools: {{ $python_tools | join " " }}"
 
 {{ range $python_tools -}}
   Write-Host Installing python tool '{{ . }}'
-  uv tool install {{ . }} --force
+  uv tool install {{ . }} --force --managed-python
 {{ end }}
 
 {{ end -}}

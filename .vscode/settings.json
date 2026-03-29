@@ -16,5 +16,9 @@
     },
     "go-template.patterns": [
         "**/*.tmpl"
+    ],
+    "go-template.languages": [
+        "toml",
+        "yaml"
     ]
 }
