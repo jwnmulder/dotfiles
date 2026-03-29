@@ -121,10 +121,10 @@ jobs:
 
       - name: Run chezmoi test in armv5
         run: |
+          echo "PWD: $PWD"
+          echo "HOME: $HOME"
           docker run --rm \
-            -v "$PWD:$PWD" \
-            -v "$HOME:$HOME" \
-            -w $PWD \
+            -v "$PWD:$PWD" -v "$HOME:$HOME" -w $PWD \
             arm32v5/debian \
             bash -c '
               set -euo pipefail
@@ -134,9 +134,10 @@ jobs:
               export PATH="${HOME}/.local/bin:$PATH"
               export DATA_profile=personal
 
-              env
+              echo "PWD2: $PWD"
+              echo "HOME2: $HOME"
 
-              git config --global --add safe.directory /work
+              # git config --global --add safe.directory /home/runner/work
               ./install.sh
 
               # chezmoi doctor --source=/home/runner/work/dotfiles/dotfiles
