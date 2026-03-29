@@ -113,11 +113,7 @@ jobs:
 
   linux-server-armv5:
     runs-on: ubuntu-24.04-arm
-    container: arm32v5/debian
     steps:
-      - name: Install prerequisites
-        run: apt-get update -q && apt-get install -y -q python3 curl git gpg node24
-
       - uses: actions/checkout@v6
 
       - name: Cache Chezmoi external
@@ -128,7 +124,37 @@ jobs:
 
       - name: Run chezmoi test in armv5
         run: |
-          ./install.sh
+          echo "PWD: $PWD"
+          echo "HOME: $HOME"
+          echo "USER: $USER"
+          echo "U: $(id -u):$(id -g)"
+          docker run --rm \
+            -v "$PWD:$PWD" -v "$HOME:$HOME" -w "$PWD" -e HOME="$HOME" -u $(id -u):$(id -g) \
+            arm32v5/debian \
+            bash -c '
+              set -euo pipefail
+
+              apt-get update -q && apt-get install -y -q git gpg python3 curl
+
+              export PATH="${HOME}/.local/bin:$PATH"
+              export DATA_profile=personal
+
+              echo "PWD2: $PWD"
+              echo "HOME2: $HOME"
+
+              # git config --global --add safe.directory /home/runner/work
+              ./install.sh
+
+              # chezmoi doctor --source=/home/runner/work/dotfiles/dotfiles
+              # tree /root/.local/share/chezmoi || true
+
+              chezmoi managed --source=/home/runner/work/dotfiles/dotfiles
+
+              if ! grep -q "is_server: true" "$HOME/.config/chezmoi/chezmoi.yaml"; then
+                echo "is_server: true not found"
+                exit 1
+              fi
+            '
 
       - name: Assert
         run: |
@@ -136,55 +162,3 @@ jobs:
             echo "::error file=chezmoi.yaml::is_server: true not found"
             exit 1
           fi
-  
-  # linux-server-armv5:
-  #   runs-on: ubuntu-24.04-arm
-  #   steps:
-  #     - uses: actions/checkout@v6
-
-  #     - name: Cache Chezmoi external
-  #       uses: actions/cache@v5
-  #       with:
-  #         path: "~/.cache/chezmoi/external"
-  #         key: ${{ runner.os }}-armv5-chezmoi-external
-
-  #     - name: Run chezmoi test in armv5
-  #       run: |
-  #         echo "PWD: $PWD"
-  #         echo "HOME: $HOME"
-  #         echo "USER: $USER"
-  #         env
-  #         docker run --rm \
-  #           -v "$PWD:$PWD" -v "$HOME:$HOME" -w "$PWD" -e HOME="$HOME" -u $(id -u):$(id -g) \
-  #           arm32v5/debian \
-  #           bash -c '
-  #             set -euo pipefail
-
-  #             apt-get update -q && apt-get install -y -q git gpg python3 curl
-
-  #             export PATH="${HOME}/.local/bin:$PATH"
-  #             export DATA_profile=personal
-
-  #             echo "PWD2: $PWD"
-  #             echo "HOME2: $HOME"
-
-  #             # git config --global --add safe.directory /home/runner/work
-  #             ./install.sh
-
-  #             # chezmoi doctor --source=/home/runner/work/dotfiles/dotfiles
-  #             # tree /root/.local/share/chezmoi || true
-
-  #             chezmoi managed --source=/home/runner/work/dotfiles/dotfiles
-
-  #             if ! grep -q "is_server: true" "$HOME/.config/chezmoi/chezmoi.yaml"; then
-  #               echo "is_server: true not found"
-  #               exit 1
-  #             fi
-  #           '
-
-  #     - name: Assert
-  #       run: |
-  #         if ! grep -q "is_server: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
-  #           echo "::error file=chezmoi.yaml::is_server: true not found"
-  #           exit 1
-  #         fi
