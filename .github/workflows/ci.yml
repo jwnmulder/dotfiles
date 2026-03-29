@@ -134,11 +134,13 @@ jobs:
               export PATH="${HOME}/.local/bin:$PATH"
               export DATA_profile=personal
 
+              env
+
               git config --global --add safe.directory /work
               ./install.sh
 
               chezmoi doctor
-              tree /root/.local/share/chezmoi
+              tree /root/.local/share/chezmoi || true
 
               chezmoi managed
 
