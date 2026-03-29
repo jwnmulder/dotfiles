@@ -1,7 +1,7 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
-{{ if and (.is_desktop) (lookPath "py.exe") -}}
+{{ if and (.is_desktop) (lookPath "uv.exe") -}}
 
 # Popluate env:Path (required during initial bootstrap)
 {{ template "script-env-powershell.ps1.tmpl" }}
