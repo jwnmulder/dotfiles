@@ -12,12 +12,32 @@ fi
 target="$1"
 cmd_exe="/mnt/c/Windows/System32/cmd.exe"
 
+escape_for_cmd_exe() {
+    local s="$1"
+
+    # Escape CMD metacharacters. Based on https://stackoverflow.com/a/29215357/532513
+    # and https://github.com/cpbotha/xdg-open-wsl/blob/master/xdg_open_wsl/xdg_open_wsl.py
+    s="${s//^/^^}"
+    s="${s//%/^%}"
+    s="${s//&/^&}"
+    s="${s//|/^|}"
+    s="${s//</^<}"
+    s="${s//> /^>}"
+    s="${s//\"/^\"}"
+    s="${s//\!/^!}"
+    s="${s//(/^(}"
+    s="${s//)/^)}"
+
+    printf '%s' "$s"
+}
+
 # Convert WSL path to Windows path if it’s a file
 if [[ "$target" =~ ^https?:// ]]; then
-    "$cmd_exe" /C start "$target" >/dev/null 2>&1
+    escaped_target=$(escape_for_cmd_exe "$target")
+    "$cmd_exe" /C start "" "$escaped_target" >/dev/null 2>&1
 else
     winpath=$(wslpath -w "$target" 2>/dev/null || echo "$target")
-    "$cmd_exe" /C start "$winpath" >/dev/null 2>&1
+    "$cmd_exe" /C start "" "$winpath" >/dev/null 2>&1
 fi
 
 {{ end }}
