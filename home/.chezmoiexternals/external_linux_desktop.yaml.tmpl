@@ -61,10 +61,10 @@
   path: "azcopy"
   executable: true
 
-".local/bin/gitleaks":
+".local/bin/betterleaks":
   type: archive-file
-  url: 'https://github.com/gitleaks/gitleaks/releases/download/{{ .versions.gitleaks }}/gitleaks_{{ .versions.gitleaks | trimPrefix "v" }}_{{ .chezmoi.os }}_{{ .uname.machine | replace "x86_" "x" }}.tar.gz'
-  path: "gitleaks"
+  url: 'https://github.com/betterleaks/betterleaks/releases/download/{{ .versions.betterleaks }}/betterleaks_{{ .versions.betterleaks | trimPrefix "v" }}_{{ .chezmoi.os }}_{{ .uname.machine | replace "x86_" "x" }}.tar.gz'
+  path: "betterleaks"
   executable: true
 
 ".local/bin/trufflehog":

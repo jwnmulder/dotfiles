@@ -29,16 +29,10 @@ repos:
         args:
           - --strict
 
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
+  - repo: https://github.com/betterleaks/betterleaks
+    rev: v1.1.2
     hooks:
-      - id: detect-secrets
-        args: ["--exclude-files", ".chezmoi.yaml.tmpl"]
-
-  - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.30.1
-    hooks:
-      - id: gitleaks
+      - id: betterleaks
 
   - repo: local
     hooks:
