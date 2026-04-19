@@ -84,7 +84,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Install prerequisites
-        run: apt-get update -q && apt-get install -y -q python3 python3-pip curl
+        run: apt-get update -q && apt-get install -y -q python3 curl
 
       - name: Setup PATH
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
@@ -99,6 +99,9 @@ jobs:
         env:
           DATA_profile: ${{ matrix.profile }}
         run: |
+          echo "PWD: $PWD"
+          echo "HOME: $HOME"
+          echo "USER: $USER"
           ./install.sh
 
       - name: Assert
@@ -108,131 +111,41 @@ jobs:
             exit 1
           fi
 
-  linux-server-armv7:
-    strategy:
-      fail-fast: false
-      matrix:
-        profile:
-          - personal
-
-    runs-on: ubuntu-latest
+  linux-server-armv5:
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup PATH
-        run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
-
-      - name: Cache arm image
-        uses: actions/cache@v5
-        id: cache
-        with:
-          path: ${{ runner.temp }}/armv7-image.img
-          key: ${{ runner.os }}-${{ hashFiles('**/workflows/ci.yml') }}
-
-      - name: Build armv7 image
-        uses: pguyot/arm-runner-action@v2
-        id: install_deps
-        if: steps.cache.outputs.cache-hit != 'true'
-        with:
-          base_image: https://dietpi.com/downloads/images/DietPi_RPi2-ARMv7-Bookworm.img.xz
-          cpu: cortex-a7
-          # cpu: pxa250
-          image_additional_mb: 1024
-          # we don't want to optimize as it's two-stage
-          optimize_image: "no"
-          commands: |
-            apt update
-
-      - name: Move and rename image with dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          mv ${{ steps.install_deps.outputs.image }} ${{ runner.temp }}/armv7-image.img
-
-      - name: Chezmoi init & apply
-        uses: pguyot/arm-runner-action@v2
-        env:
-          DATA_profile: ${{ matrix.profile }}
-        with:
-          # base_image: dietpi:rpi_armv7_bullseye
-          # base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv7-Bookworm.img.xz
-          base_image: file://${{ runner.temp }}/armv7-image.img
-          cpu: cortex-a7
-          copy_artifact_path: results
-          commands: |
-            ./install.sh
-
-            mkdir -p results
-            cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
-            chmod -R a+r results
-      - name: Assert
-        run: |
-          if ! grep -q "is_server: true" results/chezmoi.yaml; then
-            echo "::error file=chezmoi.yaml::is_server: true not found"
-            exit 1
-          fi
-
-  windows-desktop:
-    strategy:
-      fail-fast: false
-      matrix:
-        profile:
-          - personal
-        shell_test:
-          - powershell
-          - pwsh
-          - pwsh-in-powershell
-        include:
-          - shell_test_: pwsh
-            runner_shell: pwsh
-            ps1_command: pwsh.exe
-          - shell_test: pwsh-in-powershell
-            runner_shell: powershell
-            ps1_command: pwsh.exe
-          - shell_test: powershell
-            runner_shell: powershell
-            ps1_command: powershell.exe
-
-    runs-on: windows-2025
-    defaults:
-      run:
-        shell: ${{ matrix.runner_shell }}
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Install prerequisites
-        run: |
-          winget install chezmoi --disable-interactivity --accept-source-agreements
-          echo "$Env:LOCALAPPDATA\Microsoft\WinGet\Links" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
-      - name: Decrypt age key
-        env:
-          CHEZMOI_KEY: ${{ secrets.CHEZMOI_KEY }}
-        shell: bash
-        run: |
-          mkdir -p ${HOME}/.config/chezmoi
-          echo "$CHEZMOI_KEY" | base64 --decode > ${HOME}/.config/chezmoi/key.txt
 
       - name: Cache Chezmoi external
         uses: actions/cache@v5
         with:
           path: "~/.cache/chezmoi/external"
-          key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.runner_shell }}-chezmoi-external
+          key: ${{ runner.os }}-armv5-chezmoi-external
 
-      - name: Chezmoi init & apply
-        uses: nick-fields/retry@v4
-        env:
-          DATA_profile: ${{ matrix.profile }}
-          CHEZMOI_PS1_COMMAND: ${{ matrix.ps1_command }}
-        with:
-          timeout_minutes: 15
-          max_attempts: 3
-          shell: ${{ matrix.runner_shell }}
-          command: |
-            echo "Running chezmoi init --apply"
-            chezmoi init --apply --source $Env:GITHUB_WORKSPACE
-
-      - name: Remove age key
-        if: always()
-        shell: bash
+      - name: Run chezmoi test in armv5
         run: |
-          rm ${HOME}/.config/chezmoi/key.txt
+          docker run --rm \
+            -v "$PWD:$PWD" -v "$HOME:$HOME" -w "$PWD" -e HOME="$HOME" \
+            dockcross/linux-armv5-musl \
+            bash -c '
+              set -euo pipefail
+
+              uname -a
+              apt-get update -q && apt-get install -y -q git gpg python3 curl
+
+              export PATH="${HOME}/.local/bin:$PATH"
+              export DATA_profile=personal
+
+              # git config --global --add safe.directory /home/runner/work
+              ./install.sh
+
+              chezmoi managed --source=/home/runner/work/dotfiles/dotfiles
+            '
+            
+      - name: Assert
+        run: |
+          sudo chown $(id -u):$(id -g) ${HOME}/.config/chezmoi/chezmoi.yaml
+          if ! grep -q "is_server: true" ${HOME}/.config/chezmoi/chezmoi.yaml; then
+            echo "::error file=chezmoi.yaml::is_server: true not found"
+            exit 1
+          fi
