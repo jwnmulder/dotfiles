@@ -122,15 +122,33 @@ jobs:
       - name: Setup PATH
         run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
-      - name: Start QEMU for 32-bit ARM emulation
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-      - name: Install dependencies and build packages
-        uses: docker://arm32v7/debian:buster-slim
+      # - name: Start QEMU for 32-bit ARM emulation
+      #   run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+      - name: Enable ARM emulation
+        run: docker run --rm --privileged tonistiigi/binfmt --install arm
+
+      - name: Run ARM container
         env:
           DATA_profile: ${{ matrix.profile }}
-        with:
-          args: >
-            bash -c "echo $DATA_profile"
+        run: |
+          docker run --rm --platform linux/arm/v7 \
+            -v $PWD:/workspace \
+            -w /workspace \
+            arm32v7/debian:bookworm \
+            bash -c "
+              bash -c "echo $DATA_profile"
+              # apt update &&
+              # apt install -y curl git &&
+              ./install.sh
+            "
+
+      # - name: Install dependencies and build packages
+      #   uses: docker://arm32v7/debian:buster-slim
+
+      #   with:
+      #     args: >
+      #       bash -c "echo $DATA_profile"
 
       #       ./install.sh
 
