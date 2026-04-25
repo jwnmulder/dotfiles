@@ -139,10 +139,7 @@ jobs:
             bash -c "
               apt update &&
               apt install -y curl git &&
-              echo $DATA_profile &&
-              export PS4='+ ${BASH_SOURCE}:${LINENO}:${FUNCNAME[0]:-}() ' &&
-              export BASH_XTRACEFD=2 &&
-              set -x &&
+              echo \$DATA_profile &&
               ./install.sh -d
             "
 
