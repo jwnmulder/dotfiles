@@ -140,7 +140,7 @@ jobs:
               apt update &&
               apt install -y curl git &&
               echo $DATA_profile &&
-              bash -x ./install.sh
+            ./install.sh -d
             "
 
       # - name: Install dependencies and build packages
