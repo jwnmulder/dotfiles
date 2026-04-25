@@ -137,9 +137,9 @@ jobs:
             -w /workspace \
             arm32v7/debian:bookworm \
             bash -c "
-              echo $DATA_profile
-              # apt update &&
-              # apt install -y curl git &&
+              apt update &&
+              apt install -y curl git &&
+              echo $DATA_profile &&
               ./install.sh
             "
 
