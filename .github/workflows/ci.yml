@@ -140,6 +140,7 @@ jobs:
               apt update &&
               apt install -y curl git &&
               echo $DATA_profile &&
+              set -x
               ./install.sh
             "
 
