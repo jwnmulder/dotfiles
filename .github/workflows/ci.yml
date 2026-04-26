@@ -136,11 +136,17 @@ jobs:
             -v $PWD:/workspace \
             -w /workspace \
             arm32v7/debian:bookworm \
-            bash -c "
-              apt update && apt install -y curl git &&
-              curl -fsLS get.chezmoi.io | sh -s -- -b /usr/local/bin -t v2.69.2 &&
-              chezmoi init --apply
-            "
+            bash -c '
+              set -e
+              apt update
+              apt install -y curl git
+
+              curl -fsLS get.chezmoi.io -o install.sh
+              sh install.sh -b /usr/local/bin -t v2.69.2
+
+              echo "Running chezmoui"
+              /usr/local/bin/chezmoi init --apply
+            '
 
       #       mkdir -p results
       #       cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
