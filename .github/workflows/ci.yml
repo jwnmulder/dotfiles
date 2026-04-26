@@ -145,7 +145,9 @@ jobs:
               sh install.sh -b /usr/local/bin -t v2.69.2
 
               echo "Running chezmoi"
+              /usr/local/bin/chezmoi --version
               /usr/local/bin/chezmoi init --apply --verbose
+              /usr/local/bin/chezmoi managed
               echo "Done running chezmoi"
             '
 
