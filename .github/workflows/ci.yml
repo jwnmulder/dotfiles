@@ -137,20 +137,13 @@ jobs:
             -w /workspace \
             arm32v7/debian:bookworm \
             bash -c "
-              apt update &&
-              apt install -y curl git &&
-              echo \$DATA_profile &&
-              ./install.sh -d
+              apt update && apt install -y curl git &&
+              
+              # Install Chezmoi
+              sh -c "$(curl -fsLS get.chezmoi.io)" -- -t v2.69.2
+
+              chezmoi init --apply
             "
-
-      # - name: Install dependencies and build packages
-      #   uses: docker://arm32v7/debian:buster-slim
-
-      #   with:
-      #     args: >
-      #       bash -c "echo $DATA_profile"
-
-      #       ./install.sh
 
       #       mkdir -p results
       #       cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml

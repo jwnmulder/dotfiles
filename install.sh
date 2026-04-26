@@ -16,7 +16,7 @@ if ! chezmoi="$(command -v chezmoi)"; then
 		echo "To install chezmoi, you must have curl or wget installed." >&2
 		exit 1
 	fi
-	sh -x -c "${chezmoi_install_script}" -- -b "${bin_dir}"
+	sh -c "${chezmoi_install_script}" -- -b "${bin_dir}"
 	unset chezmoi_install_script bin_dir
 fi
 
