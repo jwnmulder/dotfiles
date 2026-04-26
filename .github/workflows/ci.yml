@@ -138,7 +138,7 @@ jobs:
             arm32v7/debian:bookworm \
             bash -c "
               apt update && apt install -y curl git &&
-              sh -c "$(curl -fsLS get.chezmoi.io)" -- -t v2.69.2 &&
+              curl -fsLS get.chezmoi.io | sh -s -- -t v2.69.2 &&
               chezmoi init --apply
             "
 
