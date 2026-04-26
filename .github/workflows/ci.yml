@@ -145,7 +145,7 @@ jobs:
               sh install.sh -b /usr/local/bin -t v2.69.2
 
               echo "Running chezmoui"
-              /usr/local/bin/chezmoi init --apply
+              /usr/local/bin/chezmoi init --apply --verbose
             '
 
       #       mkdir -p results
