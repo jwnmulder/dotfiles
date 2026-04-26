@@ -144,8 +144,9 @@ jobs:
               curl -fsLS get.chezmoi.io -o install.sh
               sh install.sh -b /usr/local/bin -t v2.69.2
 
-              echo "Running chezmoui"
+              echo "Running chezmoi"
               /usr/local/bin/chezmoi init --apply --verbose
+              echo "Done running chezmoi"
             '
 
       #       mkdir -p results
