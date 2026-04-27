@@ -133,20 +133,19 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
         run: |
           docker run --rm --platform linux/arm/v7 \
-            -v $PWD:/workspace \
-            -w /workspace \
+            -v $PWD:$PWD -w $PWD \
             -e DATA_profile="$DATA_profile" \
             arm32v7/debian:bookworm \
             bash -c '
               set -e
               apt update
-              apt install -y curl git
+              apt install -y curl git gpg python3
 
               curl -fsLS get.chezmoi.io -o install.sh
               sh install.sh -b /usr/local/bin -t v2.69.2
 
               echo "Running chezmoi"
-              /usr/local/bin/chezmoi init --apply --source /workspace
+              /usr/local/bin/chezmoi init --apply --source $PWD
               /usr/local/bin/chezmoi managed
               echo "Done running chezmoi"
             '
