@@ -146,7 +146,7 @@ jobs:
 
               echo "Running chezmoi"
               /usr/local/bin/chezmoi init --apply --source $PWD
-              # /usr/local/bin/chezmoi managed
+              /usr/local/bin/chezmoi managed --source $PWD
               echo "Done running chezmoi"
             '
 
