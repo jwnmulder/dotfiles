@@ -135,6 +135,7 @@ jobs:
           docker run --rm --platform linux/arm/v7 \
             -v $PWD:/workspace \
             -w /workspace \
+            -e DATA_profile="$DATA_profile" \
             arm32v7/debian:bookworm \
             bash -c '
               set -e
