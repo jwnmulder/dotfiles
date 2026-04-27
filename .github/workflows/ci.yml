@@ -119,16 +119,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Setup PATH
-        run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Run ARM container
+      - name: Install prerequisites & Chezmoi init apply
         env:
           DATA_profile: ${{ matrix.profile }}
         run: |
@@ -144,21 +141,23 @@ jobs:
               curl -fsLS get.chezmoi.io -o install.sh
               sh install.sh -b /usr/local/bin -t v2.69.2
 
-              echo "Running chezmoi"
+              echo "Running chezmoi init --apply"
               /usr/local/bin/chezmoi init --apply --source $PWD
+
+              echo "Running chezmoi managed"
               /usr/local/bin/chezmoi managed --source $PWD
               echo "Done running chezmoi"
             '
+              mkdir -p results
+              cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
+              chmod -R a+r results
 
-      #       mkdir -p results
-      #       cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
-      #       chmod -R a+r results
-      # - name: Assert
-      #   run: |
-      #     if ! grep -q "is_server: true" results/chezmoi.yaml; then
-      #       echo "::error file=chezmoi.yaml::is_server: true not found"
-      #       exit 1
-      #     fi
+      - name: Assert
+        run: |
+          if ! grep -q "is_server: true" results/chezmoi.yaml; then
+            echo "::error file=chezmoi.yaml::is_server: true not found"
+            exit 1
+          fi
 
   windows-desktop:
     strategy:
