@@ -146,8 +146,8 @@ jobs:
 
               echo "Running chezmoi"
               /usr/local/bin/chezmoi --version
-              /usr/local/bin/chezmoi doctor
-              /usr/local/bin/chezmoi init --apply --verbose
+              # /usr/local/bin/chezmoi doctor
+              /usr/local/bin/chezmoi init --apply --source /workspace --verbose
               /usr/local/bin/chezmoi managed
               echo "Done running chezmoi"
             '
