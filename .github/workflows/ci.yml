@@ -114,7 +114,7 @@ jobs:
       matrix:
         profile:
           - personal
-
+  
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -149,7 +149,7 @@ jobs:
               echo "Done running chezmoi"
             '
               mkdir -p results
-              cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
+              cp /root/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
               chmod -R a+r results
 
       - name: Assert
