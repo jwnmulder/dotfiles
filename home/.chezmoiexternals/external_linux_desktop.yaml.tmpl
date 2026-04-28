@@ -25,11 +25,6 @@
   url: "https://get.helm.sh/helm-{{ .versions.helm }}-linux-{{ .chezmoi.arch }}.tar.gz"
   path: '{{ printf "linux-%s/helm" .chezmoi.arch }}'
 
-".local/bin/backstage":
-  type: archive-file
-  url: 'https://github.com/einride/backstage-go/releases/download/{{ .versions.backstage_go }}/backstage-go_{{ .versions.backstage_go | trimPrefix "v" }}_linux_{{ .chezmoi.arch }}.tar.gz'
-  path: "backstage"
-
 ".local/bin/age":
   type: archive-file
   url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
