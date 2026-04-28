@@ -1,12 +1,9 @@
 # {{ if and (eq .chezmoi.os "linux") (.is_desktop) }}
 
 ".local/bin/bw":
-  type: file
-  url: "https://vault.bitwarden.com/download/?app=cli&platform=linux"
-  executable: true
-  refreshPeriod: "168h"
-  filter:
-    command: "zcat"
+  type: archive-file
+  url: 'https://github.com/bitwarden/clients/releases/download/cli-{{ .versions.bitwarden_cli }}/bw-oss-linux-{{ .versions.bitwarden_cli | trimPrefix "v" }}.zip'
+  path: "bw"
 
 ".local/bin/gopass":
   type: archive-file
