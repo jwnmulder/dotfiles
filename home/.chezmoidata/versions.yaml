@@ -1,8 +1,8 @@
 versions:
-  uv: "0.11.2"               # renovate: datasource=github-releases depName=astral-sh/uv
+  uv: "0.11.2"              # renovate: datasource=github-releases depName=astral-sh/uv
   kubectl: v1.27.3          # renovate: datasource=github-releases depName=kubernetes/kubectl
   kustomize: v5.8.1         # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
-  helm: v4.1.3             # renovate: datasource=github-releases depName=helm/helm
+  helm: v4.1.3              # renovate: datasource=github-releases depName=helm/helm
   direnv: v2.37.1           # renovate: datasource=github-releases depName=direnv/direnv
   starship: v1.24.2         # renovate: datasource=github-releases depName=starship/starship
   fzf: v0.71.0              # renovate: datasource=github-releases depName=junegunn/fzf
@@ -12,12 +12,12 @@ versions:
   age: v1.3.1               # renovate: datasource=github-releases depName=FiloSottile/age
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
   betterleaks: v1.1.2       # renovate: datasource=github-releases depName=betterleaks/betterleaks
-  trufflehog: v3.90.12       # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
+  trufflehog: v3.90.12      # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
   eza: v0.23.4              # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.26.1              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v3.4.1             # renovate: datasource=github-releases depName=TomWright/dasel
-  mise: v2026.3.17         # renovate: datasource=github-releases depName=jdx/mise
+  mise: v2026.3.17          # renovate: datasource=github-releases depName=jdx/mise
   usage: v3.2.0             # renovate: datasource=github-releases depName=jdx/usage
   multi_gitter: v0.63.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
-  gopass: v1.16.1          # renovate: datasource=github-releases depName=gopasspw/gopass
-  bitwarden_cli: v2026.3.0  # renovate: datasource=github-releases depName=bitwarden/clients
+  gopass: v1.16.1           # renovate: datasource=github-releases depName=gopasspw/gopass
+  bitwarden_cli: v2026.3.0  # renovate: datasource=github-releases depName=bitwarden/clients extractVersion=^cli-v(?<version>.*)$
