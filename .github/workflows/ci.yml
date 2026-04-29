@@ -155,6 +155,7 @@ jobs:
               /usr/local/bin/chezmoi doctor --source $PWD
               cp /root/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
               chmod -R a+r results
+            '
 
       - name: Assert
         run: |
