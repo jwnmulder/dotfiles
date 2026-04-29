@@ -119,51 +119,39 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Setup PATH
-        run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-      - name: Cache arm image
-        uses: actions/cache@v5
-        id: cache
-        with:
-          path: ${{ runner.temp }}/armv7-image.img
-          key: ${{ runner.os }}-${{ hashFiles('**/workflows/ci.yml') }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Build armv7 image
-        uses: pguyot/arm-runner-action@v2
-        id: install_deps
-        if: steps.cache.outputs.cache-hit != 'true'
-        with:
-          base_image: https://dietpi.com/downloads/images/DietPi_RPi2-ARMv7-Bookworm.img.xz
-          cpu: cortex-a7
-          # cpu: pxa250
-          image_additional_mb: 1024
-          # we don't want to optimize as it's two-stage
-          optimize_image: "no"
-          commands: |
-            apt update
-
-      - name: Move and rename image with dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          mv ${{ steps.install_deps.outputs.image }} ${{ runner.temp }}/armv7-image.img
-
-      - name: Chezmoi init & apply
-        uses: pguyot/arm-runner-action@v2
+      - name: Install prerequisites & Chezmoi init apply
         env:
           DATA_profile: ${{ matrix.profile }}
-        with:
-          # base_image: dietpi:rpi_armv7_bullseye
-          # base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv7-Bookworm.img.xz
-          base_image: file://${{ runner.temp }}/armv7-image.img
-          cpu: cortex-a7
-          copy_artifact_path: results
-          commands: |
-            ./install.sh
+        run: |
+          docker run --rm --platform linux/arm/v7 \
+            -v $PWD:$PWD -w $PWD \
+            -e DATA_profile="$DATA_profile" \
+            arm32v7/debian:bookworm \
+            bash -c '
+              set -e
+              apt update
+              apt install -y curl git gpg python3
 
-            mkdir -p results
-            cp ${HOME}/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
-            chmod -R a+r results
+              curl -fsLS get.chezmoi.io -o install.sh
+              sh install.sh -b /usr/local/bin -t v2.69.2
+
+              echo "Running chezmoi init --apply"
+              /usr/local/bin/chezmoi init --apply --source $PWD
+
+              echo "Running chezmoi managed"
+              /usr/local/bin/chezmoi managed --source $PWD
+              echo "Done running chezmoi"
+
+              mkdir -p results
+              cp /root/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
+              chmod -R a+r results
+            '
       - name: Assert
         run: |
           if ! grep -q "is_server: true" results/chezmoi.yaml; then
