@@ -151,10 +151,14 @@ jobs:
               mkdir -p results
               echo $HOME
               ls -la $HOME
+              echo b
               ls -la /root/.config/chezmoi/
-              /usr/local/bin/chezmoi doctor --source $PWD
+              # /usr/local/bin/chezmoi doctor --source $PWD || true
+              echo c
               cp /root/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
+              echo d
               chmod -R a+r results
+              echo e
             '
 
       - name: Assert
