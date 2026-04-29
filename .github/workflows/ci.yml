@@ -149,6 +149,10 @@ jobs:
               echo "Done running chezmoi"
             '
               mkdir -p results
+              echo $HOME
+              echo \$HOME
+              /usr/local/bin/chezmoi doctor --source $PWD
+              ls -la $HOME /root/.config/chezmoi/
               cp /root/.config/chezmoi/chezmoi.yaml results/chezmoi.yaml
               chmod -R a+r results
 
