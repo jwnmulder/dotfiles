@@ -19,4 +19,4 @@ versions:
   usage: v3.2.1             # renovate: datasource=github-releases depName=jdx/usage
   multi_gitter: v0.63.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
   gopass: v1.16.1           # renovate: datasource=github-releases depName=gopasspw/gopass
-  bitwarden_cli: v2026.3.0  # renovate: datasource=github-releases depName=bitwarden/clients extractVersion=^cli-(?<version>v.*)$
+  bitwarden_cli: v2026.4.1  # renovate: datasource=github-releases depName=bitwarden/clients extractVersion=^cli-(?<version>v.*)$
