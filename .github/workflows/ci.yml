@@ -139,7 +139,7 @@ jobs:
               apt install -y curl git gpg python3
 
               curl -fsLS get.chezmoi.io -o install.sh
-              sh install.sh -b /usr/local/bin -t v2.69.2
+              sh install.sh -b /usr/local/bin
 
               echo "Running chezmoi init --apply"
               /usr/local/bin/chezmoi init --apply --source $PWD
