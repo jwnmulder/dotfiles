@@ -5,6 +5,9 @@ $ErrorActionPreference = "Stop"
 
 cd "{{ .chezmoi.workingTree }}"
 
+# Executable mode does not work on company onedrive folders
+git config --local core.fileMode false
+
 #setup prek, aka better pre-commit
 {{ if (lookPath "prek.exe") -}}
 prek.exe install
