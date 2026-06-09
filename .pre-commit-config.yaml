@@ -30,7 +30,7 @@ repos:
           - --strict
 
   - repo: https://github.com/betterleaks/betterleaks
-    rev: v1.3.1
+    rev: v1.4.0
     hooks:
       - id: betterleaks
 
