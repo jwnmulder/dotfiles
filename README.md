@@ -36,5 +36,5 @@ chezmoi update
 ## Editing encrypted files
 
 ```bash
-bin/edit-age-encrypted-in-vscode.sh home/.data/chezmoidata.yaml.age
+bin/edit-age-encrypted-in-vscode.sh home/.chezmoidata/.private_profiles.yaml.age
 ```
