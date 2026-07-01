@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install prerequisites
         run: apt-get update -q && apt-get install -y -q python3 python3-pip python3-venv curl git
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install prerequisites
         run: apt-get update -q && apt-get install -y -q python3 python3-pip curl
@@ -117,7 +117,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
@@ -185,7 +185,7 @@ jobs:
       run:
         shell: ${{ matrix.runner_shell }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install prerequisites
         run: |
