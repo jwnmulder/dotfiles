@@ -3,6 +3,7 @@
   "extends": ["github>jwnmulder/renovate-config"],
   "assignees": ["jwnmulder"],
   "rebaseWhen": "conflicted",
+  "minimumReleaseAge": "3 days",
   "packageRules": [
     {
       "matchFileNames": [".pre-commit-config.yaml"],
