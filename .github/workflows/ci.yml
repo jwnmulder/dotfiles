@@ -207,6 +207,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.profile }}-${{ matrix.runner_shell }}-chezmoi-external
 
       - name: Chezmoi init & apply
+        continue-on-error: true  # Bitwarden CLI install is flaky
         uses: nick-fields/retry@v4
         env:
           DATA_profile: ${{ matrix.profile }}
