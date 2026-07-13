@@ -12,7 +12,7 @@ versions:
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
   betterleaks: v1.6.1       # renovate: datasource=github-releases depName=betterleaks/betterleaks
   trufflehog: v3.95.6      # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
-  eza: v0.23.4              # renovate: datasource=github-releases depName=eza-community/eza
+  eza: v0.23.5              # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.26.1              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v3.11.2             # renovate: datasource=github-releases depName=TomWright/dasel
   mise: v2026.6.14          # renovate: datasource=github-releases depName=jdx/mise
