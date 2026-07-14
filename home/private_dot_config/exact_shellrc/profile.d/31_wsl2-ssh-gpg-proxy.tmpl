@@ -30,7 +30,7 @@ fi
 
 # SSH and GPG sockets
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
-export GPG_AGENT_SOCK=$(gpgconf --list-dir agent-socket)
+export GPG_AGENT_SOCK="${GPG_AGENT_SOCK:-$(gpgconf --list-dir agent-socket)}"
 
 # Workaround for https://github.com/BlackReloaded/wsl2-ssh-pageant/issues/38
 # New wsl2-ssh-pageant.exe are created automatically upon reconnect
