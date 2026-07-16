@@ -9,6 +9,7 @@ key.txt.age
 {{ if eq .chezmoi.os "windows" }}
 .config/*
 !.config/dsc
+!.config/mise
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
