@@ -53,6 +53,11 @@
   stripComponents: 1
   path: "uvx"
 
+".local/bin/fnox":
+  type: archive-file
+  url: "https://github.com/jdx/fnox/releases/download/{{ .versions.fnox }}/fnox-{{ .uname.machine }}-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
+  path: "fnox"
+
 # busybox {{ if (lookPath "busybox") }}
 ".local/bin/ansi2txt":
   type: archive-file

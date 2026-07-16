@@ -16,5 +16,9 @@
   type: archive-file
   url: "https://github.com/astral-sh/uv/releases/download/{{ .versions.uv }}/uv-x86_64-pc-{{ .chezmoi.os }}-msvc.zip"
   path: "uvx.exe"
+".local/bin/fnox.exe":
+  type: archive-file
+  url: "https://github.com/jdx/fnox/releases/download/{{ .versions.fnox }}/fnox-x86_64-pc-{{ .chezmoi.os }}-msvc.zip"
+  path: "fnox.exe"
 
 # {{ end }}

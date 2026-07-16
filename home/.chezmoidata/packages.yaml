@@ -41,7 +41,6 @@ packages:
     - oidc-login
     - sudo
     - cert-manager
-    # - ingress-nginx
     - deprecations
     - outdated
     - get-all
@@ -53,5 +52,4 @@ packages:
     - view-quotas
 
   mise_tools:
-    all:
-      - fnox
+    all: []
