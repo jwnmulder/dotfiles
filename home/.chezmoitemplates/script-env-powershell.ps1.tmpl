@@ -13,7 +13,7 @@ if ($env:Path -notlike "*\.local\bin*") {
     $env:Path += ";$env:USERPROFILE\.local\bin"
 }
 
-# kubectl-krew managed plugins, not really needed but having it on Path results in less warnings
-if ($env:Path -notlike "*\.local\bin*") {
-    $env:Path += ";$env:USERPROFILE\.local\bin"
+# mise managed tools
+if ($env:Path -notlike "*\mise\shims*") {
+    $env:Path += ";$env:LOCALAPPDATA\mise\shims"
 }
