@@ -51,3 +51,7 @@ packages:
     - popeye
     - explore
     - view-quotas
+
+  mise_tools:
+    all:
+      - fnox

@@ -1,0 +1,11 @@
+{{- if lookPath "mise" -}}
+#!/usr/bin/env bash
+
+# {{ include (joinPath .chezmoi.homeDir ".config/mise/conf.d/default-tools.toml") | sha256sum }}
+
+set -euo pipefail
+
+echo "Installing mise tools"
+mise install
+
+{{- end }}

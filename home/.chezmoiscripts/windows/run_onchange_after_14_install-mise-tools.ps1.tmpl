@@ -1,0 +1,12 @@
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+# Popluate env:Path (required during initial bootstrap)
+{{ template "script-env-powershell.ps1.tmpl" }}
+
+{{- if lookPath "mise" -}}
+
+Write-Host "Installing mise tools"
+mise install
+
+{{- end }}
