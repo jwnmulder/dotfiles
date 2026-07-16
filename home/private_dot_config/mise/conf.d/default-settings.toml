@@ -1,5 +1,8 @@
 [settings]
 
+# If not set, mise updates conf.d/default-settings.toml when using 'mise use -g ...'
+global_config_file = '~/.config/mise/config.toml'
+
 experimental = true
 
 idiomatic_version_file_enable_tools = []
