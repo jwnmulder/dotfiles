@@ -1,6 +1,8 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
 
+# {{ include (joinPath .chezmoi.homeDir ".config/mise/conf.d/default-tools.toml") | sha256sum }}
+
 # Popluate env:Path (required during initial bootstrap)
 {{ template "script-env-powershell.ps1.tmpl" }}
 
