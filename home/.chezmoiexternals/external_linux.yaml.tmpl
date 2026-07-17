@@ -53,11 +53,6 @@
   stripComponents: 1
   path: "uvx"
 
-".local/bin/fnox":
-  type: archive-file
-  url: "https://github.com/jdx/fnox/releases/download/{{ .versions.fnox }}/fnox-{{ .uname.machine }}-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
-  path: "fnox"
-
 # busybox {{ if (lookPath "busybox") }}
 ".local/bin/ansi2txt":
   type: archive-file
@@ -91,13 +86,6 @@
 ".local/share/oh-my-zsh/custom/plugins/zsh-autosuggestions/":
   type: archive
   url: "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
-  exact: true
-  stripComponents: 1
-  refreshPeriod: "168h"
-
-".local/share/oh-my-zsh/custom/plugins/zsh-nvm/":
-  type: archive
-  url: "https://github.com/lukechilds/zsh-nvm/archive/master.tar.gz"
   exact: true
   stripComponents: 1
   refreshPeriod: "168h"

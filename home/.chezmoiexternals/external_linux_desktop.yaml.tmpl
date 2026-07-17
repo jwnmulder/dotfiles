@@ -77,15 +77,15 @@
   path: "usage"
   executable: true
 
+".local/bin/fnox":
+  type: archive-file
+  url: "https://github.com/jdx/fnox/releases/download/{{ .versions.fnox }}/fnox-{{ .uname.machine }}-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
+  path: "fnox"
+  executable: true
+
 ".local/bin/multi-gitter":
   type: archive-file
   url: 'https://github.com/lindell/multi-gitter/releases/download/{{ .versions.multi_gitter }}/multi-gitter_{{ .versions.multi_gitter | trimPrefix "v" }}_Linux_{{ .uname.machine }}.tar.gz'
   path: "multi-gitter"
-
-".local/share/nvm/":
-  type: archive
-  url: "https://github.com/nvm-sh/nvm/archive/master.tar.gz"
-  stripComponents: 1
-  refreshPeriod: "168h"
 
 # {{ end }}
