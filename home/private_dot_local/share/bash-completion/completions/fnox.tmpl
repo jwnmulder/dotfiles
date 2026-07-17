@@ -1,3 +1,6 @@
 {{- if (stat (joinPath .chezmoi.homeDir ".local/bin/fnox")) -}}
+{{- if (stat (joinPath .chezmoi.homeDir ".local/bin/usage")) -}}
+{{- /* fnox requires usage for completion */ -}}
 {{- output (joinPath .chezmoi.homeDir ".local/bin/fnox") "completion" "bash" -}}
+{{- end -}}
 {{- end -}}
