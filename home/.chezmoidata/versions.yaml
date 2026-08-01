@@ -15,7 +15,7 @@ versions:
   eza: v0.23.5              # renovate: datasource=github-releases depName=eza-community/eza
   bat: v0.26.1              # renovate: datasource=github-releases depName=sharkdp/bat
   dasel: v3.11.2             # renovate: datasource=github-releases depName=TomWright/dasel
-  mise: v2026.7.5           # renovate: datasource=github-releases depName=jdx/mise
+  mise: v2026.7.16           # renovate: datasource=github-releases depName=jdx/mise
   usage: v3.6.0             # renovate: datasource=github-releases depName=jdx/usage
   fnox: v1.31.1             # renovate: datasource=github-releases depName=jdx/fnox
   multi_gitter: v0.63.1     # renovate: datasource=github-releases depName=lindell/multi-gitter
