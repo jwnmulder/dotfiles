@@ -9,7 +9,11 @@ if [ ! -f "$ENCRYPTED_FILE" ]; then
   exit 1
 fi
 
-chezmoi decrypt "$ENCRYPTED_FILE" > /tmp/agefile.tmp.yaml; \
-code --wait /tmp/agefile.tmp.yaml && \
-chezmoi encrypt /tmp/agefile.tmp.yaml > "$ENCRYPTED_FILE"; \
-rm /tmp/agefile.tmp.yaml
+BASE="${ENCRYPTED_FILE%.age}"
+EXT="${BASE##*.}"
+TMPFILE="/tmp/agefile.tmp.${EXT}"
+
+chezmoi decrypt "$ENCRYPTED_FILE" > "$TMPFILE"; \
+code --wait "$TMPFILE" && \
+chezmoi encrypt "$TMPFILE" > "$ENCRYPTED_FILE"; \
+rm "$TMPFILE"
