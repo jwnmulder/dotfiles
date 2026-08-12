@@ -20,6 +20,7 @@ packages:
       - eza-community.eza
       - Git.MinGit
       - Microsoft.DSC
+      - jdx.mise
     personal:
       - Bitwarden.Bitwarden
       - jqlang.jq
@@ -30,7 +31,6 @@ packages:
       - SlackTechnologies.Slack
       - Postman.Postman
       - GIMP.GIMP.3
-      - MuhammedKalkan.OpenLens
       - DBeaver.DBeaver.Community
       - AgileBits.1Password
       - AgileBits.1Password.CLI
