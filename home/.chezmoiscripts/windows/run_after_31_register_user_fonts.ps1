@@ -7,6 +7,9 @@ $downloadedFontsPath = "$env:USERPROFILE\.cache\chezmoi\fonts"
 $fontsPath = "$env:LOCALAPPDATA\Microsoft\Windows\Fonts"
 $userFontsRegistryPath = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
 
+# Prints all profile locations
+# $profile | Select-Object *
+
 function Get-FontName {
   param(
     [System.IO.FileInfo]$fontFile
