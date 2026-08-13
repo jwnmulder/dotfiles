@@ -1,17 +1,12 @@
-$env:STARSHIP_CONFIG = "$HOME\AppData\Local\starship\starship.toml"
-
-# https://github.com/starship/starship/issues/2057#issuecomment-831336770
-&"$HOME\AppData\Local\starship\starship.exe" init powershell --print-full-init | Out-String | Invoke-Expression
-
+# Aliases
 Set-Alias do-upgrade-all $HOME\Documents\WindowsPowerShell\do-upgrade-all.ps1
 
-# WSL Interop (https://github.com/mikebattista/PowerShell-WSL-Interop)
-# Installation: Install-Module WslInterop -Scope CurrentUser -Force
-# Import-WslCommand "cat", "cp", "echo", "find", "grep", "head", "ls", "mv", "rm", "sed", "touch", "tree", "which"
-
+# Completions
 . $HOME\Documents\WindowsPowerShell\completions\_chezmoi.ps1
 
 {{ if (lookPath "az") -}}
+
+# Azure CLI
 Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
     param($commandName, $wordToComplete, $cursorPosition)
     $completion_file = New-TemporaryFile
@@ -30,3 +25,9 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
     Remove-Item $completion_file, Env:\_ARGCOMPLETE_STDOUT_FILENAME, Env:\ARGCOMPLETE_USE_TEMPFILES, Env:\COMP_LINE, Env:\COMP_POINT, Env:\_ARGCOMPLETE, Env:\_ARGCOMPLETE_SUPPRESS_SPACE, Env:\_ARGCOMPLETE_IFS, Env:\_ARGCOMPLETE_SHELL
 }
 {{- end }}
+
+# Starship
+$env:STARSHIP_CONFIG = "$HOME\AppData\Local\starship\starship.toml"
+
+# https://github.com/starship/starship/issues/2057#issuecomment-831336770
+&"$HOME\AppData\Local\starship\starship.exe" init powershell --print-full-init | Out-String | Invoke-Expression
