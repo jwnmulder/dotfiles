@@ -34,11 +34,8 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
     $cmd = "scoop update --all"
 
     if ($isAdmin) {
-
         Write-Host "# scoop - Skipping $cmd as we are running as Administrator" -ForegroundColor Cyan
-
     } else {
-
         Write-Host "# scoop - Ensure correct permissions $cmd"
         takeown /f $env:USERPROFILE\scoop\buckets /r >$null
 
@@ -49,15 +46,27 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
 }
 #endregion
 
+#region mise
+if (Get-Command mise.exe -ErrorAction SilentlyContinue) {
+    $cmd = "mise upgrade"
+
+    if ($isAdmin) {
+        Write-Host "# mise - Skipping $cmd as we are running as Administrator" -ForegroundColor Cyan
+    } else {
+        Write-Host "# mise - Running $cmd"
+        Invoke-Expression $cmd
+        Write-Host "# mise - Done running $cmd" -ForegroundColor Green
+    }
+}
+#endregion
+
 #region kubectl-krew
 if (Get-Command kubectl-krew -ErrorAction SilentlyContinue) {
 
     $cmd = "kubectl-krew upgrade"
 
     if ($isAdmin) {
-
         Write-Host "# kubectl-krew - Skipping $cmd as we are running as Administrator" -ForegroundColor Cyan
-
     } else {
         Write-Host "# kubectl-krew - Running $cmd"
         Invoke-Expression $cmd
@@ -71,9 +80,7 @@ if (Get-Command uv.exe -ErrorAction SilentlyContinue) {
     $cmd = "uv tool upgrade --all"
 
     if ($isAdmin) {
-
         Write-Host "# uvx - Skipping $cmd as we are running as Administrator" -ForegroundColor Cyan
-
     } else {
         Write-Host "# uvx - Running $cmd"
         Invoke-Expression $cmd
@@ -87,7 +94,7 @@ Write-Host "# pwsh - Updating powershell resources"
 
 # Normally Update-PSResource only would suffice
 # It will break however if there is a installed resource that has only a pre-release
-$resourcesToUpdate = Get-InstalledPSResource -Scope CurrentUser |
+$resourcesToUpdate = Get-InstalledPSResource -Scope CurrentUser -ErrorAction SilentlyContinue |
     Where-Object { $_.Name -ne "Microsoft.Windows.Developer" } | # no stable version available
     Sort-Object -Unique
 if ($resourcesToUpdate) {
@@ -103,7 +110,7 @@ if ($resourcesToUpdate) {
 
 Write-Host "# pwsh - Cleanup of old powershell module & script versions"
 
-$installedPSResourcesGrouped = Get-InstalledPSResource -Scope CurrentUser | Group-Object Name
+$installedPSResourcesGrouped = Get-InstalledPSResource -Scope CurrentUser -ErrorAction SilentlyContinue | Group-Object Name
 foreach ($group in $installedPSResourcesGrouped) {
     $sortedVersions = $group.Group | Sort-Object Version -Descending
 
