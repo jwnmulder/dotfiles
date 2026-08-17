@@ -11,9 +11,9 @@ if (-Not $mydocuments.ToLower().StartsWith($userprofile_documents.ToLower())) {
 
     # Sync profile for PowerShell Desktop (built-in)
     New-Item -Path "$mydocuments\WindowsPowerShell" -ItemType Directory -Force | Out-Null
-    Copy-Item "$userprofile_documents\WindowsPowerShell\profile.ps1" -Destination "$mydocuments\WindowsPowerShell\" -Recurse
+    Copy-Item "$userprofile_documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Destination "$mydocuments\WindowsPowerShell\" -Recurse
 
     # Sync profile for PowerShell Core (separately installed PowerShell, version 7+)
     New-Item -Path "$mydocuments\PowerShell" -ItemType Directory -Force | Out-Null
-    Copy-Item "$userprofile_documents\WindowsPowerShell\profile.ps1" -Destination "$mydocuments\PowerShell\" -Recurse
+    Copy-Item "$userprofile_documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" -Destination "$mydocuments\PowerShell\" -Recurse
 }
