@@ -6,6 +6,9 @@ Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
+# TODO: Ensure C:\Users\user\Documents\PowerShell\Modules is on $env:PSModulePath when running for first or second time
+# TODO: pwsh.exe is failing due to this path missing
+
 # Ensure PSResourceGet is installed and up-to-date
 Write-Output "Install/update Microsoft.PowerShell.PSResourceGet"
 Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Force
