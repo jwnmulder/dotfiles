@@ -6,12 +6,24 @@ Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
-# TODO: Ensure C:\Users\user\Documents\PowerShell\Modules is on $env:PSModulePath when running for first or second time
-# TODO: pwsh.exe is failing due to this path missing
+# https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_psmodulepath?view=powershell-7.6#starting-windows-powershell-from-powershell-7
+# $HOME\Documents\WindowsPowerShell\Modules is missing when powershell.exe is started from within pwsh.exe
+# When $HOME\Documents\WindowsPowerShell\Modules is not on $env:PSModulePath, installation errors might occure
+$UserWinPSModulePath = Join-Path ([System.Environment]::GetFolderPath('MyDocuments')) 'WindowsPowerShell\Modules'
+$modulePaths = $env:PSModulePath -split ';'
+if ($UserWinPSModulePath -notin $modulePaths) {
+    $env:PSModulePath = "$UserWinPSModulePath;$env:PSModulePath"
+}
 
-# Ensure PSResourceGet is installed and up-to-date
-Write-Output "Install/update Microsoft.PowerShell.PSResourceGet"
-Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery -Force
+# Powershell Core comes with PSResourceGet installed
+# PowerShell Desktop (version 5.1) requires an installation
+if ($PSVersion.Major -eq 5) {
+    $PSResourceGet = Get-Module Microsoft.PowerShell.PSResourceGet -ListAvailable
+    if (-not $PSResourceGet) {
+        Write-Output "Install/update Microsoft.PowerShell.PSResourceGet"
+        Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery
+    }
+}
 
 # Trust PSGallery for PowerShellGet
 if (Get-Command Get-PSRepository -ErrorAction SilentlyContinue) {
@@ -31,15 +43,15 @@ if (-not ((Get-PSResourceRepository -Name "PSGallery" -ErrorAction SilentlyConti
 # https://github.com/PowerShell/PSResourceGet/issues/1776
 $requiredResources = @{
     "PSScriptAnalyzer" = @{
-        Version = '[1.23,)'
+        Version = '[1.25,)'
         Repository = 'PSGallery'
     }
     "PSReadLine" = @{
-        Version = '[2.2.6,)'
+        Version = '[2.4.5,)'
         Repository = 'PSGallery'
     }
     "WslInterop" = @{
-        Version = '[0.4.0,)'
+        Version = '[0.4.1,)'
         Repository = 'PSGallery'
     }
     "Microsoft.Windows.Developer" = @{
@@ -48,7 +60,7 @@ $requiredResources = @{
         Prerelease = $true
     }
     "Microsoft.WinGet.Client" = @{
-        Version = '[1.10.340,)'
+        Version = '[1.29.280,)'
         Repository = 'PSGallery'
     }
 }
