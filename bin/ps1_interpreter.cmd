@@ -7,4 +7,4 @@
 
 set PSModulePath=
 
-powershell.exe %*
+powershell.exe -NoProfile %*
