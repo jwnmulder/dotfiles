@@ -14,7 +14,7 @@ key.txt.age
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
-**/*.sh
+.chezmoiscripts/**/*.sh
 
 .local/share/bash-completion/**
 .gnupg
@@ -26,8 +26,9 @@ key.txt.age
 {{ end }}
 
 {{ if ne .chezmoi.os "windows" }}
-**/*.bat
-**/*.ps1
+.chezmoiscripts/**/*.bat
+.chezmoiscripts/**/*.ps1
+
 Documents
 AppData
 
