@@ -51,17 +51,20 @@ resources:
       valueName: EnableMeetingCopy
       valueData: {DWord: 1}
 
-  - name: MicrosoftWindowsDeveloper settings
-    type: Microsoft.DSC/PowerShell
+  - name: Taskbar When using multiple displays, show my taskbar apps on 'Main taskbar and taskbar where window is open'
+    type: Microsoft.Windows/Registry
     properties:
-      resources:
-        - name: Taskbar settings
-          type: Microsoft.Windows.Developer/Taskbar
-          properties:
-            Alignment: Left
-            HideLabelsMode: Always
-            SearchBoxMode: Hide
-            TaskViewButton: Hide
+      keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+      valueName: MMTaskbarMode
+      valueData: {DWord: 1}
+
+  - name: Taskbar settings
+    type: Microsoft.Windows.Developer/Taskbar
+    properties:
+      Alignment: Left
+      HideLabelsMode: Always
+      SearchBoxMode: Hide
+      TaskViewButton: Hide
             # WidgetsButton: Hide
 
             # - name: SearchboxTaskbarMode Hide
