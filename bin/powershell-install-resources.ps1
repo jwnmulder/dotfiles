@@ -4,6 +4,11 @@ $ErrorActionPreference = "Stop"
 $PSVersion = $PSVersionTable.PSVersion
 Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
+# IsWindows does not exist on PowerShell Desktop 5.1
+if (-not (Get-Variable -Name IsWindows -ErrorAction SilentlyContinue)) {
+    $IsWindows = $PSVersionTable.PSEdition -eq 'Desktop'
+}
+
 if ($IsWindows) {
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 }
