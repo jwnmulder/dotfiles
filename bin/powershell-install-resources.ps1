@@ -4,7 +4,9 @@ $ErrorActionPreference = "Stop"
 $PSVersion = $PSVersionTable.PSVersion
 Write-Output "PSVersion=${PSVersion}, PSModulePath=${env:PSModulePath}"
 
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+if ($IsWindows) {
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+}
 
 # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_psmodulepath?view=powershell-7.6#starting-windows-powershell-from-powershell-7
 # $HOME\Documents\WindowsPowerShell\Modules is missing when powershell.exe is started from within pwsh.exe
@@ -50,18 +52,24 @@ $requiredResources = @{
         Version = '[2.4.5,)'
         Repository = 'PSGallery'
     }
-    "WslInterop" = @{
-        Version = '[0.4.1,)'
-        Repository = 'PSGallery'
-    }
-    "Microsoft.Windows.Developer" = @{
-        Version = '[0.2,)'
-        Repository = 'PSGallery'
-        Prerelease = $true
-    }
-    "Microsoft.WinGet.Client" = @{
-        Version = '[1.29.280,)'
-        Repository = 'PSGallery'
+}
+
+if ($IsWindows) {
+    $requiredResources += @{
+        "WslInterop" = @{
+            Version = '[0.4.1,)'
+            Repository = 'PSGallery'
+        }
+        "Microsoft.Windows.Developer" = @{
+            Version = '[0.2,)'
+            Repository = 'PSGallery'
+            Prerelease = $true
+        }
+
+        "Microsoft.WinGet.Client" = @{
+            Version = '[1.29.280,)'
+            Repository = 'PSGallery'
+        }
     }
 }
 
