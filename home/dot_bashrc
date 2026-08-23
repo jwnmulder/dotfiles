@@ -128,11 +128,6 @@ if [ "x${BASH_VERSION-}" != x -a "x${PS1-}" != x -a "x${BASH_COMPLETION_VERSINFO
   fi
 fi
 
-# direnv hook
-if command -v direnv &> /dev/null; then
-  eval "$(direnv hook bash)"
-fi
-
 # mise hook
 if command -v mise &> /dev/null; then
   eval "$(mise activate bash)"

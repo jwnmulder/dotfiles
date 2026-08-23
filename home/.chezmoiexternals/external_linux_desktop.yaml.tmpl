@@ -35,11 +35,6 @@
   url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
   path: "age/age-keygen"
 
-".local/bin/direnv":
-  type: file
-  url: "https://github.com/direnv/direnv/releases/download/{{ .versions.direnv }}/direnv.{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
-  executable: true
-
 ".local/bin/trivy":
   type: archive-file
   url: https://github.com/aquasecurity/trivy/releases/download/{{ .versions.trivy }}/trivy_{{ .versions.trivy | trimPrefix "v" }}_Linux-64bit.tar.gz
