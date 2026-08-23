@@ -40,6 +40,16 @@ function Add-EnvPath {
     }
 }
 
+# Path entries
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\bin"
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.krew\bin"
 Add-EnvPath -Container User -Path "$env:LOCALAPPDATA\mise\shims"
+
+# XDG environment variables
+[Environment]::SetEnvironmentVariable('XDG_CONFIG_HOME', "$env:USERPROFILE\.config", 'User')
+[Environment]::SetEnvironmentVariable('XDG_DATA_HOME', "$env:USERPROFILE\.local\share", 'User')
+
+# Various
+[Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', "1", 'User')
+[Environment]::SetEnvironmentVariable('POWERSHELL_UPDATECHECK', "Off", 'User')
+[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', "1", 'User')

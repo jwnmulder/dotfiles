@@ -1,14 +1,6 @@
 # XDG folders
-$XdgDataHome = if ($ENV:XDG_DATA_HOME) {
-  $ENV:XDG_DATA_HOME
-} else {
-  [IO.Path]::Combine($HOME, ".local", "share")
-}
-$XdgConfigHome = if ($ENV:XDG_CONFIG_HOME) {
-  $ENV:XDG_CONFIG_HOME
-} else {
-  [IO.Path]::Combine($HOME, ".config")
-}
+$XdgConfigHome = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { [IO.Path]::Combine($env:HOME, ".config") }
+$XdgDataHome = if ($env:XDG_DATA_HOME) { $env:XDG_DATA_HOME } else { [IO.Path]::Combine($env:HOME, '.local', 'share') }
 
 # Prefer local module path; drop OneDrive Documents redirection (slow completion)
 $ModuleHome = [IO.Path]::Combine($XdgDataHome, "powershell", "Modules")
@@ -40,7 +32,7 @@ function Test-IsInteractive {
     return [System.Environment]::UserInteractive
 }
 
-$IsPwsh = $PSVersionTable.PSEdition -eq 'Core'
+# $IsPwsh = $PSVersionTable.PSEdition -eq 'Core'
 $IsInteractive = Test-IsInteractive
 if (-not $IsInteractive) {
     Write-Host "done"
@@ -80,7 +72,7 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
 
 {{- end }}
 
-{{ if (lookPath "~/AppData/Local/starship/starship.exe") -}}
+{{ if stat (joinPath .chezmoi.homeDir "AppData/Local/starship/starship.exe") -}}
 # Starship
 $env:STARSHIP_CONFIG = "$HOME\AppData\Local\starship\starship.toml"
 

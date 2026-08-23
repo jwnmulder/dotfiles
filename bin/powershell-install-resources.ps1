@@ -6,6 +6,10 @@ Write-Output "Installing PowerShell resources: PSVersion=${PSVersion}, PSModuleP
 
 # IsWindows does not exist on PowerShell Desktop 5.1
 if (-not (Get-Variable -Name IsWindows -ErrorAction SilentlyContinue)) {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSAvoidAssignmentToAutomaticVariable', '',
+        Justification = 'Provide IsWindows compatibility with Windows PowerShell 5.1'
+    )]
     $IsWindows = $PSVersionTable.PSEdition -eq 'Desktop'
 }
 

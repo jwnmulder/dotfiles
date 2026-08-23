@@ -1,7 +1,3 @@
-$XdgConfigHome = if ($ENV:XDG_CONFIG_HOME) {
-  $ENV:XDG_CONFIG_HOME
-} else {
-  [IO.Path]::Combine($HOME, ".config")
-}
+$XdgConfigHome = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { [IO.Path]::Combine($HOME, ".config") }
 
 . "$XdgConfigHome\powershell\Microsoft.PowerShell_profile.ps1"

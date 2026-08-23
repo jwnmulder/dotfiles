@@ -76,26 +76,3 @@ resources:
           $dsc_file = "$env:DSC_CONFIG_ROOT/windows_desktop_config.dsc.yaml"
           $dsc_file_hash = Get-FileHash -Path $dsc_file -Algorithm SHA256
           Set-Content -Path "$dsc_file.sha256" -Value $dsc_file_hash.Hash
-
-  # DSC v3.0 feels a bit buggy, lets try again after a new release
-  # - name: Run WinPS script
-  #   type: Microsoft.Windows/WindowsPowerShell
-  #   properties:
-  #     resources:
-  #       - name: DSC config status
-  #         type: PSDesiredStateConfiguration/Script
-  #         properties:
-  #           GetScript: |
-  #             $dsc_file = "$env:DSC_CONFIG_ROOT/windows_desktop_config.dsc.yaml"
-  #             $dsc_file_hash = Get-FileHash -Path $dsc_file -Algorithm SHA256
-  #             $dsc_file_marker_hash = Get-Content -Path "$dsc_file.sha256"
-  #             @{Stale=($dsc_file_hash -neq dsc_file_marker_hash)}
-  #           TestScript: |
-  #             $dsc_file = "$env:DSC_CONFIG_ROOT/windows_desktop_config.dsc.yaml"
-  #             $dsc_file_hash = Get-FileHash -Path $dsc_file -Algorithm SHA256
-  #             $dsc_file_marker_hash = Get-Content -Path "$dsc_file.sha256"
-  #             ($dsc_file_hash -eq dsc_file_marker_hash)
-  #           SetScript: |
-  #             $dsc_file = "$env:DSC_CONFIG_ROOT/windows_desktop_config.dsc.yaml"
-  #             $dsc_file_hash = Get-FileHash -Path $dsc_file -Algorithm SHA256
-  #             Set-Content -Path "$dsc_file.sha256" -Value $dsc_file_hash.Hash

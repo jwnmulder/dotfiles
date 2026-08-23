@@ -1,3 +1,17 @@
+# IsWindows does not exist on PowerShell Desktop 5.1
+if (-not (Get-Variable -Name IsWindows -ErrorAction SilentlyContinue)) {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSAvoidAssignmentToAutomaticVariable', '',
+        Justification = 'Provide IsWindows compatibility with Windows PowerShell 5.1'
+    )]
+    $IsWindows = $PSVersionTable.PSEdition -eq 'Desktop'
+}
+
+if (-not $IsWindows) {
+    Write-Error "This script requires Windows"
+    exit 1
+}
+
 # WinGet symlinks for portable applications
 if ($env:Path -notlike "*\Microsoft\WinGet\Links*") {
     $env:Path += ";$env:LOCALAPPDATA\Microsoft\WinGet\Links"
