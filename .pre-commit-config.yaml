@@ -1,3 +1,4 @@
+minimum_prek_version: 0.4.13
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -39,11 +40,10 @@ repos:
       - id: psscriptanalyzer
         name: PSScriptAnalyzer
         description: |
-          PSScriptAnalyzer provides script analysis and checks for potential code defects in the scripts
-          by applying a group of built-in or customized rules on the scripts being analyzed
-        language: python
+          PSScriptAnalyzer is a static code checker for PowerShell modules and scripts
         files: '.*\.(ps1|ps1\.tmpl)$'
-        entry: >-
-          bin/Invoke-ScriptAnalyzer.py -Path . -Recurse -EnableExit
-          -ExcludeRule PSAvoidUsingInvokeExpression
+        language: mise
+        additional_dependencies:
+          - powershell@7
+        entry: bin/Invoke-ScriptAnalyzer.ps1 -Path . -Recurse -EnableExit -ExcludeRule PSAvoidUsingInvokeExpression
         pass_filenames: false
