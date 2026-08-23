@@ -1,6 +1,6 @@
 # XDG folders
-$XdgConfigHome = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { [IO.Path]::Combine($env:HOME, ".config") }
-$XdgDataHome = if ($env:XDG_DATA_HOME) { $env:XDG_DATA_HOME } else { [IO.Path]::Combine($env:HOME, '.local', 'share') }
+$XdgConfigHome = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { [IO.Path]::Combine($HOME, ".config") }
+$XdgDataHome = if ($env:XDG_DATA_HOME) { $env:XDG_DATA_HOME } else { [IO.Path]::Combine($HOME, '.local', 'share') }
 
 # Prefer local module path; drop OneDrive Documents redirection (slow completion)
 $ModuleHome = [IO.Path]::Combine($XdgDataHome, "powershell", "Modules")
