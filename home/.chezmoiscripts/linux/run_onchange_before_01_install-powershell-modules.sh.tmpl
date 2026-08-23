@@ -1,0 +1,9 @@
+{{- if and .is_wsl (lookPath "pwsh") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# {{ include (joinPath .chezmoi.workingTree "bin/powershell-install-resources.ps1") | sha256sum }}
+pwsh -NoProfile "{{ .chezmoi.workingTree }}/bin/powershell-install-resources.ps1"
+
+{{- end }}
