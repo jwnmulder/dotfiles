@@ -4,7 +4,7 @@ versions:
   kustomize: v5.8.1         # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
   helm: v4.2.4              # renovate: datasource=github-releases depName=helm/helm
   starship: v1.26.0         # renovate: datasource=github-releases depName=starship/starship
-  fzf: v0.74.2              # renovate: datasource=github-releases depName=junegunn/fzf
+  fzf: v0.74.3              # renovate: datasource=github-releases depName=junegunn/fzf
   fd: v10.4.2               # renovate: datasource=github-releases depName=sharkdp/fd
   trivy: v0.73.0            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.3.1               # renovate: datasource=github-releases depName=FiloSottile/age
