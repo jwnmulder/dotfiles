@@ -20,6 +20,7 @@ packages:
       - eza-community.eza
       - Git.MinGit
       - Microsoft.DSC
+      - OpenDsc.Resources
       - jdx.mise
     personal:
       - Bitwarden.Bitwarden
