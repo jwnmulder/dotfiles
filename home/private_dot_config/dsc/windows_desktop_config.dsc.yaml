@@ -51,7 +51,7 @@ resources:
       valueName: EnableMeetingCopy
       valueData: {DWord: 1}
 
-  - name: Taskbar When using multiple displays, show my taskbar apps on 'Main taskbar and taskbar where window is open'
+  - name: Taskbar Show apps on main taskbar and taskbar where window is open
     type: Microsoft.Windows/Registry
     properties:
       keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
@@ -65,30 +65,6 @@ resources:
       HideLabelsMode: Always
       SearchBoxMode: Hide
       TaskViewButton: Hide
-            # WidgetsButton: Hide
-
-            # - name: SearchboxTaskbarMode Hide
-            #   type: Microsoft.Windows/Registry
-            #   properties:
-            #     keyPath: HKCU\Software\Microsoft\Windows\CurrentVersion\Search
-            #     valueName: SearchboxTaskbarMode
-            #     valueData: { DWord: 2 }
-
-  # - name: PSDesiredStateConfiguration Environment
-  #   type: Microsoft.Windows/WindowsPowerShell
-  #   properties:
-  #     resources:
-  #       - name: Path environment configuration
-  #         type: PSDesiredStateConfiguration/Environment
-  #         properties:
-  #           Name: Path
-  #           Path: true
-  #           Target: Process
-  #           Value: "envvar('USERPROFILE')\\.local\bin2"
-  #           Ensure: Present
-  #           # Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\bin"
-  #           # Add-EnvPath -Container User -Path "$env:USERPROFILE\.krew\bin"
-  #           # PSDesiredStateConfiguration/Environment
 
   - name: Write dsc file marker
     type: Microsoft.DSC.Transitional/RunCommandOnSet
