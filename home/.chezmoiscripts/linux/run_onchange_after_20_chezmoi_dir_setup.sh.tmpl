@@ -16,7 +16,7 @@ fi
 
 {{   end -}}
 
-{{-   if or (lookPath "prek") (lookPath "~/.local/bin/prek") }}
+{{-   if or (lookPath "prek") (stat (joinPath .chezmoi.homeDir ".local/bin/prek")) }}
 
 PREK_BIN=$(command -v prek || echo ~/.local/bin/prek)
 "$PREK_BIN" install
