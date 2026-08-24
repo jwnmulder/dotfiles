@@ -72,14 +72,17 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
 
 {{- end }}
 
-{{ if stat (joinPath .chezmoi.homeDir "AppData/Local/starship/starship.exe") -}}
-# Starship
+{{- if stat (joinPath .chezmoi.homeDir "AppData/Local/starship/starship.exe") -}}
+#region Starship
+# https://github.com/starship/starship/issues/6863
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $env:STARSHIP_CONFIG = "$HOME\AppData\Local\starship\starship.toml"
 
 # https://github.com/starship/starship/issues/2057#issuecomment-831336770
 &"$HOME\AppData\Local\starship\starship.exe" init powershell --print-full-init | Out-String | Invoke-Expression
+#endregion
+{{- else }}
 
-{{ else }}
 # When Starship is not available, fallback to classic prompt
 function prompt {
     $path = (Get-Location).Path
