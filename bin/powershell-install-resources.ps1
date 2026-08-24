@@ -15,24 +15,24 @@ if (-not (Get-Variable -Name IsWindows -ErrorAction SilentlyContinue)) {
 
 if ($IsWindows) {
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
-}
 
-# https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_psmodulepath?view=powershell-7.6#starting-windows-powershell-from-powershell-7
-# $HOME\Documents\WindowsPowerShell\Modules is missing when powershell.exe is started from within pwsh.exe
-# When $HOME\Documents\WindowsPowerShell\Modules is not on $env:PSModulePath, installation errors might occure
-$UserWinPSModulePath = Join-Path ([System.Environment]::GetFolderPath('MyDocuments')) 'WindowsPowerShell\Modules'
-$modulePaths = $env:PSModulePath -split ';'
-if ($UserWinPSModulePath -notin $modulePaths) {
-    $env:PSModulePath = "$UserWinPSModulePath;$env:PSModulePath"
-}
+    # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_psmodulepath?view=powershell-7.6#starting-windows-powershell-from-powershell-7
+    # $HOME\Documents\WindowsPowerShell\Modules is missing when powershell.exe is started from within pwsh.exe
+    # When $HOME\Documents\WindowsPowerShell\Modules is not on $env:PSModulePath, installation errors might occure
+    $UserWinPSModulePath = Join-Path ([System.Environment]::GetFolderPath('MyDocuments')) 'WindowsPowerShell\Modules'
+    $modulePaths = $env:PSModulePath -split ';'
+    if ($UserWinPSModulePath -notin $modulePaths) {
+        $env:PSModulePath = "$UserWinPSModulePath;$env:PSModulePath"
+    }
 
-# Powershell Core comes with PSResourceGet installed
-# PowerShell Desktop (version 5.1) requires an installation
-if ($PSVersion.Major -eq 5) {
-    $PSResourceGet = Get-Module Microsoft.PowerShell.PSResourceGet -ListAvailable
-    if (-not $PSResourceGet) {
-        Write-Output "Install/update Microsoft.PowerShell.PSResourceGet"
-        Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery
+    # Powershell Core comes with PSResourceGet installed
+    # PowerShell Desktop (version 5.1) requires an installation
+    if ($PSVersion.Major -eq 5) {
+        $PSResourceGet = Get-Module Microsoft.PowerShell.PSResourceGet -ListAvailable
+        if (-not $PSResourceGet) {
+            Write-Output "Install/update Microsoft.PowerShell.PSResourceGet"
+            Install-Module -Name "Microsoft.PowerShell.PSResourceGet" -Scope CurrentUser -Repository PSGallery
+        }
     }
 }
 
