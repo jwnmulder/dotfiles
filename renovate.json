@@ -36,6 +36,15 @@
         "[^:#]+:\\s*[\"']?(?<currentValue>[^\"'\\s#]+)[\"']?\\s*#\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+packageName=(?<packageName>[^\\s]+))?(?:\\s+versioning=(?<versioning>[^\\s]+))?(?:\\s+extractVersion=(?<extractVersion>[^\\s]+))?(?:\\s+registryUrl=(?<registryUrl>[^\\s]+))?\\s*"
       ],
       "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)\\.pre-commit-config\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=(?<datasource>[a-z-]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+packageName=(?<packageName>[^\\s]+))?\\s*\\n\\s*-\\s+[^@\\s]+@(?<currentValue>[^\\s]+)"
+      ]
     }
   ]
 }
