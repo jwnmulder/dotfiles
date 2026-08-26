@@ -30,7 +30,7 @@ repos:
         args:
           - --strict
 
-  # - repo:
+  # - repo: https://github.com/betterleaks/betterleaks
   #   rev: v1.8.1
   - repo: local
     hooks:
