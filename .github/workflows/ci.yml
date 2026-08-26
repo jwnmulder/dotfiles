@@ -51,7 +51,7 @@ jobs:
           DATA_profile: ${{ matrix.profile }}
           IS_DESKTOP: "true"
 
-          # chezmoi removes ~/.gitconfig and overwrite ~/.config/git/config
+          # chezmoi removes ~/.gitconfig and overwrites ~/.config/git/config
           GIT_CONFIG_GLOBAL: ${{ runner.temp }}/gitconfig-ci
         run: |
           git config --global --add safe.directory "$(pwd)"
