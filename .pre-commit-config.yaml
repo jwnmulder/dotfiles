@@ -40,7 +40,7 @@ repos:
         entry: betterleaks git --pre-commit --redact --staged --verbose
         language: mise
         additional_dependencies:
-          - betterleaks@1.8.1
+          - betterleaks@1.8.1  # renovate: datasource=github-releases depName=betterleaks/betterleaks
         pass_filenames: false
 
   - repo: local
