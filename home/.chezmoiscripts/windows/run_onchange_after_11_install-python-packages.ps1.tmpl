@@ -12,6 +12,11 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "Installing/updating python tools: {{ $python_tools | join " " }}"
 
+{{ if eq .profile "work2" -}}
+# uv https://docs.astral.sh/uv/concepts/authentication/certificates/#system-certificates
+$env:UV_SYSTEM_CERTS="1"
+{{- end }}
+
 {{ range $python_tools -}}
   Write-Host Installing python tool '{{ . }}'
   uv tool install {{ . }} --force --managed-python

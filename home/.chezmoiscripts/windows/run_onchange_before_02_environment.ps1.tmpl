@@ -43,7 +43,11 @@ function Add-EnvPath {
 # Path entries
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\bin"
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.krew\bin"
-Add-EnvPath -Container User -Path "$env:LOCALAPPDATA\mise\shims"
+
+# mise default path entry
+# Add-EnvPath -Container User -Path "$env:LOCALAPPDATA\mise\shims"
+# mise path entry for when XDG_DATA_HOME is set
+Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\share\mise\shims"
 
 # XDG environment variables
 [Environment]::SetEnvironmentVariable('XDG_CONFIG_HOME', "$env:USERPROFILE\.config", 'User')
@@ -53,3 +57,8 @@ Add-EnvPath -Container User -Path "$env:LOCALAPPDATA\mise\shims"
 [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', "1", 'User')
 [Environment]::SetEnvironmentVariable('POWERSHELL_UPDATECHECK', "Off", 'User')
 [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', "1", 'User')
+
+{{ if eq .profile "work2" -}}
+# uv configs: https://docs.astral.sh/uv/concepts/authentication/certificates/#tls-backend
+[Environment]::SetEnvironmentVariable('UV_SYSTEM_CERTS', "1", 'User')
+{{- end }}

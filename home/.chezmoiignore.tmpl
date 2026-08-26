@@ -9,8 +9,12 @@ key.txt.age
 {{ if eq .chezmoi.os "windows" }}
 .config/*
 !.config/dsc
+!.config/git
 !.config/mise
 !.config/powershell
+
+.gitconfig
+
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
@@ -34,7 +38,6 @@ AppData
 
 .config/dsc
 
-.gitconfig
 .npmrc
 .wslgconfig
 {{ end }}

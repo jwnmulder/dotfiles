@@ -7,6 +7,11 @@
     email = {{ .email }}
 {{- end }}
 
+{{ if eq .profile "work2" -}}
+[http]
+    sslBackend = schannel
+{{- end }}
+
 [init]
     defaultBranch = main
 
