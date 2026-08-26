@@ -18,6 +18,13 @@ fi
 
 {{-   if or (lookPath "prek") (stat (joinPath .chezmoi.homeDir ".local/bin/prek")) }}
 
+# debugging
+echo "whoami: $(whoami)"
+id
+pwd
+stat -c '%u:%g %U:%G %n' .
+stat -c '%u:%g %U:%G %n' .git
+
 PREK_BIN=$(command -v prek || echo ~/.local/bin/prek)
 "$PREK_BIN" install
 
