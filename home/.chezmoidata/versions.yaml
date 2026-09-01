@@ -7,7 +7,7 @@ versions:
   fzf: v0.74.3              # renovate: datasource=github-releases depName=junegunn/fzf
   fd: v10.5.0               # renovate: datasource=github-releases depName=sharkdp/fd
   trivy: v0.74.0            # renovate: datasource=github-releases depName=aquasecurity/trivy
-  age: v1.3.1               # renovate: datasource=github-releases depName=FiloSottile/age
+  age: v1.3.2               # renovate: datasource=github-releases depName=FiloSottile/age
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
   betterleaks: v1.8.1       # renovate: datasource=github-releases depName=betterleaks/betterleaks
   trufflehog: v3.95.6      # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
