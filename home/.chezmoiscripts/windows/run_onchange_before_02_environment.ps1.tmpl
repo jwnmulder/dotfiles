@@ -44,14 +44,16 @@ function Add-EnvPath {
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\bin"
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.krew\bin"
 
-# mise default path entry
-# Add-EnvPath -Container User -Path "$env:LOCALAPPDATA\mise\shims"
-# mise path entry for when XDG_DATA_HOME is set
+# Mise - If not set, mise updates conf.d/default-settings.toml when using 'mise use -g ...'
+[Environment]::SetEnvironmentVariable('MISE_GLOBAL_CONFIG_FILE', "$env:USERPROFILE\.config\mise\config.toml", 'User')
+
+# Mise - On Windows the shims path is different when XDG_DATA_HOME is set
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\share\mise\shims"
 
 # XDG environment variables
 [Environment]::SetEnvironmentVariable('XDG_CONFIG_HOME', "$env:USERPROFILE\.config", 'User')
 [Environment]::SetEnvironmentVariable('XDG_DATA_HOME', "$env:USERPROFILE\.local\share", 'User')
+
 
 # Various
 [Environment]::SetEnvironmentVariable('DOTNET_CLI_TELEMETRY_OPTOUT', "1", 'User')

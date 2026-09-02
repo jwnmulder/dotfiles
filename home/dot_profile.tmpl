@@ -31,7 +31,10 @@ fi
 PATH="/opt/bin:/opt/sbin:$PATH"
 {{- end }}
 
-# set path so it includes user's mise shims
+# mise - If not set, mise updates conf.d/default-settings.toml when using 'mise use -g ...'
+export MISE_GLOBAL_CONFIG_FILE="$HOME/.config/mise/config.toml"
+
+# mise - set path so it includes user's mise shims
 if [ -d "$HOME/.local/share/mise/shims" ]; then
   PATH="$HOME/.local/share/mise/shims:$PATH"
 fi
