@@ -6,6 +6,8 @@ packages:
       - ruff
       - git-filter-repo
       - colout
+    personal:
+      - free-claude-code@https://github.com/Alishahryar1/free-claude-code/archive/refs/heads/main.zip
 
   scoop_packages:
     all: []
