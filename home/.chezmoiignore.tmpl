@@ -45,3 +45,8 @@ AppData
 {{ if not (and (.is_desktop) (eq .profile "work1")) }}
 .m2
 {{ end }}
+
+{{ if eq .profile "work1" }}
+# not managed with chezmoi, avoid removal of existing files
+.config/claude/settings.json
+{{ end }}

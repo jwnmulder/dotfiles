@@ -2,7 +2,7 @@
 enabled = true
 idle_timeout = "8h"
 
-{{ if and .is_desktop (eq .profile "work1") -}}
+{{ if and .is_desktop (or (eq .profile "personal") (eq .profile "work1")) -}}
 [providers]
 {{ printf "%s%s%s" "private_dot_config/fnox/.config_" .profile "_providers.toml.age" | include | decrypt -}}
 {{- end -}}

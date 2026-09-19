@@ -1,0 +1,3 @@
+{{ if and .is_desktop (or (eq .profile "personal")) -}}
+{{ printf "%s%s%s" "private_dot_config/claude/.settings_" .profile ".json.age" | include | decrypt -}}
+{{- end -}}
