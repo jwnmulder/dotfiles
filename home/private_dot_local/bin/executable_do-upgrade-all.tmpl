@@ -58,13 +58,15 @@ if command -v pip3 > /dev/null 2>&1; then
 fi
 {{- end }}
 
-# uv python tools
+# uv python tools & python versions
 if command -v uvx > /dev/null 2>&1; then
   echo "# uvx - Updating python tools"
-
   uv tool upgrade --all
-
   echo "# uvx - Done updating python tools"
+
+  echo "# uv - Updating python versions"
+  uv python upgrade
+  echo "# uv - Done updating python versions"
 fi
 
 # kubectl krew

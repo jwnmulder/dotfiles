@@ -75,16 +75,24 @@ if (Get-Command kubectl-krew -ErrorAction SilentlyContinue) {
 }
 #endregion
 
-#region python tools
+#region python tools & python versions
 if (Get-Command uv.exe -ErrorAction SilentlyContinue) {
-    $cmd = "uv tool upgrade --all"
-
+    $uv_tool_cmd = "uv tool upgrade --all"
     if ($isAdmin) {
-        Write-Host "# uvx - Skipping $cmd as we are running as Administrator" -ForegroundColor Cyan
+        Write-Host "# uvx - Skipping $uv_tool_cmd as we are running as Administrator" -ForegroundColor Cyan
     } else {
-        Write-Host "# uvx - Running $cmd"
+        Write-Host "# uvx - Running $uv_tool_cmd"
         Invoke-Expression $cmd
-        Write-Host "# uvx - Done running $cmd" -ForegroundColor Green
+        Write-Host "# uvx - Done running $uv_tool_cmd" -ForegroundColor Green
+    }
+
+    $uv_python_cmd = "uv python upgrade"
+    if ($isAdmin) {
+        Write-Host "# uv - Skipping $uv_python_cmd as we are running as Administrator" -ForegroundColor Cyan
+    } else {
+        Write-Host "# uv - Running $uv_python_cmd"
+        Invoke-Expression $cmd
+        Write-Host "# uv - Done running $uv_python_cmd" -ForegroundColor Green
     }
 }
 #endregion
