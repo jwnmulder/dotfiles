@@ -7,7 +7,7 @@ repos:
       - id: check-executables-have-shebangs
       - id: check-merge-conflict
       - id: check-shebang-scripts-are-executable
-        exclude: ".*\\.tmpl"
+        exclude: ".*\\.tmpl|executable_.*"
       - id: check-json
       - id: check-yaml
         files: .*\.(yaml|yml)$
