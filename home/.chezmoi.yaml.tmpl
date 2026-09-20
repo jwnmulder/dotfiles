@@ -8,7 +8,7 @@ interpreters:
   ps1:
     # Prefer PowerShell Core over PowerShell Desktop
     # https://github.com/PowerShell/PowerShell/issues/8635#issuecomment-454028787
-    # Also, PSModulePath needs to be unset to have a reproducable scripting environment. This is done by wrapping it in 'cmd /c'
+    # Also, PSModulePath needs to be unset to have a reproducible scripting environment. This is done by wrapping it in 'cmd /c'
     command: 'cmd.exe'
     args:
       - /c
@@ -68,7 +68,7 @@ config_info: |
   {{ "" }}
   Generated for user={{ .chezmoi.username }}, hostname={{ .chezmoi.hostname }}
   .private.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private.yaml.age") | sha256sum }}
-  .private_proviles.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | sha256sum }}
+  .private_profiles.yaml.age hash={{ include (joinPath .chezmoi.workingTree "home/.chezmoidata/.private_profiles.yaml.age") | sha256sum }}
 
 hooks:
   read-source-state:
