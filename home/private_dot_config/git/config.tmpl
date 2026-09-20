@@ -7,6 +7,9 @@
     email = {{ .email }}
 {{- end }}
 
+[core]
+excludesFile = "~/.config/git/ignore"
+
 {{ if eq .profile "work2" -}}
 [http]
     sslBackend = schannel
