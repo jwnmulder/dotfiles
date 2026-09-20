@@ -1,4 +1,4 @@
-{{ if and .is_desktop (or (eq .profile "personal")) -}}
+{{ if and .is_desktop (get . "profiles") (eq .profile "personal") -}}
 {
   "email": "{{ (get .profiles .profile).bw_email }}",
   "sso_id": null,
