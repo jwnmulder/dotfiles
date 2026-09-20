@@ -5,6 +5,13 @@
   url: 'https://github.com/bitwarden/clients/releases/download/cli-{{ .versions.bitwarden_cli }}/bw-oss-linux-{{ .versions.bitwarden_cli | trimPrefix "v" }}.zip'
   path: "bw"
 
+"rbw":
+  type: archive
+  url: 'https://github.com/doy/rbw/releases/download/{{ .versions.rbw }}/rbw_{{ .versions.rbw }}_linux_amd64.tar.gz'
+  include: ["rbw","rbw-agent"]
+  executable: true
+  targetPath: ".local/bin"
+
 ".local/bin/gopass":
   type: archive-file
   url: 'https://github.com/gopasspw/gopass/releases/download/{{ .versions.gopass }}/gopass-{{ .versions.gopass | trimPrefix "v" }}-linux-{{ .chezmoi.arch }}.tar.gz'

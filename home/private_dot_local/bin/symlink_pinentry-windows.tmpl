@@ -1,0 +1,5 @@
+{{ if and .is_wsl (stat "/mnt/c/Program Files/Gpg4win/bin/pinentry.exe") -}}
+/mnt/c/Program Files/Gpg4win/bin/pinentry.exe
+{{ else if and .is_wsl (stat "/mnt/c/Program Files (x86)/Gpg4win/bin/pinentry.exe") -}}
+/mnt/c/Program Files (x86)/Gpg4win/bin/pinentry.exe
+{{- end }}

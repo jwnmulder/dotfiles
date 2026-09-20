@@ -1,0 +1,14 @@
+{{ if and .is_desktop (or (eq .profile "personal")) -}}
+{
+  "email": "{{ (get .profiles .profile).bw_email }}",
+  "sso_id": null,
+  "base_url": null,
+  "identity_url": null,
+  "ui_url": null,
+  "notifications_url": null,
+  "lock_timeout": 3600,
+  "sync_interval": 3600,
+  "pinentry": "pinentry-windows",
+  "client_cert_path": null
+}
+{{- end }}
