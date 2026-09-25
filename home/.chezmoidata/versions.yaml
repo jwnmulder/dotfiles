@@ -18,6 +18,6 @@ versions:
   usage: v6.11.0             # renovate: datasource=github-releases depName=jdx/usage
   fnox: v1.35.3             # renovate: datasource=github-releases depName=jdx/fnox
   multi_gitter: v0.63.1     # renovate: datasource=github-releases depName=lindell/multi-gitter
-  gopass: v1.17.2           # renovate: datasource=github-releases depName=gopasspw/gopass
+  gopass: v1.17.3           # renovate: datasource=github-releases depName=gopasspw/gopass
   bitwarden_cli: v2026.9.0  # renovate: datasource=github-releases depName=bitwarden/clients extractVersion=^cli-(?<version>v.*)$
   rbw: 1.15.0               # renovate: datasource=github-releases depName=doy/rbw
