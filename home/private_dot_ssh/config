@@ -1,0 +1,4 @@
+Host *
+    WarnWeakCrypto no-pq-kex
+
+Include ~/.ssh/conf.d/*.conf
