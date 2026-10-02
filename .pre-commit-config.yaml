@@ -41,7 +41,7 @@ repos:
         language: mise
         additional_dependencies:
           # renovate: datasource=github-releases depName=betterleaks/betterleaks
-          - betterleaks@1.8.1
+          - betterleaks@1.9.0
         pass_filenames: false
 
   - repo: local
