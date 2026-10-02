@@ -7,7 +7,7 @@ packages:
       - git-filter-repo
       - colout
     personal:
-      - free-claude-code@https://github.com/Alishahryar1/free-claude-code/archive/refs/heads/main.zip
+      - free-claude-code
 
   scoop_packages:
     all: []
