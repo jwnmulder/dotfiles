@@ -55,4 +55,5 @@ packages:
     - view-quotas
 
   mise_tools:
-    all: []
+    all:
+      - pitchfork  # mise vscode plugin expects it
