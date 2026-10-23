@@ -21,3 +21,4 @@ versions:
   gopass: v1.17.4           # renovate: datasource=github-releases depName=gopasspw/gopass
   bitwarden_cli: v2026.10.0  # renovate: datasource=github-releases depName=bitwarden/clients extractVersion=^cli-(?<version>v.*)$
   rbw: 1.15.0               # renovate: datasource=github-releases depName=doy/rbw
+  age_plugin_yubikey: v0.5.1  # renovate: datasource=github-releases depName=str4d/age-plugin-yubikey

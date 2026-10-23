@@ -20,5 +20,9 @@
   type: archive-file
   url: "https://github.com/jdx/fnox/releases/download/{{ .versions.fnox }}/fnox-x86_64-pc-{{ .chezmoi.os }}-msvc.zip"
   path: "fnox.exe"
+".local/bin/age-plugin-yubikey.exe":
+  type: archive-file
+  url: "https://github.com/str4d/age-plugin-yubikey/releases/download/{{ .versions.age_plugin_yubikey }}/age-plugin-yubikey-{{ .versions.age_plugin_yubikey }}-x86_64-windows.zip"
+  path: "age-plugin-yubikey/age-plugin-yubikey.exe"
 
 # {{ end }}
