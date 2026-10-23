@@ -1,0 +1,3 @@
+{{ if and .is_wsl (stat (printf "/mnt/c/Users/%s/.local/bin/age-plugin-yubikey.exe" .wsl.win_username)) -}}
+/mnt/c/Users/{{ .wsl.win_username }}/.local/bin/age-plugin-yubikey.exe
+{{- end }}

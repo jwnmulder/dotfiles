@@ -1,0 +1,3 @@
+{{ if and .is_wsl (stat "/mnt/c/Program Files/Yubico/YubiKey Manager CLI/ykman.exe") -}}
+/mnt/c/Program Files/Yubico/YubiKey Manager CLI/ykman.exe
+{{- end }}
