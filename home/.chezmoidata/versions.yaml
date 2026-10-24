@@ -6,7 +6,7 @@ versions:
   starship: v1.27.0         # renovate: datasource=github-releases depName=starship/starship
   fzf: v0.74.5              # renovate: datasource=github-releases depName=junegunn/fzf
   fd: v10.5.0               # renovate: datasource=github-releases depName=sharkdp/fd
-  trivy: v0.76.0            # renovate: datasource=github-releases depName=aquasecurity/trivy
+  trivy: v0.76.1            # renovate: datasource=github-releases depName=aquasecurity/trivy
   age: v1.3.2               # renovate: datasource=github-releases depName=FiloSottile/age
   wsl2_ssh_pageant: v1.4.0  # renovate: datasource=github-releases depName=BlackReloaded/wsl2-ssh-pageant
   betterleaks: v1.9.0       # renovate: datasource=github-releases depName=betterleaks/betterleaks
