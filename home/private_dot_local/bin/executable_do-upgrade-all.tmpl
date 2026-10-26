@@ -39,6 +39,15 @@ if command -v flatpak > /dev/null 2>&1; then
   echo "# flatpak - Done running flatpak update --system"
 fi
 
+# snap
+if command -v snap > /dev/null 2>&1; then
+  echo "# snap - Running snap refresh"
+
+  sudo snap refresh
+
+  echo "# snap - Done running snap refresh"
+fi
+
 # pip user packages
 {{ if and (.is_desktop) -}}
 if command -v pip3 > /dev/null 2>&1; then
