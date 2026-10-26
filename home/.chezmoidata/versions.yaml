@@ -17,7 +17,7 @@ versions:
   mise: v2026.8.14           # renovate: datasource=github-releases depName=jdx/mise
   usage: v7.1.1             # renovate: datasource=github-releases depName=jdx/usage
   fnox: v1.42.0             # renovate: datasource=github-releases depName=jdx/fnox
-  multi_gitter: v0.63.1     # renovate: datasource=github-releases depName=lindell/multi-gitter
+  multi_gitter: v0.64.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
   gopass: v1.17.4           # renovate: datasource=github-releases depName=gopasspw/gopass
   bitwarden_cli: v2026.10.0  # renovate: datasource=github-releases depName=bitwarden/clients extractVersion=^cli-(?<version>v.*)$
   rbw: 1.15.0               # renovate: datasource=github-releases depName=doy/rbw
