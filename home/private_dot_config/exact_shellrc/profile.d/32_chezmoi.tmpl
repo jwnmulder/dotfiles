@@ -1,0 +1,15 @@
+chezmoi() {
+    if [[ "${1:-}" == "apply" || "${1:-}" == "update" ]]; then
+        local github_token="${CHEZMOI_GITHUB_ACCESS_TOKEN:-}"
+        if [[ -z "$github_token" ]]; then
+            github_token="$(command chezmoi secret keyring get --service=github --user=chezmoi-github)"
+        fi
+        if [[ -z "$github_token" ]]; then
+            echo "Running chezmoi without CHEZMOI_GITHUB_ACCESS_TOKEN set"
+            echo "Configure keyring using: chezmoi secret keyring set --service=github --user=chezmoi-github"
+        fi
+        CHEZMOI_GITHUB_ACCESS_TOKEN="$github_token" command chezmoi "$@"
+    else
+        command chezmoi "$@"
+    fi
+}
