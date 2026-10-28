@@ -43,6 +43,7 @@ function Add-EnvPath {
 # Path entries
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.local\bin"
 Add-EnvPath -Container User -Path "$env:USERPROFILE\.krew\bin"
+Add-EnvPath -Container User -Path "$env:LOCALAPPDATA\Programs\pipeferry"
 
 # Mise - If not set, mise updates conf.d/default-settings.toml when using 'mise use -g ...'
 [Environment]::SetEnvironmentVariable('MISE_GLOBAL_CONFIG_FILE', "$env:USERPROFILE\.config\mise\config.toml", 'User')

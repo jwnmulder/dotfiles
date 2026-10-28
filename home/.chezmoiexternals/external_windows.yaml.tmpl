@@ -4,9 +4,14 @@
   type: archive
   url: "https://github.com/starship/starship/releases/download/{{ .versions.starship }}/starship-x86_64-pc-windows-msvc.zip"
 
-".local/bin/wsl2-ssh-pageant.exe":
-  type: file
-  url: "https://github.com/BlackReloaded/wsl2-ssh-pageant/releases/download/{{ .versions.wsl2_ssh_pageant }}/wsl2-ssh-pageant.exe"
+# ".local/bin/wsl2-ssh-pageant.exe":
+#   type: file
+#   url: "https://github.com/BlackReloaded/wsl2-ssh-pageant/releases/download/{{ .versions.wsl2_ssh_pageant }}/wsl2-ssh-pageant.exe"
+
+"AppData/Local/Programs/pipeferry/pipeferry.exe":
+  type: archive-file
+  url: "https://github.com/masahide/pipeferry/releases/download/{{ .versions.pipeferry }}/pipeferry-windows-amd64.zip"
+  path: "pipeferry-{{ .versions.pipeferry }}-windows-amd64/pipeferry.exe"
 
 ".local/bin/uv.exe":
   type: archive-file
