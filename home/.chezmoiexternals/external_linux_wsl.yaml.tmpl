@@ -1,0 +1,8 @@
+# {{ if and (eq .chezmoi.os "linux") (.is_wsl) }}
+
+".local/bin/pipeferry":
+  type: archive-file
+  url: https://github.com/masahide/pipeferry/releases/download/{{ .versions.pipeferry }}/pipeferry-linux-amd64.tar.gz
+  path: "pipeferry-{{ .versions.pipeferry }}-linux-amd64/pipeferry"
+
+# {{ end }}
