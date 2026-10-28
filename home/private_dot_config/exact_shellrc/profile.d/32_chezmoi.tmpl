@@ -10,6 +10,11 @@ chezmoi() {
             echo "Running chezmoi without CHEZMOI_GITHUB_ACCESS_TOKEN set"
             echo "Configure keyring using: chezmoi secret keyring set --service=github --user=chezmoi-github"
         fi
+
+        if ! command -v busctl >/dev/null 2>&1 || ! busctl --user --no-pager list 2>/dev/null | grep -q 'org.freedesktop.secrets'; then
+            echo "No keyring service appears to be running, install one using: sudo apt install gnome-keyring libsecret-tools"
+            echo "If needed, initialize a new default kyring using: secret-tool store --label="Chezmoi readonly GitHub token" service github username chezmoi-github"
+        fi
         CHEZMOI_GITHUB_ACCESS_TOKEN="$github_token" command chezmoi "$@"
     else
         command chezmoi "$@"
