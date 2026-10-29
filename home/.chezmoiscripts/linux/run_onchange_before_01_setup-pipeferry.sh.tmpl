@@ -1,0 +1,9 @@
+{{- if and .is_wsl -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+pipeferry service install --name ssh-agent --socket-name ssh-agent.sock \
+  -- pipeferry.exe npipe-connect --pipe openssh-ssh-agent
+
+{{- end }}

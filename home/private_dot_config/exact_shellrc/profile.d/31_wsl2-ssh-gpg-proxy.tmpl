@@ -28,31 +28,17 @@ if test -z "$win_gpg_config_basepath"; then
   win_gpg_config_basepath=${win_gpg_config_basepath/:/\\\:}
 fi
 
-# SSH and GPG sockets
-export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+# SSH socket (pipeferry)
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/pipeferry/ssh-agent.sock"
+
+# GPG socket (socat / wsl2-ssh-pageant.exe)
+# export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
 export GPG_AGENT_SOCK="${GPG_AGENT_SOCK:-$(gpgconf --list-dir agent-socket)}"
 
 # Workaround for https://github.com/BlackReloaded/wsl2-ssh-pageant/issues/38
 # New wsl2-ssh-pageant.exe are created automatically upon reconnect
-if ! ss -a 2>/dev/null | grep -q "$SSH_AUTH_SOCK"; then
+if ! ss -a 2>/dev/null | grep -q "$GPG_AGENT_SOCK"; then
   taskkill.exe /IM "wsl2-ssh-pageant.exe" /F > /dev/null 2>&1
-elif ! ss -a 2>/dev/null | grep -q "$GPG_AGENT_SOCK"; then
-  taskkill.exe /IM "wsl2-ssh-pageant.exe" /F > /dev/null 2>&1
-fi
-
-# Relay $SSH_AUTH_SOCK using socat
-# Removing Linux SSH socket and replacing it by link to wsl2-ssh-pageant socket
-# if ! socat OPEN:/dev/null UNIX-CONNECT:$SSH_AUTH_SOCK > /dev/null 2>&1; then
-if [ ! -S "${SSH_AUTH_SOCK}" ] || ! ss -a 2>/dev/null | grep -q "$SSH_AUTH_SOCK"; then
-  ({
-    pkill -f "socat.*$SSH_AUTH_SOCK"
-    rm -f "$SSH_AUTH_SOCK"
-    if test -x "$wsl2_ssh_pageant_bin"; then
-      (setsid nohup socat UNIX-LISTEN:"$SSH_AUTH_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-ssh.log" >/dev/null 2>&1 &)
-    else
-      echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
-    fi
-  } &)
 fi
 
 # Relay $GPG_AGENT_SOCK using socat
