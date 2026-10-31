@@ -6,6 +6,10 @@ Setup Gpg4win on Windows
 winget install GnuPG.Gpg4win
 ```
 
+Even though I don't use gpg much, Gpg4Win still provides many benefits. One is automatic looading of youbikey ssh keys on insertion. Keys autmatically loaded: 'PIV slot 9A' and 'PGP Authentiocation key'. Another benefit is pinentry support for unlocking SSH keys.
+
+Alternative solutions like OpenSC or Yubikey PIV Tool come with many corner cases. See <https://sshs3.com/docs/reference/windows/> for issues and recommendations
+
 ## Prepare WSL for gpg-agent forwarding
 
 Disable gpg-agent on systemd by running the following command within WSL. A restart of WSL is required
@@ -33,7 +37,7 @@ gpg -K
 gpg --card-status
 ```
 
-On the Windows host, where gpg is installed via the GnuPG.Gpg4win package, these are useful commands as well
+On the Windows host, where gpg is installed via the GnuPG.Gpg4win package. Useful commands
 
 ```powershell
 # Restart core gpg components
@@ -42,5 +46,5 @@ gpgconf --kill scdaemon
 
 # yubikey specific tests
 gpg --card-status
-certutil.exe -scinfo
+certutil.exe -scinfo -silent
 ```
