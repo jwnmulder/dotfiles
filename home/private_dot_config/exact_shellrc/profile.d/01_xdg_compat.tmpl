@@ -21,13 +21,17 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 
 # XDG - node, npm, nvm
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+export NPM_CONFIG_INIT_MODULE="$XDG_CONFIG_HOME"/npm/config/npm-init.js
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME"/npm
+export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR"/npm
+
 export NVM_DIR="$XDG_DATA_HOME"/nvm
 export NODE_REPL_HISTORY="$XDG_STATE_HOME"/node_repl_history
 
 # XDG - less
 export LESSHISTFILE="$XDG_STATE_HOME"/less/history
 
-# XDG - pylint
+# XDG - python, pylint
 export PYLINTHOME="${XDG_CACHE_HOME}"/pylint
 
 # XDG - AWS
@@ -59,10 +63,9 @@ export PYTHON_HISTORY="$XDG_DATA_HOME"/python/history
 # XDG - ICEauthority
 export ICEAUTHORITY="$XDG_CACHE_HOME"/ICEauthority
 
-# XDG - npm
-export NPM_CONFIG_INIT_MODULE="$XDG_CONFIG_HOME"/npm/config/npm-init.js
-export NPM_CONFIG_CACHE="$XDG_CACHE_HOME"/npm
-export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR"/npm
-
 # XDG - Claude code
 export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME"/claude
+
+# XDG - Rust, Cargo
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup

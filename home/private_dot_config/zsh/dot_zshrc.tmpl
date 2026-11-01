@@ -11,6 +11,9 @@ for filename in "$HOME/.config/zsh/"*.zsh; do
 done
 unset filename
 
+# XDG related ZSH settings
+export ZSH_EVALCACHE_DIR="$XDG_CACHE_HOME"/zsh/evalcache
+
 # Path to your oh-my-zsh installation.
 export ZSH="$XDG_DATA_HOME"/oh-my-zsh
 
