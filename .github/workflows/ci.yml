@@ -45,6 +45,7 @@ jobs:
         run: |
           mkdir -p ${HOME}/.config/chezmoi
           echo "$CHEZMOI_KEY" | base64 --decode > ${HOME}/.config/chezmoi/key.txt
+          chmod 600 "${HOME}/.config/chezmoi/key.txt"
 
       - name: Chezmoi init & apply
         env:
@@ -202,6 +203,7 @@ jobs:
         run: |
           mkdir -p ${HOME}/.config/chezmoi
           echo "$CHEZMOI_KEY" | base64 --decode > ${HOME}/.config/chezmoi/key.txt
+          chmod 600 "${HOME}/.config/chezmoi/key.txt"
 
       - name: Cache Chezmoi external
         uses: actions/cache@v6
