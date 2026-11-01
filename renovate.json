@@ -21,6 +21,7 @@
       "matchPackageNames": [
         "astral-sh/uv",
         "jdx/mise",
+        "jdx/usage",
         "trufflesecurity/trufflehog"
       ],
       "extends": ["schedule:monthly"]
