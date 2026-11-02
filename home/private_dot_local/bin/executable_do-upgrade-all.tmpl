@@ -48,6 +48,16 @@ if command -v snap > /dev/null 2>&1; then
   echo "# snap - Done running snap refresh"
 fi
 
+# opkg
+if command -v opkg > /dev/null 2>&1; then
+  echo "# opkg - Upgrading opkg packages"
+
+  sudo opkg update
+  sudo opkg upgrade
+
+  echo "# opkg - Done upgrading opkg packages"
+fi
+
 # pip user packages
 {{ if and (.is_desktop) -}}
 if command -v pip3 > /dev/null 2>&1; then
@@ -97,6 +107,7 @@ if command -v mise > /dev/null 2>&1; then
   echo "# mise - Done updating mise tools"
 fi
 
+{{- if ne .uname.machine "armv5tel" }}
 # chezmoi itself
 if command -v chezmoi > /dev/null 2>&1; then
   echo "# chezmoi - Upgrading chezmoi"
@@ -105,6 +116,7 @@ if command -v chezmoi > /dev/null 2>&1; then
 
   echo "# chezmoi - Done upgrading chezmoi"
 fi
+{{- end }}
 
 echo "do-upgrade-all - All done"
 
