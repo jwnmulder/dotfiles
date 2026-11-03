@@ -2,7 +2,6 @@
     name = {{ .name }}
 {{- if get . "profiles" }}
     email = {{ (get .profiles .profile).email }}
-    signingkey = {{ .git.signingkey }}
 {{- else }}
     email = {{ .email }}
 {{- end }}
@@ -10,7 +9,12 @@
 [core]
 excludesFile = "~/.config/git/ignore"
 
-{{ if eq .profile "work2" -}}
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    allowedSignersFile = "~/.config/git/allowed_signers"
+
+{{- if eq .profile "work2" }}
 [http]
     sslBackend = schannel
 {{- end }}

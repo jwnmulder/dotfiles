@@ -3,3 +3,8 @@
     name = {{ .name }}
     email = {{ .profiles.personal.email }}
 {{- end }}
+{{- if eq .profile "personal" }}
+    signingkey = "~/.ssh/id_ed25519.pub"
+[commit]
+    gpgsign = true
+{{- end }}

@@ -1,0 +1,6 @@
+{{- if and
+    (get . "profiles")
+    .is_desktop
+    (or (eq .profile "work1") (eq .profile "personal")) -}}
+{{ (get .profiles .profile).email }} namespaces="git" {{ printf "%s%s%s" "private_dot_ssh/.id_ed25519_" .profile ".pub.age" | include | decrypt }}
+{{- end }}
