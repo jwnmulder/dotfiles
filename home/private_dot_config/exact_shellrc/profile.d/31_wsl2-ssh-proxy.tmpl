@@ -1,0 +1,20 @@
+{{ if .is_wsl -}}
+
+# SSH socket (pipeferry)
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/pipeferry/ssh-agent.sock"
+
+# Although all GnuPG components try to start the gpg-agent as needed,
+# this is not possible for the ssh support because ssh does not know about it.
+# Thus if no GnuPG tool which accesses the agent has been run,
+# there is no guarantee that ssh is able to use gpg-agent for authentication.
+# To fix this you may start gpg-agent if needed using this simple command: gpg-connect-agent /bye
+{{- $win_gpg_socketdir_wsl := output "bash" "-c" `wslpath -u "$(gpgconf.exe --list-dirs socketdir | tr -d '\r')" 2>/dev/null || true` | trim }}
+{{- if $win_gpg_socketdir_wsl }}
+# The Windows gpg-agent removes its socket files on exit, so a missing file means it is not running.
+if [ ! -e "{{ $win_gpg_socketdir_wsl }}/S.gpg-agent" ]; then
+  echo "Starting gpg agent on Windows host"
+  gpg-connect-agent.exe --quiet /bye
+fi
+{{- end }}
+
+{{- end }}

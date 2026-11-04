@@ -28,23 +28,6 @@ if test -z "$win_gpg_config_basepath"; then
   win_gpg_config_basepath=${win_gpg_config_basepath/:/\\\:}
 fi
 
-# SSH socket (pipeferry)
-export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/pipeferry/ssh-agent.sock"
-
-# Although all GnuPG components try to start the gpg-agent as needed,
-# this is not possible for the ssh support because ssh does not know about it.
-# Thus if no GnuPG tool which accesses the agent has been run,
-# there is no guarantee that ssh is able to use gpg-agent for authentication.
-# To fix this you may start gpg-agent if needed using this simple command: gpg-connect-agent /bye
-{{- $win_gpg_socketdir_wsl := output "bash" "-c" `wslpath -u "$(gpgconf.exe --list-dirs socketdir | tr -d '\r')" 2>/dev/null || true` | trim }}
-{{- if $win_gpg_socketdir_wsl }}
-# The Windows gpg-agent removes its socket files on exit, so a missing file means it is not running.
-if [ ! -e "{{ $win_gpg_socketdir_wsl }}/S.gpg-agent" ]; then
-  echo "Starting gpg agent on Windows host"
-  gpg-connect-agent.exe --quiet /bye
-fi
-{{- end }}
-
 # GPG socket (socat / wsl2-ssh-pageant.exe)
 export GPG_AGENT_SOCK="${GPG_AGENT_SOCK:-$(gpgconf --list-dir agent-socket)}"
 
@@ -65,7 +48,7 @@ if [ ! -S "${GPG_AGENT_SOCK}" ] || (( ! gpg_sock_up )); then
     pkill -f "socat.*$GPG_AGENT_SOCK"
     rm -f "$GPG_AGENT_SOCK"
     if test -x "$wsl2_ssh_pageant_bin"; then
-      (setsid nohup socat UNIX-LISTEN:"$GPG_AGENT_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --gpg S.gpg-agent --gpgConfigBasepath $win_gpg_config_basepath --verbose --logfile $HOME/.ssh/ssh-gpg-wsl2-proxy-gpg.log" >/dev/null 2>&1 &)
+      (setsid nohup socat UNIX-LISTEN:"$GPG_AGENT_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --gpg S.gpg-agent --gpgConfigBasepath $win_gpg_config_basepath --verbose --logfile $HOME/.gnupg/gpg-wsl2-proxy.log" >/dev/null 2>&1 &)
     else
       echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
     fi
