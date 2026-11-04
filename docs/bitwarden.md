@@ -3,6 +3,9 @@
 Pretty format password-health
 
 ```bash
+bw login
+export BW_SESSION="$(bw unlock --raw)"
+
 bw report password-health --pretty |
 jq -r '
   [.[]? | objects] as $entries |
