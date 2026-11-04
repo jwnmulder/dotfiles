@@ -11,7 +11,7 @@ export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/pipeferry/ssh-agent
 {{- $win_gpg_socketdir_wsl := output "bash" "-c" `wslpath -u "$(gpgconf.exe --list-dirs socketdir | tr -d '\r')" 2>/dev/null || true` | trim }}
 {{- if $win_gpg_socketdir_wsl }}
 # The Windows gpg-agent removes its socket files on exit, so a missing file means it is not running.
-if [ ! -e "{{ $win_gpg_socketdir_wsl }}/S.gpg-agent" ]; then
+if [ ! -e "{{ $win_gpg_socketdir_wsl }}/S.gpg-agent.extra" ]; then
   echo "Starting gpg agent on Windows host"
   gpg-connect-agent.exe --quiet /bye
 fi
