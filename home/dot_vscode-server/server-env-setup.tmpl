@@ -13,8 +13,11 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:="$HOME/.local/state"}"
 if [ -f "$HOME/.config/shellrc/profile.d/01_xdg_compat" ]; then
   . "$HOME/.config/shellrc/profile.d/01_xdg_compat"
 fi
-if [ -f "$HOME/.config/shellrc/profile.d/31_wsl2-ssh-gpg-proxy" ]; then
-  . "$HOME/.config/shellrc/profile.d/31_wsl2-ssh-gpg-proxy"
+if [ -f "$HOME/.config/shellrc/profile.d/31_wsl2-ssh-proxy" ]; then
+  . "$HOME/.config/shellrc/profile.d/31_wsl2-ssh-proxy"
+fi
+if [ -f "$HOME/.config/shellrc/profile.d/32_wsl2-gpg-proxy" ]; then
+  . "$HOME/.config/shellrc/profile.d/32_wsl2-gpg-proxy"
 fi
 
 {{- end }}
