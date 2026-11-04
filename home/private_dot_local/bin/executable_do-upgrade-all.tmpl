@@ -100,11 +100,19 @@ fi
 
 # mise
 if command -v mise > /dev/null 2>&1; then
-  echo "# mise - Upgrading mise tools"
+  echo "# mise - Upgrading mise global and project tools"
 
   mise upgrade
 
-  echo "# mise - Done updating mise tools"
+  # upgrade mise tools per project
+  mise list --all-sources --json | jq -r '.[].[] | .sources[].path' | grep "mise.toml" | sort -u |
+    while IFS= read -r config; do
+      dir=$(dirname "$config")
+      echo "# mise - Upgrading mise tools for $dir"
+      mise upgrade --no-global --cd "$dir"
+    done
+
+  echo "# mise - Done updating mise global and project tools"
 fi
 
 {{- if ne .uname.machine "armv5tel" }}
