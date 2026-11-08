@@ -14,9 +14,9 @@ export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/pipeferry/ssh-agent
 
 marker="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/windows-gpg-agent-started"
 
-if [ ! -e "$marker" ] || [ ! -e "{{ $win_gpg_socketdir_wsl }}/S.gpg-agent.extra" ]; then
-    echo "Starting gpg agent on Windows host"
-    gpg-connect-agent.exe --quiet /bye && touch "$marker"
+if [ ! -e "$marker" ] || [ ! -e "{{ $win_gpg_socketdir_wsl }}/S.gpg-agent" ]; then
+  echo "Starting gpg agent on Windows host"
+  gpg-connect-agent.exe --quiet /bye && touch "$marker"
 fi
 {{- end }}
 
