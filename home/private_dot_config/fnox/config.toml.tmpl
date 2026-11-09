@@ -2,7 +2,12 @@
 enabled = true
 idle_timeout = "8h"
 
+{{ if .is_desktop -}}
+[providers.sync-age]
+type = "age"
+recipients = ["{{ (output "sh" "-c" "chezmoi age-keygen -y ~/.config/fnox/age.txt") | trim }}"]
+{{- end }}
+
 {{ if and .is_desktop (or (eq .profile "personal") (eq .profile "work1")) -}}
-[providers]
 {{ printf "%s%s%s" "private_dot_config/fnox/.config_" .profile "_providers.toml.age" | include | decrypt -}}
-{{- end -}}
+{{- end }}

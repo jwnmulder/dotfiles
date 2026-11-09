@@ -5,12 +5,9 @@ set -euo pipefail
 
 {{ if not (stat (joinPath .chezmoi.homeDir ".config/fnox/age.txt")) }}
 
-{{ if and (lookPath "fnox") (lookPath "age-keygen") }}
 echo "Generating unique fnox age identity for this machine under ~/.config/fnox/age.txt"
-age-keygen -o ~/.config/fnox/age.txt
-{{ else }}
-echo "Missing fnox and age-keygen, unable to run: age-keygen -o ~/.config/fnox/age.txt"
-{{ end -}}
+mkdir -p ~/.config/fnox
+chezmoi age-keygen -o ~/.config/fnox/age.txt
 
 {{ end -}}
 
