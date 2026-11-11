@@ -57,3 +57,4 @@ packages:
   mise_tools:
     all:
       - pitchfork  # mise vscode plugin expects it
+      - glab
