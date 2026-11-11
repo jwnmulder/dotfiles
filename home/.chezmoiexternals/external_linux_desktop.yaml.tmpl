@@ -36,7 +36,7 @@
   type: archive
   url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
   stripComponents: 1
-  include: ["age/age","age/age-keygen", "age/age-inspect"]
+  include: ["age/age*"]
   executable: true
   targetPath: ".local/bin"
 
