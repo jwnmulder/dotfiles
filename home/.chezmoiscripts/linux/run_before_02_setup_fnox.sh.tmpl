@@ -3,12 +3,23 @@
 
 set -euo pipefail
 
-{{ if not (stat (joinPath .chezmoi.homeDir ".config/fnox/local-identity.txt")) }}
+if ! command -v busctl >/dev/null 2>&1 || ! busctl --user --no-pager list 2>/dev/null | grep -q 'org.freedesktop.secrets'; then
+    echo "No keyring service appears to be running, install one using: sudo apt install gnome-keyring libsecret-tools"
+    echo "If needed, initialize a new default kyring using: secret-tool store --label="test" service test"
+fi
 
-echo "Generating unique fnox age identity for this machine under ~/.config/fnox/local-identity.txt"
+{{ if not (stat (joinPath .chezmoi.homeDir ".config/fnox/age.txt")) }}
+echo "Generating unique fnox age-pq identity for this machine under ~/.config/fnox/age.txt"
 mkdir -p ~/.config/fnox
-chezmoi age-keygen -o ~/.config/fnox/local-identity.txt
+chezmoi --use-builtin-age true age-keygen --pq -o ~/.config/fnox/age.txt
+grep '^# public key:' ~/.config/fnox/age.txt | sed 's/^# public key: //' > ~/.config/fnox/age.pub
+{{ end -}}
 
+{{ if not (stat (joinPath .chezmoi.homeDir ".config/fnox/local-local.pub")) }}
+echo "Generating unique fnox age identity for this machine under ~/.config/fnox/age-local.txt"
+mkdir -p ~/.config/fnox
+chezmoi --use-builtin-age true age-keygen -o ~/.config/fnox/age-local.txt
+grep '^# public key:' ~/.config/fnox/age-local.txt | sed 's/^# public key: //' > ~/.config/fnox/age-local.pub
 {{ end -}}
 
 {{ end -}}

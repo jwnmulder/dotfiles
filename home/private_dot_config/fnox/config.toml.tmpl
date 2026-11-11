@@ -1,29 +1,32 @@
+{{ if .is_desktop -}}
 [daemon]
 enabled = true
 idle_timeout = "8h"
 
-{{ if .is_desktop -}}
+[providers.keychain]
+type = "keychain"
+service = "fnox"
+
 [providers.sync-age]
 type = "age"
 default_identity = "local"
 [providers.sync-age.identities]
-local = "~/.config/fnox/local-identity.txt"
+local = "~/.config/fnox/age-local.txt"
 [providers.sync-age.recipients]
-local = "{{ (output "sh" "-c" "chezmoi age-keygen -y ~/.config/fnox/local-identity.txt") | trim }}"  # Local per-device recipient, regenerated on OS re-install
+local = "{{ output "cat" (joinPath .chezmoi.homeDir ".config/fnox/age-local.pub") | trim }}"  # Local per-device recipient, regenerated on OS re-install
 # recovery = "age1..."
 
 [providers.personal-age]
 type = "age"
 default_identity = "local"
 [providers.personal-age.identities]
-local = "~/.config/fnox/local-identity.txt"
+local = "~/.config/fnox/age-local.txt"
 [providers.personal-age.recipients]
-local = "{{ (output "sh" "-c" "chezmoi age-keygen -y ~/.config/fnox/local-identity.txt") | trim }}"  # Local per-device recipient, regenerated on OS re-install
+local = "{{ output "cat" (joinPath .chezmoi.homeDir ".config/fnox/age-local.pub") | trim }}"  # Local per-device recipient, regenerated on OS re-install
 # recovery = "age1..."
-
-
-{{- end }}
 
 {{ if and .is_desktop (or (eq .profile "personal") (eq .profile "work1")) -}}
 {{ printf "%s%s%s" "private_dot_config/fnox/.config_" .profile "_providers.toml.age" | include | decrypt -}}
+{{- end }}
+
 {{- end }}
