@@ -32,15 +32,13 @@
   url: "https://get.helm.sh/helm-{{ .versions.helm }}-linux-{{ .chezmoi.arch }}.tar.gz"
   path: '{{ printf "linux-%s/helm" .chezmoi.arch }}'
 
-".local/bin/age":
-  type: archive-file
+"age":
+  type: archive
   url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-  path: "age/age"
-
-".local/bin/age-keygen":
-  type: archive-file
-  url: "https://github.com/FiloSottile/age/releases/download/{{ .versions.age }}/age-{{ .versions.age }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
-  path: "age/age-keygen"
+  stripComponents: 1
+  include: ["age/age","age/age-keygen", "age/age-inspect"]
+  executable: true
+  targetPath: ".local/bin"
 
 ".local/bin/trivy":
   type: archive-file
