@@ -5,7 +5,23 @@ idle_timeout = "8h"
 {{ if .is_desktop -}}
 [providers.sync-age]
 type = "age"
-recipients = ["{{ (output "sh" "-c" "chezmoi age-keygen -y ~/.config/fnox/age.txt") | trim }}"]
+default_identity = "local"
+[providers.sync-age.identities]
+local = "~/.config/fnox/local-identity.txt"
+[providers.sync-age.recipients]
+local = "{{ (output "sh" "-c" "chezmoi age-keygen -y ~/.config/fnox/local-identity.txt") | trim }}"  # Local per-device recipient, regenerated on OS re-install
+# recovery = "age1..."
+
+[providers.personal-age]
+type = "age"
+default_identity = "local"
+[providers.personal-age.identities]
+local = "~/.config/fnox/local-identity.txt"
+[providers.personal-age.recipients]
+local = "{{ (output "sh" "-c" "chezmoi age-keygen -y ~/.config/fnox/local-identity.txt") | trim }}"  # Local per-device recipient, regenerated on OS re-install
+# recovery = "age1..."
+
+
 {{- end }}
 
 {{ if and .is_desktop (or (eq .profile "personal") (eq .profile "work1")) -}}

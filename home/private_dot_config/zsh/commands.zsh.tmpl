@@ -6,3 +6,8 @@ elif (( $+commands[batcat] )); then
 fi
 
 alias wget='wget --hsts-file="$XDG_DATA_HOME"/wget-hsts'
+
+{{ if and (eq .chezmoi.os "linux") (.is_desktop) -}}
+alias fnox-edit='EDITOR="code --wait" fnox edit --config fnox.toml'
+alias fnox-edit-local='EDITOR="code --wait" fnox edit --config fnox.local.toml'
+{{- end }}
