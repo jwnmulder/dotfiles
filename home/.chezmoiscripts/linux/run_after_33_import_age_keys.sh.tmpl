@@ -1,0 +1,19 @@
+{{ if .is_desktop -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ if lookPath "fnox" -}}
+# Import fnox age keys
+
+{{ if stat (joinPath .chezmoi.homeDir ".config/fnox/age-local.txt") }}
+echo "Moving ~/.config/fnox/age-local.txt age key into OS keychain"
+touch /tmp/fnox.import.toml
+cat ~/.config/fnox/age-local.txt | fnox set AGE_KEY --provider keychain --key-name age-local-key -c /tmp/fnox.import.toml
+rm /tmp/fnox.import.toml
+rm ~/.config/fnox/age-local.txt
+{{- end }}
+
+{{- end }}
+
+{{- end }}

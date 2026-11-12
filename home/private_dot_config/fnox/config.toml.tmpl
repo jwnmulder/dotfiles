@@ -11,17 +11,17 @@ service = "fnox"
 type = "age"
 default_identity = "local"
 [providers.sync-age.identities]
-local = "~/.config/fnox/age-local.txt"
+local = { provider = "keychain", value = "age-local-key" }
 [providers.sync-age.recipients]
 local = "{{ output "cat" (joinPath .chezmoi.homeDir ".config/fnox/age-local.pub") | trim }}"  # Local per-device recipient, regenerated on OS re-install
 # recovery = "age1..."
 
-[providers.personal-age]
+[providers.local-age]
 type = "age"
 default_identity = "local"
-[providers.personal-age.identities]
-local = "~/.config/fnox/age-local.txt"
-[providers.personal-age.recipients]
+[providers.local-age.identities]
+local = { provider = "keychain", value = "age-local-key" }
+[providers.local-age.recipients]
 local = "{{ output "cat" (joinPath .chezmoi.homeDir ".config/fnox/age-local.pub") | trim }}"  # Local per-device recipient, regenerated on OS re-install
 # recovery = "age1..."
 
