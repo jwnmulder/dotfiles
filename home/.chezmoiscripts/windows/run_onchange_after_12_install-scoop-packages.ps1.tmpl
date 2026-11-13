@@ -8,7 +8,6 @@ $ErrorActionPreference = "Stop"
   (dig "all" list .packages.scoop_packages)
   (dig .profile list .packages.scoop_packages) -}}
 
-
 {{ if gt (len $scoop_packages) 0 -}}
 
   # Add useful scoop buckets

@@ -4,8 +4,12 @@ $ErrorActionPreference = "Stop"
 # Popluate env:Path (required during initial bootstrap)
 {{ template "script-env-powershell.ps1.tmpl" }}
 
-{{ if not (lookPath "scoop") -}}
+{{ $scoop_packages := concat
+  (dig "all" list .packages.scoop_packages)
+  (dig .profile list .packages.scoop_packages) -}}
+
+{{ if and (gt (len $scoop_packages) 0) (not (lookPath "scoop")) -}}
 Write-Host "Installing scoop"
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod get.scoop.sh | Invoke-Expression
-{{- end }}
+{{ end }}
