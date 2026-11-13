@@ -5,9 +5,6 @@ set -euo pipefail
 # Track encrypted data files
 generated_data_files=()
 
-echo test-1
-ls "${HOME}/.config/chezmoi"
-
 if [ -f "${HOME}/.config/chezmoi/key.txt" ]; then
     while IFS= read -r -d '' file; do
         if [ -f "$file" ]; then
