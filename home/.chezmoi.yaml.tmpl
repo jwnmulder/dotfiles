@@ -64,7 +64,7 @@ config_info: |
   {{- $work_device := ne $profile_key "personal" -}}
 
   {{- $hook_extension := (eq .chezmoi.os "windows") | ternary  "cmd" "sh" -}}
-  {{- $use_encrypted_data := or (and $interactive (not $ephemeral) (not $is_server))  (eq (env "USE_ENCRYPTED_DATA") "false") -}}
+  {{- $use_encrypted_data := or (and $interactive (not $ephemeral) (not $is_server))  (eq (env "USE_ENCRYPTED_DATA") "true") -}}
 
   {{ "" }}
   Generated for user={{ .chezmoi.username }}, hostname={{ .chezmoi.hostname }}
