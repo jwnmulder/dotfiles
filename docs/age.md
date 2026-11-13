@@ -14,3 +14,11 @@ Age identities in combination with fnox profiles / providers.
 Notes:
 
 * fnox does not support age pq keys yet
+
+## reencrypting fnox passwords
+
+```bash
+FNOX_AGE_IDENTITY=recovery fnox reencrypt
+# or
+FNOX_AGE_IDENTITY=recovery fnox reencrypt --provider local-age
+```

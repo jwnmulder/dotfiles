@@ -14,16 +14,16 @@ default_identity = "local"
 local = { provider = "keychain", value = "age-local-key" }
 [providers.sync-age.recipients]
 local = "{{ output "cat" (joinPath .chezmoi.homeDir ".config/fnox/age-local.pub") | trim }}"  # Local per-device recipient, regenerated on OS re-install
-# recovery = "age1..."
 
 [providers.local-age]
 type = "age"
 default_identity = "local"
 [providers.local-age.identities]
 local = { provider = "keychain", value = "age-local-key" }
+recovery = { provider = "recovery", value = "age-recovery-key" }
 [providers.local-age.recipients]
 local = "{{ output "cat" (joinPath .chezmoi.homeDir ".config/fnox/age-local.pub") | trim }}"  # Local per-device recipient, regenerated on OS re-install
-# recovery = "age1..."
+recovery = "{{ .age.recovery_recipient }}"
 
 {{ if and .is_desktop (or (eq .profile "personal") (eq .profile "work1")) -}}
 {{ printf "%s%s%s" "private_dot_config/fnox/.config_" .profile "_providers.toml.age" | include | decrypt -}}
