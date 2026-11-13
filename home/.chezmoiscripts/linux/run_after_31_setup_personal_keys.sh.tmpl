@@ -1,4 +1,4 @@
-{{- if and .is_desktop (hasKey . "password_store") -}}
+{{- if and .is_desktop .is_wsl (hasKey . "password_store") -}}
 #!/usr/bin/env bash
 
 set -euo pipefail
