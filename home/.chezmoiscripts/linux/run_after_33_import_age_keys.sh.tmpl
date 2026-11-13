@@ -12,7 +12,7 @@ echo "Moving ~/.config/fnox/age-local.txt age key into OS keychain"
 if ! command -v busctl >/dev/null 2>&1 || ! busctl --user --no-pager list 2>/dev/null | grep -q 'org.freedesktop.secrets'; then
     echo "No keyring service appears to be running, install one using: sudo apt install gnome-keyring libsecret-tools"
     echo "Skipping import of age keys"
-elif
+else
     touch /tmp/fnox.import.toml
     cat ~/.config/fnox/age-local.txt | fnox set AGE_KEY --provider keychain --key-name age-local-key -c /tmp/fnox.import.toml
     rm /tmp/fnox.import.toml
