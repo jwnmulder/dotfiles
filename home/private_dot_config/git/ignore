@@ -1,2 +1,2 @@
-fnox.local.toml
+*.local.toml
 **/.claude/settings.local.json
