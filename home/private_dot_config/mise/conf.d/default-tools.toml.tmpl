@@ -1,7 +1,7 @@
 [tools]
 {{ $mise_tools := concat
-  (dig "all" list .packages.mise_tools)
-  (dig .profile list .packages.mise_tools) -}}
+  (dig "all" list .packages.mise)
+  (dig .profile list .packages.mise) -}}
 
 {{     range $mise_tools -}}
 {{ . }} = "latest"

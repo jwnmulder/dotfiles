@@ -7,8 +7,8 @@ $ErrorActionPreference = "Stop"
 {{ template "script-env-powershell.ps1.tmpl" }}
 
 {{ $python_tools := concat
-  (dig "all" list .packages.python_tools)
-  (dig .profile list .packages.python_tools) -}}
+  (dig "all" list .packages.python)
+  (dig .profile list .packages.python) -}}
 
 Write-Host "Installing/updating python tools: {{ $python_tools | join " " }}"
 

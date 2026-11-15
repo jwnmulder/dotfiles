@@ -1,5 +1,20 @@
+# packages requiring elevated install
+# skipped on machines where .can_elevate is false
+packages_elevated:
+  winget:
+    all:
+      - id: Notepad++.Notepad++
+      - id: VideoLAN.VLC
+      - id: 7zip.7zip
+      - id: ScooterSoftware.BeyondCompare.4
+      - id: Mozilla.Firefox
+      - id: 9P7KNL5RWT25
+        name: Sysinternals Suite
+        source: msstore
+
+# packages that dont require elevation or root
 packages:
-  python_tools:
+  python:
     all:
       - prek  # better pre-commit
       - yq
@@ -9,36 +24,34 @@ packages:
     personal:
       - free-claude-code
 
-  scoop_packages:
+  scoop:
     all: []
 
-  # Bitwarden.Bitwarden sometimes failes on GitHub CI with error code: 0x80131506 or 0xC0000005
-  # Installing it first before all other packages seems to have helped
-  winget_packages:
+  winget:
     all:
-      - JernejSimoncic.Wget
-      - Microsoft.WindowsTerminal
-      - Microsoft.VisualStudioCode
-      - eza-community.eza
-      - Git.MinGit
-      - Microsoft.DSC
-      - OpenDsc.Resources.Portable
-      - jdx.mise
+      - id: JernejSimoncic.Wget
+      - id: Microsoft.WindowsTerminal
+      - id: Microsoft.VisualStudioCode
+      - id: eza-community.eza
+      - id: Git.MinGit
+      - id: Microsoft.DSC
+      - id: OpenDsc.Resources.Portable
+      - id: jdx.mise
     personal:
-      - Bitwarden.Bitwarden
-      - jqlang.jq
+      - id: Bitwarden.Bitwarden
+      - id: jqlang.jq
     work1:
-      - Bitwarden.Bitwarden
-      - Kubernetes.kubectl
-      - Kubernetes.krew
-      - SlackTechnologies.Slack
-      - Postman.Postman
-      - GIMP.GIMP.3
-      - DBeaver.DBeaver.Community
-      - AgileBits.1Password
-      - AgileBits.1Password.CLI
+      - id: Bitwarden.Bitwarden
+      - id: Kubernetes.kubectl
+      - id: Kubernetes.krew
+      - id: SlackTechnologies.Slack
+      - id: Postman.Postman
+      - id: DBeaver.DBeaver.Community
+      - id: AgileBits.1Password
+      - id: AgileBits.1Password.CLI
     work2:
-      - Microsoft.PowerShell
+      - id: Microsoft.PowerShell
+      - id: Notepad++.Notepad++
 
   kubectl_krew_plugins:
     - oidc-login
@@ -54,7 +67,7 @@ packages:
     - explore
     - view-quotas
 
-  mise_tools:
+  mise:
     all:
       - pitchfork  # mise vscode plugin expects it
       - glab

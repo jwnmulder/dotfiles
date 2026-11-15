@@ -1,0 +1,37 @@
+{{ if and (.is_desktop) (.can_elevate) -}}
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+# Popluate env:Path (required during initial bootstrap)
+{{ template "script-env-powershell.ps1.tmpl" }}
+
+{{ $winget_packages := concat
+  (dig .profile list .packages_elevated.winget)
+  (dig "all" list .packages_elevated.winget) -}}
+
+$failedPackages = @()
+$lastFailedExitCode = 0
+
+{{ range $winget_packages -}}
+    Write-Host "Installing (elevated) winget package '{{ .id }}'"
+    winget install `
+      --exact --source {{ get . "source" | default "winget" }} --id {{ .id }} `
+      --accept-source-agreements `
+      --accept-package-agreements `
+      --silent `
+      --disable-interactivity `
+      --no-upgrade
+    if ($LASTEXITCODE -ne 0 -and $LASTEXITCODE -ne 0x8a150061) {
+      Write-Warning "Failed to install package '{{ .id }}' (exit code: $LASTEXITCODE)"
+      $failedPackages += "{{ .id }}"
+      $lastFailedExitCode = $LASTEXITCODE
+    }
+{{ end }}
+
+if ($failedPackages.Length -gt 0) {
+  $failedPackagesStr = $failedPackages -join ', '
+  Write-Host "Failed to install the following packages: $failedPackagesStr"
+  exit $lastFailedExitCode
+}
+
+{{- end}}
