@@ -1,0 +1,3 @@
+{{- if (stat (joinPath .chezmoi.homeDir ".local/bin/gopass")) -}}
+{{ output (joinPath .chezmoi.homeDir ".local/bin/gopass") "completion" "zsh" }}
+{{- end }}
