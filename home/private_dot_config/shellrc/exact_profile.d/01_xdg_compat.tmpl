@@ -16,6 +16,9 @@ export GEM_SPEC_CACHE="${XDG_CACHE_HOME}"/gem
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 {{- end }}
 
+# XDG - Wget
+export WGETRC="${XDG_CONFIG_HOME}/wget/wgetrc"
+
 # XDG - Gradle
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 
