@@ -18,7 +18,7 @@ versions:
   usage: v7.4.0             # renovate: datasource=github-releases depName=jdx/usage
   fnox: v1.50.0             # renovate: datasource=github-releases depName=jdx/fnox
   multi_gitter: v0.64.0     # renovate: datasource=github-releases depName=lindell/multi-gitter
-  gopass: v1.17.4           # renovate: datasource=github-releases depName=gopasspw/gopass
+  gopass: v1.17.5           # renovate: datasource=github-releases depName=gopasspw/gopass
   bitwarden_cli: v2026.11.0  # renovate: datasource=github-releases depName=bitwarden/clients extractVersion=^cli-(?<version>v.*)$
   rbw: 1.15.0               # renovate: datasource=github-releases depName=doy/rbw
   age_plugin_yubikey: v0.5.1  # renovate: datasource=github-releases depName=str4d/age-plugin-yubikey
